@@ -7,11 +7,11 @@ name: Rifm
 import { Playground, PropsTable } from 'docz'
 import { Value } from 'react-powerplug';
 import { Rifm } from '../src'
-import { numberFormat, currencyFormat, dateFormat, dateFormatSym } from './format';
+import { numberFormat, currencyFormat, dateFormat, dateFormatSym, formatPhone } from './format';
 import TextField from '@material-ui/core/TextField';
 import { css } from 'emotion';
 
-## Simple number format
+## Simple input number format
 
 <Playground>
   <Value initial={''}>
@@ -41,7 +41,7 @@ const numberFormat = (str: string) => {
 };
 ```
 
-## Number format with fractional part
+## Input number format with fractional part
 
 <Playground>
   <Value initial={''}>
@@ -72,6 +72,8 @@ and allows you to split numbers.
 
 ## Material UI
 
+It can work with 3rd party Inputs without pain
+
 <Playground>
   <Value initial={''}>
     {text => (
@@ -90,6 +92,8 @@ and allows you to split numbers.
 </Playground>
 
 ## Masked input
+
+Mask is a little bit different in formatting, add `mask` property
 
 <Playground>
   <Value initial={'18-08-1978'}>
@@ -134,9 +138,36 @@ and allows you to split numbers.
   </Value>
 </Playground>
 
+## Phone Input
+
+Example of usage with [libphonenumber-js](https://github.com/catamphetamine/libphonenumber-js) formatter
+
+<Playground>
+  <Value initial={''}>
+    {text => (
+      <Rifm
+        mask
+        value={text.value}
+        onChange={text.set}
+        format={formatPhone}
+      >
+        {({ value, onChange }) => (
+          <>
+            Phone&nbsp;&nbsp;+1&nbsp;
+            <input  value={value} onChange={onChange} />
+          </>
+        )}
+      </Rifm>
+    )}
+
+  </Value>
+</Playground>
+
 ## React async ready
 
 Check that it will work with new async React [see strict-mode](https://reactjs.org/docs/strict-mode.html)
+
+### Format Async Ready
 
 <Playground>
   <React.StrictMode>
@@ -159,6 +190,8 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
     </Value>
   </React.StrictMode>
 </Playground>
+
+### Mask Async Ready
 
 <Playground>
   <React.StrictMode>

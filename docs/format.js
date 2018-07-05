@@ -1,4 +1,5 @@
 /* @flow */
+import { AsYouType } from 'libphonenumber-js';
 
 export const numberFormat = (str: string) => {
   const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
@@ -48,4 +49,14 @@ export const dateFormatSym = (str: string) => {
   if (r.length === 0) return r;
 
   return `${r}${dtSym.substr(r.length)}`;
+};
+
+const usPhone = new AsYouType('US');
+
+export const formatPhone = (str: string) => {
+  const clean = str.replace(/[^\d]+/gi, '').substr(0, 10);
+  const r = usPhone.input(clean);
+  usPhone.reset();
+
+  return r;
 };
