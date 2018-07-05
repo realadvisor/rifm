@@ -34,6 +34,7 @@ test('number comma format', () => {
       )}
     </Value>
   );
+
   if (!rifm) {
     throw Error('rifm is not initialized');
   }
