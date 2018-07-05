@@ -11,7 +11,13 @@ import { Playground, PropsTable } from 'docz'
 import { Value } from 'react-powerplug';
 // import { Rifm } from '../src';
 import { Rifm } from '../dist/rifm.esm';
-import { numberFormat, currencyFormat, dateFormat, dateFormatSym, formatPhone } from './format';
+import {
+numberFormat,
+currencyFormat,
+dateFormat,
+dateFormatSym,
+formatPhone
+} from './format';
 import TextField from '@material-ui/core/TextField';
 import { css } from 'emotion';
 
@@ -28,7 +34,12 @@ import { css } from 'emotion';
         {({ value, onChange }) => (
           <>
             Int&nbsp;&nbsp;
-            <input value={value} onChange={onChange} className={css({textAlign:"right"})}/>
+            <input
+              value={value}
+              onChange={onChange}
+              className={css({textAlign:"right"})}
+              type="tel"
+            />
           </>
         )}
       </Rifm>
@@ -59,7 +70,12 @@ const numberFormat = (str: string) => {
         {({ value, onChange }) => (
           <>
             Float&nbsp;&nbsp;
-            <input value={value} onChange={onChange} className={css({textAlign:"right"})}/>
+            <input
+              value={value}
+              onChange={onChange}
+              className={css({textAlign:"right"})}
+              type="tel"
+            />
           </>
         )}
       </Rifm>
@@ -72,7 +88,7 @@ property `refuse` allows you to change this behaviour.
 In later example "." is also added to `refuse` so input will accept `.`
 and allows you to split numbers.
 
-[currencyFormat source](./docs/format.js)
+[currencyFormat and other formatters source](https://github.com/istarkov/rifm/blob/master/docs/format.js)
 
 ## Material UI
 
@@ -88,7 +104,13 @@ It can work with 3rd party Inputs without pain
         format={currencyFormat}
       >
         {({ value, onChange }) => (
-          <TextField value={value} label={'Float'} onChange={onChange} className={css({input: {textAlign:"right"}})}/>
+          <TextField
+            value={value}
+            label={'Float'}
+            onChange={onChange}
+            className={css({input: {textAlign:"right"}})}
+            type="tel"
+          />
         )}
       </Rifm>
     )}
@@ -111,7 +133,12 @@ Mask is a little bit different in formatting, add `mask` property
         {({ value, onChange }) => (
           <>
             Date&nbsp;&nbsp;
-            <input placeholder="dd-mm-yyyy" value={value} onChange={onChange} />
+            <input
+              placeholder="dd-mm-yyyy"
+              value={value}
+              onChange={onChange}
+              type="tel"
+            />
           </>
         )}
       </Rifm>
@@ -134,7 +161,12 @@ Mask is a little bit different in formatting, add `mask` property
         {({ value, onChange }) => (
           <>
             Date&nbsp;&nbsp;
-            <input placeholder="__-__-____" value={value} onChange={onChange} />
+            <input
+              placeholder="__-__-____"
+              value={value}
+              onChange={onChange}
+              type="tel"
+            />
           </>
         )}
       </Rifm>
@@ -144,7 +176,8 @@ Mask is a little bit different in formatting, add `mask` property
 
 ## Masked Phone Input
 
-Example of usage with [libphonenumber-js](https://github.com/catamphetamine/libphonenumber-js) formatter
+Example of usage with
+[libphonenumber-js](https://github.com/catamphetamine/libphonenumber-js) formatter
 
 <Playground>
   <Value initial={''}>
@@ -158,7 +191,7 @@ Example of usage with [libphonenumber-js](https://github.com/catamphetamine/libp
         {({ value, onChange }) => (
           <>
             Phone&nbsp;&nbsp;+1&nbsp;
-            <input  value={value} onChange={onChange} />
+            <input  value={value} onChange={onChange} type="tel"/>
           </>
         )}
       </Rifm>
@@ -186,7 +219,12 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
           {({ value, onChange }) => (
           <>
             Format&nbsp;&nbsp;
-            <input value={value} onChange={onChange} className={css({textAlign:"right"})}/>
+            <input
+              value={value}
+              onChange={onChange}
+              className={css({textAlign:"right"})}
+              type="tel"
+            />
           </>
           )}
         </Rifm>
@@ -210,7 +248,12 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
           {({ value, onChange }) => (
             <>
               Parse&nbsp;&nbsp;
-              <input placeholder="dd-mm-yyyy" value={value} onChange={onChange} />
+              <input
+                placeholder="dd-mm-yyyy"
+                value={value}
+                onChange={onChange}
+                type="tel"
+              />
             </>
           )}
         </Rifm>
