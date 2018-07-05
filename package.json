@@ -1,15 +1,16 @@
 {
-  "name": "tmask",
+  "name": "rifm",
   "version": "0.1.0",
-  "description": "Tiny react masker input",
+  "description": "Tiny react input formatter and mask",
   "author": "istarkov",
   "license": "MIT",
   "private": false,
-  "main": "dist/tmask.cjs.js",
-  "module": "dist/tmask.esm.js",
+  "main": "dist/rifm.cjs.js",
+  "module": "dist/rifm.esm.js",
   "scripts": {
     "build:code": "rollup -c",
     "build": "npm run clean && npm run build:code",
+    "lint": "flow && eslint ./",
     "clean": "rimraf dist"
   },
   "lint-staged": {

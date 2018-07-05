@@ -1,7 +1,7 @@
 /* @flow */
 import * as React from 'react';
 import { Value } from 'react-powerplug';
-import { TMask } from '../src';
+import { Rifm } from '../src';
 import { css } from 'emotion';
 
 const numberFormat = str => {
@@ -12,7 +12,7 @@ const numberFormat = str => {
 export const TestFlow = () => (
   <Value initial={''}>
     {text => (
-      <TMask value={text.value} onChange={text.set} format={numberFormat}>
+      <Rifm value={text.value} onChange={text.set} format={numberFormat}>
         {({ value, onChange }) => (
           <input
             value={value}
@@ -20,7 +20,7 @@ export const TestFlow = () => (
             className={css({ textAlign: 'right' })}
           />
         )}
-      </TMask>
+      </Rifm>
     )}
   </Value>
 );

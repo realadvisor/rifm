@@ -9,15 +9,15 @@
     "minified": 1735,
     "gzipped": 704
   },
-  "dist/tmask.cjs.js": {
-    "bundled": 2436,
-    "minified": 1484,
-    "gzipped": 651
+  "dist/rifm.cjs.js": {
+    "bundled": 2428,
+    "minified": 1481,
+    "gzipped": 648
   },
-  "dist/tmask.esm.js": {
-    "bundled": 2187,
-    "minified": 1293,
-    "gzipped": 575,
+  "dist/rifm.esm.js": {
+    "bundled": 2180,
+    "minified": 1291,
+    "gzipped": 574,
     "treeshaked": {
       "rollup": {
         "code": 235,
@@ -28,9 +28,9 @@
       }
     }
   },
-  "dist/react-tmask.umd.js": {
-    "bundled": 3098,
-    "minified": 1488,
+  "dist/react-rifm.umd.js": {
+    "bundled": 3090,
+    "minified": 1487,
     "gzipped": 751
   }
 }

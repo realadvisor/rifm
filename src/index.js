@@ -1,3 +1,3 @@
 /* @flow */
 
-export { TMask } from './TMask';
+export { Rifm } from './Rifm';

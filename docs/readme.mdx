@@ -1,10 +1,10 @@
 ---
-name: TMask
+name: Rifm
 ---
 
 import { Playground, PropsTable } from 'docz'
 import { Value } from 'react-powerplug';
-import { TMask } from '../src'
+import { Rifm } from '../src'
 import { numberFormat } from './format';
 import { css } from 'emotion';
 
@@ -16,7 +16,7 @@ It can be used as number format
 <Playground>
   <Value initial={''}>
     {text => (
-      <TMask
+      <Rifm
         value={text.value}
         onChange={text.set}
         format={numberFormat}
@@ -24,7 +24,7 @@ It can be used as number format
         {({ value, onChange }) => (
           <input value={value} onChange={onChange} className={css({textAlign:"right"})}/>
         )}
-      </TMask>
+      </Rifm>
     )}
   </Value>
 </Playground>
@@ -46,7 +46,7 @@ const numberFormat = str =>
 <Playground>
   <Value initial={''}>
     {text => (
-      <TMask
+      <Rifm
         value={text.value}
         onChange={text.set}
         format={numberFormat}
@@ -54,7 +54,7 @@ const numberFormat = str =>
         {({ value, onChange }) => (
           <input value={value} onChange={onChange} />
         )}
-      </TMask>
+      </Rifm>
     )}
   </Value>
 </Playground>

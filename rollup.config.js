@@ -28,7 +28,7 @@ export default [
   {
     input,
     output: {
-      file: 'dist/react-tmask.umd.js',
+      file: 'dist/react-rifm.umd.js',
       format: 'umd',
       name,
       globals,
@@ -45,7 +45,7 @@ export default [
   {
     input,
     output: {
-      file: 'dist/react-tmask.min.js',
+      file: 'dist/react-rifm.min.js',
       format: 'umd',
       name,
       globals,
