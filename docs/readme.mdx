@@ -149,7 +149,32 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
           format={currencyFormat}
         >
           {({ value, onChange }) => (
+          <>
+            Format&nbsp;&nbsp;
             <input value={value} onChange={onChange} className={css({textAlign:"right"})}/>
+          </>
+          )}
+        </Rifm>
+      )}
+    </Value>
+  </React.StrictMode>
+</Playground>
+
+<Playground>
+  <React.StrictMode>
+    <Value initial={'18-08-1978'}>
+      {text => (
+        <Rifm
+          mask
+          value={text.value}
+          onChange={text.set}
+          format={dateFormat}
+        >
+          {({ value, onChange }) => (
+            <>
+              Parse&nbsp;&nbsp;
+              <input placeholder="dd-mm-yyyy" value={value} onChange={onChange} />
+            </>
           )}
         </Rifm>
       )}

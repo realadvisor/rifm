@@ -16,7 +16,7 @@ type Props = {|
 
 type State = {|
   value: string,
-  internal: boolean,
+  local: boolean,
 |};
 
 export class Rifm extends React.Component<Props, State> {
@@ -24,7 +24,7 @@ export class Rifm extends React.Component<Props, State> {
     super(props);
     this.state = {
       value: props.value,
-      internal: false,
+      local: false,
     };
   }
 
@@ -39,7 +39,7 @@ export class Rifm extends React.Component<Props, State> {
     const input = evt.target;
     const del = value.length < this.props.value.length;
 
-    this.setState({ value, internal: true }, () => {
+    this.setState({ value, local: true }, () => {
       const { selectionStart } = input;
       const refuse = this.props.refuse || /[^\d]+/gi;
 
@@ -65,8 +65,8 @@ export class Rifm extends React.Component<Props, State> {
 
   static getDerivedStateFromProps(props: Props, state: State) {
     return {
-      value: state.internal ? state.value : props.value,
-      internal: false,
+      value: state.local ? state.value : props.value,
+      local: false,
     };
   }
 
