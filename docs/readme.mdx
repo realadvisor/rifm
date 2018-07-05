@@ -5,13 +5,14 @@ name: Rifm
 import { Playground, PropsTable } from 'docz'
 import { Value } from 'react-powerplug';
 import { Rifm } from '../src'
-import { numberFormat } from './format';
+import { numberFormat, currencyFormat } from './format';
 import { css } from 'emotion';
 
 
 ## Basic usage
 
 It can be used as number format
+
 
 <Playground>
   <Value initial={''}>
@@ -29,14 +30,44 @@ It can be used as number format
   </Value>
 </Playground>
 
-Where `numberFormat` function is
+Or a number format with fractional part
+
+<Playground>
+  <Value initial={''}>
+    {text => (
+      <Rifm
+        refuse={/[^\d.]/ig}
+        value={text.value}
+        onChange={text.set}
+        format={currencyFormat}
+      >
+        {({ value, onChange }) => (
+          <input value={value} onChange={onChange} className={css({textAlign:"right"})}/>
+        )}
+      </Rifm>
+    )}
+  </Value>
+</Playground>
+
+
+Where `numberFormat` and `currencyFormat` are
 
 ```javascript
-const numberFormat = str =>
-  [...str.replace(/[^\d]+/gi, '')].reduce(
-    (r, v, i) => ((i + 1) % 3 === 0 ? r + v + ' ' : r + v),
-    ''
-  );
+const numberFormat = str => {
+  const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
+  return r ? r.toLocaleString('ch') : '';
+};
+
+export const currencyFormat = str => {
+  const r = parseFloat(str.replace(/[^\d.]+/gi, ''), 10);
+  return r
+    ? r.toLocaleString('en', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    : '';
+};
+
 ```
 
 
