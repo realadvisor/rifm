@@ -14,7 +14,7 @@
     "clean": "rimraf dist",
     "docz:build": "docz build",
     "docz:dev": "docz dev",
-    "deploy": "gh-pages -d .docz/dist"
+    "deploy:docz": "yarn docz:build && gh-pages -d .docz/dist"
   },
   "lint-staged": {
     "*.{js,md,ts,tsx}": [
