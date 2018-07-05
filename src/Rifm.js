@@ -31,23 +31,21 @@ export class Rifm extends React.Component<Props, State> {
   _state: ?{|
     before: string,
     input: HTMLInputElement,
+    del: boolean,
   |} = null;
 
   _handleChange = (evt: SyntheticInputEvent<HTMLInputElement>) => {
     let value = evt.target.value;
     const input = evt.target;
+    const del = value.length < this.props.value.length;
 
     this.setState({ value, internal: true }, () => {
       const { selectionStart } = input;
+      const refuse = this.props.refuse || /[^\d]+/gi;
 
-      const before = value
-        .substr(0, selectionStart)
-        .replace(this.props.refuse || /[^\d]+/gi, '');
+      const before = value.substr(0, selectionStart).replace(refuse, '');
 
-      this._state = {
-        input,
-        before,
-      };
+      this._state = { input, before, del };
 
       if (this.props.mask) {
         let start = -1;
@@ -55,9 +53,7 @@ export class Rifm extends React.Component<Props, State> {
           start = Math.max(start, value.indexOf(before[i], start + 1));
         }
 
-        const c = value
-          .substr(start + 1)
-          .replace(this.props.refuse || /[^\d]+/gi, '')[0];
+        const c = value.substr(start + 1).replace(refuse, '')[0];
         start = value.indexOf(c, start + 1);
 
         value = `${value.substr(0, start)}${value.substr(start + 1)}`;
@@ -93,6 +89,15 @@ export class Rifm extends React.Component<Props, State> {
       let start = -1;
       for (let i = 0; i !== _state.before.length; ++i) {
         start = Math.max(start, value.indexOf(_state.before[i], start + 1));
+      }
+
+      if (this.props.mask && !_state.del) {
+        while (
+          value[start + 1] &&
+          (this.props.refuse || /[^\d]+/gi).test(value[start + 1])
+        ) {
+          start += 1;
+        }
       }
 
       _state.input.selectionStart = start + 1;

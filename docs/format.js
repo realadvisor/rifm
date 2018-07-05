@@ -34,3 +34,18 @@ export const dateFormat = (str: string) => {
     ''
   );
 };
+
+const dtSym = '__-__-____';
+
+export const dateFormatSym = (str: string) => {
+  const clean = str.replace(/[^\d]+/gi, '');
+  const r = [...clean].reduce(
+    (r, v, index) =>
+      (index === 2 || index === 4 ? `${r}-${v}` : `${r}${v}`).substr(0, 10),
+    ''
+  );
+
+  if (r.length === 0) return r;
+
+  return `${r}${dtSym.substr(r.length)}`;
+};

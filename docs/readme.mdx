@@ -7,7 +7,7 @@ name: Rifm
 import { Playground, PropsTable } from 'docz'
 import { Value } from 'react-powerplug';
 import { Rifm } from '../src'
-import { numberFormat, currencyFormat, dateFormat } from './format';
+import { numberFormat, currencyFormat, dateFormat, dateFormatSym } from './format';
 import TextField from '@material-ui/core/TextField';
 import { css } from 'emotion';
 
@@ -22,10 +22,14 @@ import { css } from 'emotion';
         format={numberFormat}
       >
         {({ value, onChange }) => (
-          <input value={value} onChange={onChange} className={css({textAlign:"right"})}/>
+          <>
+            Int&nbsp;&nbsp;
+            <input value={value} onChange={onChange} className={css({textAlign:"right"})}/>
+          </>
         )}
       </Rifm>
     )}
+
   </Value>
 </Playground>
 
@@ -49,7 +53,10 @@ const numberFormat = (str: string) => {
         format={currencyFormat}
       >
         {({ value, onChange }) => (
-          <input value={value} onChange={onChange} className={css({textAlign:"right"})}/>
+          <>
+            Float&nbsp;&nbsp;
+            <input value={value} onChange={onChange} className={css({textAlign:"right"})}/>
+          </>
         )}
       </Rifm>
     )}
@@ -75,7 +82,7 @@ and allows you to split numbers.
         format={currencyFormat}
       >
         {({ value, onChange }) => (
-          <TextField value={value} onChange={onChange} className={css({input: {textAlign:"right"}})}/>
+          <TextField value={value} label={'Float'} onChange={onChange} className={css({input: {textAlign:"right"}})}/>
         )}
       </Rifm>
     )}
@@ -85,7 +92,7 @@ and allows you to split numbers.
 ## Masked input
 
 <Playground>
-  <Value initial={'12-34-5678'}>
+  <Value initial={'18-08-1978'}>
     {text => (
       <Rifm
         mask
@@ -94,7 +101,33 @@ and allows you to split numbers.
         format={dateFormat}
       >
         {({ value, onChange }) => (
-          <input placeholder="dd-mm-yyyy" value={value} onChange={onChange} />
+          <>
+            Date&nbsp;&nbsp;
+            <input placeholder="dd-mm-yyyy" value={value} onChange={onChange} />
+          </>
+        )}
+      </Rifm>
+    )}
+  </Value>
+</Playground>
+
+## Masked input 2
+
+<Playground>
+  <Value initial={''}>
+    {text => (
+      <Rifm
+        mask
+        refuse={/[^\d_]/ig}
+        value={text.value}
+        onChange={text.set}
+        format={dateFormatSym}
+      >
+        {({ value, onChange }) => (
+          <>
+            Date&nbsp;&nbsp;
+            <input placeholder="__-__-____" value={value} onChange={onChange} />
+          </>
         )}
       </Rifm>
     )}
