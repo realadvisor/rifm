@@ -61,7 +61,7 @@ const numberFormat = (str: string) => {
 ```
 
 ```shell
-  npm -i rifn
+  npm -i rifm
 ```
 
 ## Thanks
