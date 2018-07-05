@@ -2,7 +2,7 @@
 name: Rifm
 ---
 
-# RIFM - React Input Format and Mask
+# RIFM - React Input Format & Mask
 
 import { Playground, PropsTable } from 'docz'
 import { Value } from 'react-powerplug';
@@ -79,4 +79,27 @@ In later example "." is also added to `refuse` so input will accept `.` and allo
       </Rifm>
     )}
   </Value>
+</Playground>
+
+## React async ready
+
+Check that it will work with new async React [see strict-mode](https://reactjs.org/docs/strict-mode.html)
+
+<Playground>
+  <React.StrictMode>
+    <Value initial={''}>
+      {text => (
+        <Rifm
+          refuse={/[^\d.]/ig}
+          value={text.value}
+          onChange={text.set}
+          format={currencyFormat}
+        >
+          {({ value, onChange }) => (
+            <input value={value} onChange={onChange} className={css({textAlign:"right"})}/>
+          )}
+        </Rifm>
+      )}
+    </Value>
+  </React.StrictMode>
 </Playground>
