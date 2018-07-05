@@ -6,6 +6,7 @@ type Props = {|
   value: string,
   onChange: string => void,
   format: (str: string) => string,
+  refuse?: RegExp,
   children: ({
     value: string,
     onChange: (evt: SyntheticInputEvent<HTMLInputElement>) => void,
@@ -18,34 +19,39 @@ type State = {|
 |};
 
 export class TMask extends React.Component<Props, State> {
-  state = {
-    value: this.props.value,
-    internal: false,
-  };
-
   _before: ?string;
   _input: ?HTMLInputElement;
+  _handleChange: (evt: SyntheticInputEvent<HTMLInputElement>) => void;
 
-  static getDerivedStateFromProps(props: Props, state: State) {
-    if (state.internal) {
-      return { value: state.value, internal: false };
-    }
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      value: props.value,
+      internal: false,
+    };
 
-    return { value: props.value, internal: false };
+    this._handleChange = (evt: SyntheticInputEvent<HTMLInputElement>) => {
+      const value = evt.target.value;
+      const input = evt.target;
+
+      this.setState({ value, internal: true }, () => {
+        const { selectionStart } = input;
+        this._input = input;
+        this._before = value
+          .substr(0, selectionStart)
+          .replace(this.props.refuse || /[^\d]+/gi, '');
+
+        this.props.onChange(this.props.format(value));
+      });
+    };
   }
 
-  _handleChange = (evt: SyntheticInputEvent<HTMLInputElement>) => {
-    const value = evt.target.value;
-    const input = evt.target;
-
-    this.setState({ value, internal: true }, () => {
-      const { selectionStart } = input;
-      this._input = input;
-      this._before = value.substr(0, selectionStart).replace(/\s+/gi, '');
-
-      this.props.onChange(this.props.format(value));
-    });
-  };
+  static getDerivedStateFromProps(props: Props, state: State) {
+    return {
+      value: state.internal ? state.value : props.value,
+      internal: false,
+    };
+  }
 
   render() {
     const {
@@ -65,7 +71,7 @@ export class TMask extends React.Component<Props, State> {
 
       let start = -1;
       for (let i = 0; i !== _before.length; ++i) {
-        start = value.indexOf(_before[i], start + 1);
+        start = Math.max(start, value.indexOf(_before[i], start + 1));
       }
 
       _input.selectionStart = start + 1;

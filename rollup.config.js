@@ -11,7 +11,7 @@ const external = id => !id.startsWith('.') && !id.startsWith('/');
 
 const globals = { react: 'React' };
 
-const name = 'ReactPowerPlug';
+const name = 'ReactTmask';
 
 const getBabelOptions = ({ useESModules }) => ({
   exclude: '**/node_modules/**',
@@ -28,7 +28,7 @@ export default [
   {
     input,
     output: {
-      file: 'dist/react-powerplug.umd.js',
+      file: 'dist/react-tmask.umd.js',
       format: 'umd',
       name,
       globals,
@@ -45,7 +45,7 @@ export default [
   {
     input,
     output: {
-      file: 'dist/react-powerplug.min.js',
+      file: 'dist/react-tmask.min.js',
       format: 'umd',
       name,
       globals,

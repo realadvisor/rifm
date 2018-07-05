@@ -1,8 +1,8 @@
 {
   "dist/react-powerplug.umd.js": {
-    "bundled": 3702,
-    "minified": 1809,
-    "gzipped": 789
+    "bundled": 3345,
+    "minified": 1567,
+    "gzipped": 764
   },
   "index.js": {
     "bundled": 2846,
@@ -10,14 +10,14 @@
     "gzipped": 704
   },
   "dist/tmask.cjs.js": {
-    "bundled": 2846,
-    "minified": 1735,
-    "gzipped": 704
+    "bundled": 2607,
+    "minified": 1610,
+    "gzipped": 671
   },
   "dist/tmask.esm.js": {
-    "bundled": 2597,
-    "minified": 1544,
-    "gzipped": 630,
+    "bundled": 2358,
+    "minified": 1419,
+    "gzipped": 595,
     "treeshaked": {
       "rollup": {
         "code": 235,
@@ -27,5 +27,10 @@
         "code": 1324
       }
     }
+  },
+  "dist/react-tmask.umd.js": {
+    "bundled": 3273,
+    "minified": 1558,
+    "gzipped": 768
   }
 }
