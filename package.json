@@ -11,7 +11,10 @@
     "build:code": "rollup -c",
     "build": "npm run clean && npm run build:code",
     "lint": "flow && eslint ./",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "docz:build": "docz build",
+    "docz:dev": "docz dev",
+    "deploy": "gh-pages -d .docz/dist"
   },
   "lint-staged": {
     "*.{js,md,ts,tsx}": [
@@ -45,6 +48,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
     "flow-bin": "^0.75.0",
+    "gh-pages": "^1.2.0",
     "husky": "^0.14.3",
     "libphonenumber-js": "^1.2.15",
     "lint-staged": "^6.0.0",
