@@ -21,6 +21,15 @@ formatPhone
 } from './format';
 import TextField from '@material-ui/core/TextField';
 import { css } from 'emotion';
+import { injectGlobal } from 'emotion/macro';
+
+<div data-run={(()=>{
+  injectGlobal(`
+    .react-prism {
+      overflow-x: auto;
+    }
+  `)
+})()} />
 
 In all examples:
 
