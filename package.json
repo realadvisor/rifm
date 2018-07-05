@@ -4,14 +4,16 @@
   "description": "Tiny react input formatter and mask",
   "author": "istarkov",
   "license": "MIT",
-  "private": false,
   "main": "dist/rifm.cjs.js",
   "module": "dist/rifm.esm.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build:code": "rollup -c",
-    "build": "npm run clean && npm run build:code",
-    "lint": "flow && eslint ./",
-    "clean": "rimraf dist",
+    "build": "rimraf dist && npm run build:code",
+    "lint": "flow check && eslint ./",
     "docz:build": "docz build",
     "docz:dev": "docz dev",
     "deploy:docz": "yarn docz:build && cp .docz/dist/index.html .docz/dist/404.html && gh-pages -d .docz/dist"
@@ -22,12 +24,8 @@
       "git add"
     ]
   },
-  "files": [
-    "dist",
-    "src"
-  ],
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.49",
+    "@babel/cli": "^7.0.0-beta.51",
     "@babel/core": "^7.0.0-beta.51",
     "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.51",
     "@babel/plugin-transform-runtime": "^7.0.0-beta.51",
@@ -52,7 +50,6 @@
     "husky": "^0.14.3",
     "libphonenumber-js": "^1.2.15",
     "lint-staged": "^6.0.0",
-    "microbundle": "^0.4.4",
     "prettier": "^1.10.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -61,11 +58,12 @@
     "rollup": "^0.59.3",
     "rollup-plugin-babel": "^4.0.0-beta.4",
     "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-replace": "^2.0.0",
-    "rollup-plugin-size-snapshot": "^0.5.1",
-    "rollup-plugin-uglify": "^4.0.0"
+    "rollup-plugin-size-snapshot": "^0.5.1"
   },
   "peerDependencies": {
     "react": "^16.4.0-0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.51"
   }
 }

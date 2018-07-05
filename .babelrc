@@ -1,8 +1,0 @@
-{
-  "presets": [
-    ["@babel/env", { "modules": false, "useBuiltIns": false, "loose": true }],
-    "@babel/react",
-    "@babel/flow",
-    "@babel/stage-3"
-  ]
-}

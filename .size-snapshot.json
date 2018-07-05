@@ -1,36 +1,26 @@
 {
-  "dist/react-powerplug.umd.js": {
-    "bundled": 3345,
-    "minified": 1567,
-    "gzipped": 764
-  },
-  "index.js": {
-    "bundled": 2846,
-    "minified": 1735,
-    "gzipped": 704
+  "dist/rifm.umd.js": {
+    "bundled": 3212,
+    "minified": 1516,
+    "gzipped": 740
   },
   "dist/rifm.cjs.js": {
-    "bundled": 3128,
-    "minified": 1780,
-    "gzipped": 772
+    "bundled": 2785,
+    "minified": 1451,
+    "gzipped": 719
   },
   "dist/rifm.esm.js": {
-    "bundled": 2880,
-    "minified": 1590,
-    "gzipped": 699,
+    "bundled": 2569,
+    "minified": 1283,
+    "gzipped": 641,
     "treeshaked": {
       "rollup": {
-        "code": 235,
-        "import_statements": 235
+        "code": 98,
+        "import_statements": 98
       },
       "webpack": {
-        "code": 1324
+        "code": 1113
       }
     }
-  },
-  "dist/react-rifm.umd.js": {
-    "bundled": 3826,
-    "minified": 1786,
-    "gzipped": 872
   }
 }
