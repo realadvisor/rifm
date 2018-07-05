@@ -2,14 +2,14 @@
 name: Rifm
 ---
 
+# RIFM - React Input Format and Mask
+
 import { Playground, PropsTable } from 'docz'
 import { Value } from 'react-powerplug';
 import { Rifm } from '../src'
 import { numberFormat, currencyFormat } from './format';
 import TextField from '@material-ui/core/TextField';
 import { css } from 'emotion';
-
-
 
 ## Simple number format
 
@@ -29,16 +29,13 @@ import { css } from 'emotion';
   </Value>
 </Playground>
 
-
 ```javascript
 // numberFormat from example above
 const numberFormat = (str: string) => {
   const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
   return r ? r.toLocaleString('en') : '';
 };
-
 ```
-
 
 ## Number format with fractional part
 
@@ -64,7 +61,6 @@ property `refuse` allows you to change this behaviour.
 In later example "." is also added to `refuse` so input will accept `.` and allows you to split numbers.
 
 [currencyFormat source](./docs/format.js)
-
 
 ## Material UI
 
