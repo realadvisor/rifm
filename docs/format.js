@@ -9,6 +9,14 @@ export const numberFormat = (str: string) => {
   return r ? r.toLocaleString('en') : '';
 };
 
+export const negNumberFormat = (str: string) => {
+  const clean = str.replace(/[^\d-]+/gi, '');
+  if (clean === '-') return '-';
+  const r = parseInt(clean, 10);
+
+  return r ? r.toLocaleString('en') : '';
+};
+
 export const currencyFormat = (str: string) => {
   const clean = str.replace(/[^\d.]+/gi, '');
 
