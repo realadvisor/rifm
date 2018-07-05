@@ -4,9 +4,13 @@ name: Rifm
 
 # RIFM - React Input Format & Mask
 
+Is a tiny (≈700b-800b) component to transform any input component
+into formatted or masked input.
+
 import { Playground, PropsTable } from 'docz'
 import { Value } from 'react-powerplug';
-import { Rifm } from '../src'
+// import { Rifm } from '../src';
+import { Rifm } from '../dist/rifm.esm';
 import { numberFormat, currencyFormat, dateFormat, dateFormatSym, formatPhone } from './format';
 import TextField from '@material-ui/core/TextField';
 import { css } from 'emotion';
@@ -91,7 +95,7 @@ It can work with 3rd party Inputs without pain
   </Value>
 </Playground>
 
-## Masked input
+## Masked date input
 
 Mask is a little bit different in formatting, add `mask` property
 
@@ -115,7 +119,7 @@ Mask is a little bit different in formatting, add `mask` property
   </Value>
 </Playground>
 
-## Masked input 2
+## Masked date input 2
 
 <Playground>
   <Value initial={''}>
@@ -138,7 +142,7 @@ Mask is a little bit different in formatting, add `mask` property
   </Value>
 </Playground>
 
-## Phone Input
+## Masked Phone Input
 
 Example of usage with [libphonenumber-js](https://github.com/catamphetamine/libphonenumber-js) formatter
 
