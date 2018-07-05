@@ -9,7 +9,7 @@ const external = id => !id.startsWith('.') && !id.startsWith('/');
 
 const globals = { react: 'React' };
 
-const name = 'ReactTmask';
+const name = 'Rifm';
 
 const getBabelOptions = ({ useESModules }) => ({
   exclude: '**/node_modules/**',

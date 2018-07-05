@@ -1,8 +1,8 @@
 {
   "dist/rifm.umd.js": {
-    "bundled": 3218,
-    "minified": 1522,
-    "gzipped": 744
+    "bundled": 3212,
+    "minified": 1516,
+    "gzipped": 740
   },
   "dist/rifm.cjs.js": {
     "bundled": 2785,
