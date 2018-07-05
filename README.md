@@ -51,6 +51,7 @@ const numberFormat = (str: string) => {
 ```
 
 [Demo](https://istarkov.github.io/rifm/docs-readme)
+
 [Demo source](https://github.com/istarkov/rifm/blob/master/docs/readme.mdx)
 
 ## Install
@@ -65,4 +66,4 @@ const numberFormat = (str: string) => {
 
 ## Thanks
 
-@TrySound for incredible help and support on this
+[@TrySound](https://github.com/TrySound) for incredible help and support on this
