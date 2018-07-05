@@ -1,0 +1,63 @@
+{
+  "name": "tmask",
+  "version": "0.1.0",
+  "description": "Tiny react masker input",
+  "author": "istarkov",
+  "license": "MIT",
+  "private": false,
+  "main": "dist/tmask.cjs.js",
+  "module": "dist/tmask.esm.js",
+  "scripts": {
+    "build:code": "rollup -c",
+    "build": "npm run clean && npm run build:code",
+    "clean": "rimraf dist"
+  },
+  "lint-staged": {
+    "*.{js,md,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.49",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.51",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/preset-flow": "^7.0.0-beta.51",
+    "@babel/preset-react": "^7.0.0-beta.51",
+    "@babel/preset-stage-3": "^7.0.0-beta.51",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^8.2.3",
+    "cross-env": "^5.0.5",
+    "docz": "^0.5.1",
+    "eslint": "^4.19.1",
+    "eslint-config-react-app": "^2.1.0",
+    "eslint-plugin-flowtype": "^2.49.3",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.9.1",
+    "flow-bin": "^0.75.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^6.0.0",
+    "microbundle": "^0.4.4",
+    "prettier": "^1.10.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-powerplug": "^1.0.0-rc.1",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.59.3",
+    "rollup-plugin-babel": "^4.0.0-beta.4",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-size-snapshot": "^0.5.1",
+    "rollup-plugin-uglify": "^4.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.4.0-0"
+  }
+}

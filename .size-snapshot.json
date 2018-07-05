@@ -1,0 +1,31 @@
+{
+  "dist/react-powerplug.umd.js": {
+    "bundled": 3702,
+    "minified": 1809,
+    "gzipped": 789
+  },
+  "index.js": {
+    "bundled": 2846,
+    "minified": 1735,
+    "gzipped": 704
+  },
+  "dist/tmask.cjs.js": {
+    "bundled": 2846,
+    "minified": 1735,
+    "gzipped": 704
+  },
+  "dist/tmask.esm.js": {
+    "bundled": 2597,
+    "minified": 1544,
+    "gzipped": 630,
+    "treeshaked": {
+      "rollup": {
+        "code": 235,
+        "import_statements": 235
+      },
+      "webpack": {
+        "code": 1324
+      }
+    }
+  }
+}
