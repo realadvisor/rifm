@@ -27,6 +27,24 @@
       "git add"
     ]
   },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "plugins": [
+      "react",
+      "flowtype",
+      "jsx-a11y"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:flowtype/recommended",
+      "plugin:jsx-a11y/recommended"
+    ]
+  },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.51",
     "@babel/core": "^7.0.0-beta.51",
