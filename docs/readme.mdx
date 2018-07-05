@@ -7,7 +7,7 @@ name: Rifm
 import { Playground, PropsTable } from 'docz'
 import { Value } from 'react-powerplug';
 import { Rifm } from '../src'
-import { numberFormat, currencyFormat } from './format';
+import { numberFormat, currencyFormat, dateFormat } from './format';
 import TextField from '@material-ui/core/TextField';
 import { css } from 'emotion';
 
@@ -58,7 +58,8 @@ const numberFormat = (str: string) => {
 
 By default all non digit symbols are refused to enter,
 property `refuse` allows you to change this behaviour.
-In later example "." is also added to `refuse` so input will accept `.` and allows you to split numbers.
+In later example "." is also added to `refuse` so input will accept `.`
+and allows you to split numbers.
 
 [currencyFormat source](./docs/format.js)
 
@@ -75,6 +76,25 @@ In later example "." is also added to `refuse` so input will accept `.` and allo
       >
         {({ value, onChange }) => (
           <TextField value={value} onChange={onChange} className={css({input: {textAlign:"right"}})}/>
+        )}
+      </Rifm>
+    )}
+  </Value>
+</Playground>
+
+## Masked input
+
+<Playground>
+  <Value initial={'12-34-5678'}>
+    {text => (
+      <Rifm
+        mask
+        value={text.value}
+        onChange={text.set}
+        format={dateFormat}
+      >
+        {({ value, onChange }) => (
+          <input placeholder="dd-mm-yyyy" value={value} onChange={onChange} />
         )}
       </Rifm>
     )}

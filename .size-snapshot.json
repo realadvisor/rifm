@@ -10,14 +10,14 @@
     "gzipped": 704
   },
   "dist/rifm.cjs.js": {
-    "bundled": 2428,
-    "minified": 1481,
-    "gzipped": 648
+    "bundled": 2880,
+    "minified": 1684,
+    "gzipped": 721
   },
   "dist/rifm.esm.js": {
-    "bundled": 2180,
-    "minified": 1291,
-    "gzipped": 574,
+    "bundled": 2632,
+    "minified": 1494,
+    "gzipped": 645,
     "treeshaked": {
       "rollup": {
         "code": 235,
@@ -29,8 +29,8 @@
     }
   },
   "dist/react-rifm.umd.js": {
-    "bundled": 3090,
-    "minified": 1487,
-    "gzipped": 751
+    "bundled": 3562,
+    "minified": 1690,
+    "gzipped": 818
   }
 }

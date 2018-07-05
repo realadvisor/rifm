@@ -25,3 +25,12 @@ export const currencyFormat = (str: string) => {
       })
     : '';
 };
+
+export const dateFormat = (str: string) => {
+  const clean = str.replace(/[^\d]+/gi, '');
+  return [...clean].reduce(
+    (r, v, index) =>
+      (index === 2 || index === 4 ? `${r}-${v}` : `${r}${v}`).substr(0, 10),
+    ''
+  );
+};

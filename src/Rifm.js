@@ -6,6 +6,7 @@ type Props = {|
   value: string,
   onChange: string => void,
   format: (str: string) => string,
+  mask?: boolean,
   refuse?: RegExp,
   children: ({
     value: string,
@@ -27,23 +28,40 @@ export class Rifm extends React.Component<Props, State> {
     };
   }
 
-  _state: ?{
+  _state: ?{|
     before: string,
     input: HTMLInputElement,
-  } = null;
+  |} = null;
 
   _handleChange = (evt: SyntheticInputEvent<HTMLInputElement>) => {
-    const value = evt.target.value;
+    let value = evt.target.value;
     const input = evt.target;
 
     this.setState({ value, internal: true }, () => {
       const { selectionStart } = input;
+
+      const before = value
+        .substr(0, selectionStart)
+        .replace(this.props.refuse || /[^\d]+/gi, '');
+
       this._state = {
         input,
-        before: value
-          .substr(0, selectionStart)
-          .replace(this.props.refuse || /[^\d]+/gi, ''),
+        before,
       };
+
+      if (this.props.mask) {
+        let start = -1;
+        for (let i = 0; i !== before.length; ++i) {
+          start = Math.max(start, value.indexOf(before[i], start + 1));
+        }
+
+        const c = value
+          .substr(start + 1)
+          .replace(this.props.refuse || /[^\d]+/gi, '')[0];
+        start = value.indexOf(c, start + 1);
+
+        value = `${value.substr(0, start)}${value.substr(start + 1)}`;
+      }
 
       this.props.onChange(this.props.format(value));
     });
