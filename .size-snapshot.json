@@ -10,14 +10,14 @@
     "gzipped": 704
   },
   "dist/tmask.cjs.js": {
-    "bundled": 2607,
-    "minified": 1610,
-    "gzipped": 671
+    "bundled": 2436,
+    "minified": 1484,
+    "gzipped": 651
   },
   "dist/tmask.esm.js": {
-    "bundled": 2358,
-    "minified": 1419,
-    "gzipped": 595,
+    "bundled": 2187,
+    "minified": 1293,
+    "gzipped": 575,
     "treeshaked": {
       "rollup": {
         "code": 235,
@@ -29,8 +29,8 @@
     }
   },
   "dist/react-tmask.umd.js": {
-    "bundled": 3273,
-    "minified": 1558,
-    "gzipped": 768
+    "bundled": 3098,
+    "minified": 1488,
+    "gzipped": 751
   }
 }
