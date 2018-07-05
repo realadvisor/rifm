@@ -1,7 +1,5 @@
 import nodeResolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
-import replace from 'rollup-plugin-replace';
-import { uglify } from 'rollup-plugin-uglify';
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 import pkg from './package.json';
 
@@ -17,52 +15,19 @@ const getBabelOptions = ({ useESModules }) => ({
   exclude: '**/node_modules/**',
   runtimeHelpers: true,
   plugins: [
-    [
-      '@babel/plugin-transform-runtime',
-      { polyfill: false, useBuiltIns: true, useESModules },
-    ],
+    ['@babel/plugin-transform-runtime', { useBuiltIns: true, useESModules }],
   ],
 });
 
 export default [
   {
     input,
-    output: {
-      file: 'dist/react-rifm.umd.js',
-      format: 'umd',
-      name,
-      globals,
-    },
+    output: { file: 'dist/rifm.umd.js', format: 'umd', name, globals },
     external: Object.keys(globals),
     plugins: [
       nodeResolve(),
       babel(getBabelOptions({ useESModules: true })),
-      replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
       sizeSnapshot(),
-    ],
-  },
-
-  {
-    input,
-    output: {
-      file: 'dist/react-rifm.min.js',
-      format: 'umd',
-      name,
-      globals,
-    },
-    external: Object.keys(globals),
-    plugins: [
-      nodeResolve(),
-      babel(getBabelOptions({ useESModules: true })),
-      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-      uglify({
-        compress: {
-          pure_getters: true,
-          unsafe: true,
-          unsafe_comps: true,
-          warnings: false,
-        },
-      }),
     ],
   },
 
@@ -75,7 +40,7 @@ export default [
 
   {
     input,
-    output: { file: pkg.module, format: 'es' },
+    output: { file: pkg.module, format: 'esm' },
     external,
     plugins: [babel(getBabelOptions({ useESModules: true })), sizeSnapshot()],
   },
