@@ -29,6 +29,17 @@ import { css } from 'emotion';
   </Value>
 </Playground>
 
+
+```javascript
+// numberFormat from example above
+const numberFormat = (str: string) => {
+  const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
+  return r ? r.toLocaleString('en') : '';
+};
+
+```
+
+
 ## Number format with fractional part
 
 <Playground>
@@ -52,31 +63,7 @@ By default all non digit symbols are refused to enter,
 property `refuse` allows you to change this behaviour.
 In later example "." is also added to `refuse` so input will accept `.` and allows you to split numbers.
 
-
-Where `numberFormat` and `currencyFormat` are
-
-```javascript
-export const numberFormat = (str: string) => {
-  const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
-  return r ? r.toLocaleString('en') : '';
-};
-
-export const currencyFormat = (str: string) => {
-  const clean = str.replace(/[^\d.]+/gi, '');
-  const restoreDigits =
-    clean.length > 2 && clean.indexOf('.') === -1
-      ? `${clean.substr(0, clean.length - 2)}.${clean.substr(-2)}`
-      : clean;
-  const r = parseFloat(restoreDigits);
-  return r
-    ? r.toLocaleString('de-CH', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })
-    : '';
-};
-
-```
+[currencyFormat source](./docs/format.js)
 
 
 ## Material UI
