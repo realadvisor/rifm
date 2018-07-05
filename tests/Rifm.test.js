@@ -22,7 +22,7 @@ test('number comma format', () => {
   const onChangeFn = jest.fn();
   let rifm = null;
 
-  const renderer = TestRenderer.create(
+  TestRenderer.create(
     <Value initial="" onChange={onChangeFn}>
       {input => (
         <Rifm value={input.value} onChange={input.set} format={numberFormat}>
@@ -34,6 +34,7 @@ test('number comma format', () => {
       )}
     </Value>
   );
+
   if (!rifm) {
     throw Error('rifm is not initialized');
   }
