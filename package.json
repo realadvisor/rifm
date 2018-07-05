@@ -1,6 +1,6 @@
 {
   "name": "rifm",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Tiny react input formatter and mask",
   "author": "istarkov",
   "license": "MIT",
@@ -70,5 +70,9 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.51"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/istarkov/rifm.git"
   }
 }
