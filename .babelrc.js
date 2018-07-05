@@ -6,3 +6,7 @@ module.exports = {
     '@babel/react',
   ],
 };
+
+if (process.env.NODE_ENV === 'test') {
+  module.exports.plugins = ['@babel/transform-modules-commonjs'];
+}
