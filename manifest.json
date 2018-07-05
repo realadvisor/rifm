@@ -1,7 +1,7 @@
 {
-  "vendors.js": "/rifmstatic/js/vendors.43c8b17d.js",
-  "docs-readme.js": "/rifmstatic/js/docs-readme.d5a76364.js",
-  "runtime~app.js": "/rifmstatic/js/runtime~app.def043a6.js",
-  "app.js": "/rifmstatic/js/app.23239c4f.js",
-  "index.html": "/rifmindex.html"
+  "vendors.js": "/rifm/static/js/vendors.43c8b17d.js",
+  "docs-readme.js": "/rifm/static/js/docs-readme.d5a76364.js",
+  "runtime~app.js": "/rifm/static/js/runtime~app.a6d5c70d.js",
+  "app.js": "/rifm/static/js/app.9ecec22f.js",
+  "index.html": "/rifm/index.html"
 }
