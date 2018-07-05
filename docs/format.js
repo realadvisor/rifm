@@ -1,4 +1,6 @@
 /* @flow */
+/* simple fomtatters without number overflow checks etc */
+
 import { AsYouType } from 'libphonenumber-js';
 
 export const numberFormat = (str: string) => {
