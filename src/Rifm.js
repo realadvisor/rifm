@@ -6,7 +6,7 @@ type Props = {|
   value: string,
   onChange: string => void,
   format: (str: string) => string,
-  mask?: boolean,
+  replace?: string => boolean,
   refuse?: RegExp,
   children: ({
     value: string,
@@ -47,7 +47,7 @@ export class Rifm extends React.Component<Props, State> {
 
       this._state = { input, before, del };
 
-      if (this.props.mask && !del) {
+      if (this.props.replace && this.props.replace(this.props.value) && !del) {
         let start = -1;
         for (let i = 0; i !== before.length; ++i) {
           start = Math.max(start, value.indexOf(before[i], start + 1));
@@ -91,7 +91,7 @@ export class Rifm extends React.Component<Props, State> {
         start = Math.max(start, value.indexOf(_state.before[i], start + 1));
       }
 
-      if (this.props.mask && !_state.del) {
+      if (this.props.replace && !_state.del) {
         while (
           value[start + 1] &&
           (this.props.refuse || /[^\d]+/gi).test(value[start + 1])
