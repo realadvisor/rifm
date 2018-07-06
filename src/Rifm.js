@@ -47,7 +47,7 @@ export class Rifm extends React.Component<Props, State> {
 
       this._state = { input, before, del };
 
-      if (this.props.mask) {
+      if (this.props.mask && !del) {
         let start = -1;
         for (let i = 0; i !== before.length; ++i) {
           start = Math.max(start, value.indexOf(before[i], start + 1));
