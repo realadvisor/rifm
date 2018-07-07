@@ -9,8 +9,8 @@ into formatted or masked input.
 
 import { Playground, PropsTable } from 'docz'
 import { Value } from 'react-powerplug';
-// import { Rifm } from '../src';
-import { Rifm } from '../dist/rifm.esm';
+import { Rifm } from '../src';
+// import { Rifm } from '../dist/rifm.esm';
 import {
 numberFormat,
 negNumberFormat,
@@ -52,7 +52,7 @@ In all examples:
           <>
             Int&nbsp;&nbsp;
             <input
-              maxlength="20"
+              maxLength="20"
               value={value}
               onChange={onChange}
               className={css({textAlign:"right"})}
@@ -73,6 +73,10 @@ const numberFormat = (str: string) => {
   return r ? r.toLocaleString('en') : '';
 };
 ```
+
+to prevent parseInt overflow you can use `maxLength` on input field
+or write your own numberFormat.
+
 
 ## Input number format with fractional part
 
@@ -137,13 +141,17 @@ It can work with 3rd party Inputs without pain
 
 ## Masked date input
 
-Mask is a little bit different in formatting, add `mask` property
+Mask mostly the same as format, the difference that at some moment
+when you enter symbols replace operation used instead of insert
+for example when field value reached maximum length
+
+Use `replace` to inform field to use replace operation
 
 <Playground>
   <Value initial={'18-08-1978'}>
     {text => (
       <Rifm
-        mask
+        replace={v => v.length >= 10}
         value={text.value}
         onChange={text.set}
         format={dateFormat}
@@ -170,7 +178,7 @@ Mask is a little bit different in formatting, add `mask` property
   <Value initial={''}>
     {text => (
       <Rifm
-        mask
+        replace={v => v.substr(9,10) !== '_'}
         refuse={/[^\d_]/ig}
         value={text.value}
         onChange={text.set}
@@ -201,7 +209,7 @@ Example of usage with
   <Value initial={''}>
     {text => (
       <Rifm
-        mask
+        replace={v => v.length >= 14}
         value={text.value}
         onChange={text.set}
         format={formatPhone}
@@ -258,7 +266,7 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
     <Value initial={'18-08-1978'}>
       {text => (
         <Rifm
-          mask
+          replace={v => v.length >= 10}
           value={text.value}
           onChange={text.set}
           format={dateFormat}
