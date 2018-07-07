@@ -107,19 +107,28 @@ test('mask behaviour', async () => {
   exec({ type: 'PUT_SYMBOL', payload: '8' });
   exec({ type: 'PUT_SYMBOL', payload: '7' });
   exec({ type: 'PUT_SYMBOL', payload: '6' });
+
   exec({ type: 'BACKSPACE' });
   exec({ type: 'PUT_SYMBOL', payload: '6' });
 
   exec({ type: 'MOVE_CARET', payload: -3 });
   exec({ type: 'BACKSPACE' });
+
   exec({ type: 'PUT_SYMBOL', payload: '0' });
+
   exec({ type: 'BACKSPACE' });
   exec({ type: 'PUT_SYMBOL', payload: '01' });
+
   exec({ type: 'PUT_SYMBOL', payload: '2345678' });
+
   exec({ type: 'MOVE_CARET', payload: -100 }); // -100 at begin
   exec({ type: 'MOVE_CARET', payload: 2 });
+
   exec({ type: 'BACKSPACE' });
   exec({ type: 'BACKSPACE' });
+
+  exec({ type: 'PUT_SYMBOL', payload: '9876' });
+  exec({ type: 'PUT_SYMBOL', payload: '5' });
 
   expect(snaphot).toMatchSnapshot();
 });
