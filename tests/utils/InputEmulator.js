@@ -13,6 +13,11 @@ type InputCommand =
   | { type: 'BACKSPACE' }
   | { type: 'DELETE' };
 
+type InputState = {
+  value: string,
+  selectionStart: number,
+  selectionEnd: number,
+};
 export class InputEmulator extends React.Component<{|
   value: string,
   onChange: (evt: SyntheticInputEvent<HTMLInputElement>) => void,
@@ -21,7 +26,7 @@ export class InputEmulator extends React.Component<{|
     () => { value: string, selectionStart: number }
   ) => React.Node,
 |}> {
-  _state = {
+  _state: InputState = {
     value: this.props.value,
     selectionStart: 0,
     selectionEnd: 0,
@@ -81,3 +86,28 @@ export class InputEmulator extends React.Component<{|
     return this.props.children(this._execCommand, () => ({ ...this._state }));
   }
 }
+
+export const renderInputState = (state: InputState) => {
+  if (state.selectionEnd < state.selectionStart) {
+    throw new Error("selectionEnd can't be greater selectionStart");
+  }
+
+  if (state.selectionStart === state.selectionEnd) {
+    return (
+      state.value.substring(0, state.selectionStart) +
+      '|' +
+      state.value.substring(state.selectionStart)
+    );
+  }
+
+  const end = state.value.substring(state.selectionStart);
+  const dt = state.selectionEnd - state.selectionStart;
+
+  return (
+    state.value.substring(0, state.selectionStart) +
+    '[' +
+    end.substring(0, dt) +
+    ']' +
+    end.substring(dt)
+  );
+};

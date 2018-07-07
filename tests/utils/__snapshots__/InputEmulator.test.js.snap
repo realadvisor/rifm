@@ -277,3 +277,13 @@ Array [
   },
 ]
 `;
+
+exports[`renderInputState test 1`] = `
+Array [
+  "h[ell]o",
+  "[hello]",
+  "hello|",
+  "|hello",
+  "he|llo",
+]
+`;

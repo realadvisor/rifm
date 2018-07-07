@@ -3,7 +3,7 @@
 import * as React from 'react';
 import TestRenderer from 'react-test-renderer';
 import { Value } from 'react-powerplug';
-import { InputEmulator } from './InputEmulator';
+import { InputEmulator, renderInputState } from './InputEmulator';
 
 declare var test: Function;
 declare var expect: Function;
@@ -117,6 +117,60 @@ test('Input emulator work as React if values dont match', () => {
   badSymbol = '-';
   // cursor should move at the end of input
   exec({ type: 'PUT_SYMBOL', payload: '3' });
+
+  expect(snaphot).toMatchSnapshot();
+});
+
+test('renderInputState test', () => {
+  const snaphot = [];
+
+  snaphot.push(
+    renderInputState({
+      value: 'hello',
+      selectionStart: 1,
+      selectionEnd: 4,
+    })
+  );
+
+  snaphot.push(
+    renderInputState({
+      value: 'hello',
+      selectionStart: 0,
+      selectionEnd: 5,
+    })
+  );
+
+  snaphot.push(
+    renderInputState({
+      value: 'hello',
+      selectionStart: 5,
+      selectionEnd: 5,
+    })
+  );
+
+  snaphot.push(
+    renderInputState({
+      value: 'hello',
+      selectionStart: 0,
+      selectionEnd: 0,
+    })
+  );
+
+  snaphot.push(
+    renderInputState({
+      value: 'hello',
+      selectionStart: 2,
+      selectionEnd: 2,
+    })
+  );
+
+  expect(() =>
+    renderInputState({
+      value: 'hello',
+      selectionStart: 2,
+      selectionEnd: 1,
+    })
+  ).toThrow();
 
   expect(snaphot).toMatchSnapshot();
 });
