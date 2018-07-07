@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mask behaviour 1`] = `
+Array [
+  Object {
+    "cmd": Object {
+      "payload": "1",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 1,
+    "selectionStart": 1,
+    "value": "1",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "23",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "12-3",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -1,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "12-3",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "4",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "12-43",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -100,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "12-43",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "5",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 1,
+    "selectionStart": 1,
+    "value": "51-24-3",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "6",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "56-12-43",
+  },
+  Object {
+    "cmd": Object {
+      "payload": 100,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 8,
+    "selectionStart": 8,
+    "value": "56-12-43",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "789",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 10,
+    "selectionStart": 10,
+    "value": "56-12-4378",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -4,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "56-12-4378",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "9",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 7,
+    "selectionStart": 7,
+    "value": "56-12-9378",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "8",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 8,
+    "selectionStart": 8,
+    "value": "56-12-9878",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "7",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 9,
+    "selectionStart": 9,
+    "value": "56-12-9878",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "6",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 10,
+    "selectionStart": 10,
+    "value": "56-12-9876",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 9,
+    "selectionStart": 9,
+    "value": "56-12-987",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "6",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 10,
+    "selectionStart": 10,
+    "value": "56-12-9876",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -3,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 7,
+    "selectionStart": 7,
+    "value": "56-12-9876",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "56-12-876",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "0",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 7,
+    "selectionStart": 7,
+    "value": "56-12-0876",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "56-12-876",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "01",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 8,
+    "selectionStart": 8,
+    "value": "56-12-0176",
+  },
+]
+`;
