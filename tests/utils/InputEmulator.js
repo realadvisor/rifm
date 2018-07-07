@@ -10,7 +10,8 @@ const makeEvtFromState = (state): SyntheticInputEvent<HTMLInputElement> =>
 type InputCommand =
   | { type: 'PUT_SYMBOL', payload: string }
   | { type: 'MOVE_CARET', payload: number }
-  | { type: 'BACKSPACE' };
+  | { type: 'BACKSPACE' }
+  | { type: 'DELETE' };
 
 export class InputEmulator extends React.Component<{|
   value: string,
@@ -53,6 +54,19 @@ export class InputEmulator extends React.Component<{|
         Math.max(this._state.selectionStart - 1, 0),
         this._state.value.length
       );
+      this.props.onChange(makeEvtFromState(this._state));
+    }
+
+    if (cmd.type === 'DELETE') {
+      this._state.value =
+        this._state.value.substr(0, this._state.selectionStart) +
+        this._state.value.substr(this._state.selectionStart + 1);
+      /*
+      this._state.selectionStart = this._state.selectionEnd = Math.min(
+        Math.max(this._state.selectionStart - 1, 0),
+        this._state.value.length
+      );
+      */
       this.props.onChange(makeEvtFromState(this._state));
     }
   };

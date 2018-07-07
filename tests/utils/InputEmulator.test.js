@@ -63,6 +63,16 @@ test('Input emulator commands test', () => {
   exec({ type: 'MOVE_CARET', payload: -1 });
   exec({ type: 'BACKSPACE' });
   exec({ type: 'PUT_SYMBOL', payload: '3' });
+  exec({ type: 'MOVE_CARET', payload: 100 });
+  exec({ type: 'DELETE' });
+  exec({ type: 'MOVE_CARET', payload: -1 });
+  exec({ type: 'DELETE' });
+  exec({ type: 'MOVE_CARET', payload: -2 });
+  exec({ type: 'DELETE' });
+  exec({ type: 'MOVE_CARET', payload: -100 });
+  exec({ type: 'DELETE' });
+  exec({ type: 'DELETE' });
+  exec({ type: 'DELETE' });
 
   expect(reactVal).toEqual(getVal && getVal().value);
 

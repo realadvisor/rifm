@@ -150,6 +150,90 @@ Array [
     "selectionStart": 3,
     "value": "1234",
   },
+  Object {
+    "cmd": Object {
+      "payload": 100,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "1234",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "1234",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -1,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "1234",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "123",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -2,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 1,
+    "selectionStart": 1,
+    "value": "123",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 1,
+    "selectionStart": 1,
+    "value": "13",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -100,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "13",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "3",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "",
+  },
 ]
 `;
 
