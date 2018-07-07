@@ -31,13 +31,14 @@ export class Rifm extends React.Component<Props, State> {
   _state: ?{|
     before: string,
     input: HTMLInputElement,
-    op: number,
+    op: boolean,
   |} = null;
 
   _handleChange = (evt: SyntheticInputEvent<HTMLInputElement>) => {
     let value = evt.target.value;
     const input = evt.target;
-    const op = value.length - this.props.value.length;
+    const op = value.length > this.props.value.length;
+    const noOp = this.props.value === this.props.format(value);
 
     this.setState({ value, local: true }, () => {
       const { selectionStart } = input;
@@ -50,7 +51,8 @@ export class Rifm extends React.Component<Props, State> {
       if (
         this.props.replace &&
         this.props.replace(this.props.value) &&
-        op > 0
+        op &&
+        !noOp
       ) {
         let start = -1;
         for (let i = 0; i !== before.length; ++i) {
@@ -95,7 +97,7 @@ export class Rifm extends React.Component<Props, State> {
         start = Math.max(start, value.indexOf(_state.before[i], start + 1));
       }
 
-      if (this.props.replace && _state.op > 0) {
+      if (this.props.replace && _state.op) {
         while (
           value[start + 1] &&
           (this.props.refuse || /[^\d]+/gi).test(value[start + 1])
