@@ -132,3 +132,47 @@ test('mask behaviour', async () => {
 
   expect(snaphot).toMatchSnapshot();
 });
+
+test('mask behaviour with bad symbols', async () => {
+  const snaphot = [];
+  let getVal = null;
+  let execCommand = null;
+
+  TestRenderer.create(
+    <Value initial={''}>
+      {input => (
+        <Rifm
+          replace={v => v.length >= 10}
+          value={input.value}
+          onChange={input.set}
+          format={dateFormat}
+        >
+          {({ value, onChange }) => (
+            <InputEmulator value={value} onChange={onChange}>
+              {(exec, val) => {
+                execCommand = exec;
+                getVal = val;
+                return null;
+              }}
+            </InputEmulator>
+          )}
+        </Rifm>
+      )}
+    </Value>
+  );
+
+  const exec = cmd => {
+    if (!execCommand || !getVal) {
+      throw Error('rifm is not initialized');
+    }
+
+    execCommand(cmd);
+    snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
+  };
+
+  exec({ type: 'PUT_SYMBOL', payload: '18081978' });
+  exec({ type: 'MOVE_CARET', payload: -4 });
+  exec({ type: 'PUT_SYMBOL', payload: 'x' });
+
+  expect(snaphot).toMatchSnapshot();
+});

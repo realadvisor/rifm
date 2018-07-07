@@ -279,3 +279,38 @@ Array [
   },
 ]
 `;
+
+exports[`mask behaviour with bad symbols 1`] = `
+Array [
+  Object {
+    "cmd": Object {
+      "payload": "18081978",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 10,
+    "selectionStart": 10,
+    "value": "18-08-1978",
+    "withCaret": "18-08-1978|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -4,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-1978",
+    "withCaret": "18-08-|1978",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "x",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-1978",
+    "withCaret": "18-08-|1978",
+  },
+]
+`;
