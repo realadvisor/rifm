@@ -43,7 +43,7 @@ test('Input emulator commands test', () => {
     }
 
     execCommand(cmd);
-    snaphot.push({ ...getVal(), cmd });
+    snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
 
   exec({ type: 'PUT_SYMBOL', payload: '1' });
@@ -108,7 +108,7 @@ test('Input emulator work as React if values dont match', () => {
     }
 
     execCommand(cmd);
-    snaphot.push({ ...getVal(), cmd });
+    snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
 
   exec({ type: 'PUT_SYMBOL', payload: '1' });

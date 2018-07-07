@@ -10,6 +10,7 @@ Array [
     "selectionEnd": 1,
     "selectionStart": 1,
     "value": "1",
+    "withCaret": "1|",
   },
   Object {
     "cmd": Object {
@@ -19,6 +20,7 @@ Array [
     "selectionEnd": 3,
     "selectionStart": 3,
     "value": "134",
+    "withCaret": "134|",
   },
   Object {
     "cmd": Object {
@@ -28,6 +30,7 @@ Array [
     "selectionEnd": 1,
     "selectionStart": 1,
     "value": "134",
+    "withCaret": "1|34",
   },
   Object {
     "cmd": Object {
@@ -37,6 +40,7 @@ Array [
     "selectionEnd": 2,
     "selectionStart": 2,
     "value": "1234",
+    "withCaret": "12|34",
   },
   Object {
     "cmd": Object {
@@ -46,6 +50,7 @@ Array [
     "selectionEnd": 4,
     "selectionStart": 4,
     "value": "1234",
+    "withCaret": "1234|",
   },
   Object {
     "cmd": Object {
@@ -55,6 +60,7 @@ Array [
     "selectionEnd": 5,
     "selectionStart": 5,
     "value": "12345",
+    "withCaret": "12345|",
   },
   Object {
     "cmd": Object {
@@ -64,6 +70,7 @@ Array [
     "selectionEnd": 0,
     "selectionStart": 0,
     "value": "12345",
+    "withCaret": "|12345",
   },
   Object {
     "cmd": Object {
@@ -73,6 +80,7 @@ Array [
     "selectionEnd": 1,
     "selectionStart": 1,
     "value": "012345",
+    "withCaret": "0|12345",
   },
   Object {
     "cmd": Object {
@@ -82,6 +90,7 @@ Array [
     "selectionEnd": 2,
     "selectionStart": 2,
     "value": "0d12345",
+    "withCaret": "0d|12345",
   },
   Object {
     "cmd": Object {
@@ -90,6 +99,7 @@ Array [
     "selectionEnd": 1,
     "selectionStart": 1,
     "value": "012345",
+    "withCaret": "0|12345",
   },
   Object {
     "cmd": Object {
@@ -98,6 +108,7 @@ Array [
     "selectionEnd": 0,
     "selectionStart": 0,
     "value": "12345",
+    "withCaret": "|12345",
   },
   Object {
     "cmd": Object {
@@ -106,6 +117,7 @@ Array [
     "selectionEnd": 0,
     "selectionStart": 0,
     "value": "12345",
+    "withCaret": "|12345",
   },
   Object {
     "cmd": Object {
@@ -115,6 +127,7 @@ Array [
     "selectionEnd": 5,
     "selectionStart": 5,
     "value": "12345",
+    "withCaret": "12345|",
   },
   Object {
     "cmd": Object {
@@ -123,6 +136,7 @@ Array [
     "selectionEnd": 4,
     "selectionStart": 4,
     "value": "1234",
+    "withCaret": "1234|",
   },
   Object {
     "cmd": Object {
@@ -132,6 +146,7 @@ Array [
     "selectionEnd": 3,
     "selectionStart": 3,
     "value": "1234",
+    "withCaret": "123|4",
   },
   Object {
     "cmd": Object {
@@ -140,6 +155,7 @@ Array [
     "selectionEnd": 2,
     "selectionStart": 2,
     "value": "124",
+    "withCaret": "12|4",
   },
   Object {
     "cmd": Object {
@@ -149,6 +165,7 @@ Array [
     "selectionEnd": 3,
     "selectionStart": 3,
     "value": "1234",
+    "withCaret": "123|4",
   },
   Object {
     "cmd": Object {
@@ -158,6 +175,7 @@ Array [
     "selectionEnd": 4,
     "selectionStart": 4,
     "value": "1234",
+    "withCaret": "1234|",
   },
   Object {
     "cmd": Object {
@@ -166,6 +184,7 @@ Array [
     "selectionEnd": 4,
     "selectionStart": 4,
     "value": "1234",
+    "withCaret": "1234|",
   },
   Object {
     "cmd": Object {
@@ -175,6 +194,7 @@ Array [
     "selectionEnd": 3,
     "selectionStart": 3,
     "value": "1234",
+    "withCaret": "123|4",
   },
   Object {
     "cmd": Object {
@@ -183,6 +203,7 @@ Array [
     "selectionEnd": 3,
     "selectionStart": 3,
     "value": "123",
+    "withCaret": "123|",
   },
   Object {
     "cmd": Object {
@@ -192,6 +213,7 @@ Array [
     "selectionEnd": 1,
     "selectionStart": 1,
     "value": "123",
+    "withCaret": "1|23",
   },
   Object {
     "cmd": Object {
@@ -200,6 +222,7 @@ Array [
     "selectionEnd": 1,
     "selectionStart": 1,
     "value": "13",
+    "withCaret": "1|3",
   },
   Object {
     "cmd": Object {
@@ -209,6 +232,7 @@ Array [
     "selectionEnd": 0,
     "selectionStart": 0,
     "value": "13",
+    "withCaret": "|13",
   },
   Object {
     "cmd": Object {
@@ -217,6 +241,7 @@ Array [
     "selectionEnd": 0,
     "selectionStart": 0,
     "value": "3",
+    "withCaret": "|3",
   },
   Object {
     "cmd": Object {
@@ -225,6 +250,7 @@ Array [
     "selectionEnd": 0,
     "selectionStart": 0,
     "value": "",
+    "withCaret": "|",
   },
   Object {
     "cmd": Object {
@@ -233,6 +259,7 @@ Array [
     "selectionEnd": 0,
     "selectionStart": 0,
     "value": "",
+    "withCaret": "|",
   },
 ]
 `;
@@ -247,6 +274,7 @@ Array [
     "selectionEnd": 1,
     "selectionStart": 1,
     "value": "1",
+    "withCaret": "1|",
   },
   Object {
     "cmd": Object {
@@ -256,6 +284,7 @@ Array [
     "selectionEnd": 2,
     "selectionStart": 2,
     "value": "12",
+    "withCaret": "12|",
   },
   Object {
     "cmd": Object {
@@ -265,6 +294,7 @@ Array [
     "selectionEnd": 0,
     "selectionStart": 0,
     "value": "12",
+    "withCaret": "|12",
   },
   Object {
     "cmd": Object {
@@ -274,6 +304,7 @@ Array [
     "selectionEnd": 4,
     "selectionStart": 4,
     "value": "-312",
+    "withCaret": "-312|",
   },
 ]
 `;

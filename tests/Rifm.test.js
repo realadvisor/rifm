@@ -5,7 +5,7 @@ import TestRenderer from 'react-test-renderer';
 import { Value } from 'react-powerplug';
 import { Rifm } from '../src';
 import { numberFormat, dateFormat } from '../docs/format.js';
-import { InputEmulator } from './utils/InputEmulator';
+import { InputEmulator, renderInputState } from './utils/InputEmulator';
 
 declare var test: Function;
 declare var expect: Function;
@@ -88,7 +88,7 @@ test('mask behaviour', async () => {
     }
 
     execCommand(cmd);
-    snaphot.push({ ...getVal(), cmd });
+    snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
 
   exec({ type: 'PUT_SYMBOL', payload: '1' });

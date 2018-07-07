@@ -21,10 +21,7 @@ type InputState = {
 export class InputEmulator extends React.Component<{|
   value: string,
   onChange: (evt: SyntheticInputEvent<HTMLInputElement>) => void,
-  children: (
-    (cmd: InputCommand) => void,
-    () => { value: string, selectionStart: number }
-  ) => React.Node,
+  children: ((cmd: InputCommand) => void, () => InputState) => React.Node,
 |}> {
   _state: InputState = {
     value: this.props.value,
