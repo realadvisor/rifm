@@ -1,0 +1,195 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input emulator commands test 1`] = `
+Array [
+  Object {
+    "cmd": Object {
+      "payload": "1",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 1,
+    "selectionStart": 1,
+    "value": "1",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "34",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "134",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -2,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 1,
+    "selectionStart": 1,
+    "value": "134",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "2",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 2,
+    "selectionStart": 2,
+    "value": "1234",
+  },
+  Object {
+    "cmd": Object {
+      "payload": 100,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "1234",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "5",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 5,
+    "selectionStart": 5,
+    "value": "12345",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -100,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "12345",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "0",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 1,
+    "selectionStart": 1,
+    "value": "012345",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "d",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 2,
+    "selectionStart": 2,
+    "value": "0d12345",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 1,
+    "selectionStart": 1,
+    "value": "012345",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "12345",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "12345",
+  },
+  Object {
+    "cmd": Object {
+      "payload": 100,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 5,
+    "selectionStart": 5,
+    "value": "12345",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "1234",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -1,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "1234",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 2,
+    "selectionStart": 2,
+    "value": "124",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "3",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "1234",
+  },
+]
+`;
+
+exports[`Input emulator work as React if values dont match 1`] = `
+Array [
+  Object {
+    "cmd": Object {
+      "payload": "1",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 1,
+    "selectionStart": 1,
+    "value": "1",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "2",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 2,
+    "selectionStart": 2,
+    "value": "12",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -100,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "12",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "3",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "-312",
+  },
+]
+`;
