@@ -39,7 +39,8 @@ export const currencyFormat = (str: string) => {
 
 export const dateFormat = (str: string) => {
   const clean = str.replace(/[^\d]+/gi, '');
-  return [...clean].reduce(
+  const chars = clean.split('');
+  return chars.reduce(
     (r, v, index) =>
       (index === 2 || index === 4 ? `${r}-${v}` : `${r}${v}`).substr(0, 10),
     ''
@@ -50,7 +51,8 @@ const dtSym = '__-__-____';
 
 export const dateFormatSym = (str: string) => {
   const clean = str.replace(/[^\d]+/gi, '');
-  const r = [...clean].reduce(
+  const chars = clean.split('');
+  const r = chars.reduce(
     (r, v, index) =>
       (index === 2 || index === 4 ? `${r}-${v}` : `${r}${v}`).substr(0, 10),
     ''
