@@ -69,7 +69,7 @@ In all examples:
 ```javascript
 // numberFormat from example above
 const numberFormat = (str: string) => {
-  const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
+  const r = parseInt(str.replace(/[^\\d]+/gi, ''), 10);
   return r ? r.toLocaleString('en') : '';
 };
 ```
