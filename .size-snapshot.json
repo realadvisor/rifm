@@ -5,21 +5,21 @@
     "gzipped": 757
   },
   "dist/rifm.cjs.js": {
-    "bundled": 2910,
-    "minified": 1529,
-    "gzipped": 736
+    "bundled": 2902,
+    "minified": 1521,
+    "gzipped": 731
   },
   "dist/rifm.esm.js": {
-    "bundled": 2694,
-    "minified": 1361,
-    "gzipped": 659,
+    "bundled": 2686,
+    "minified": 1353,
+    "gzipped": 651,
     "treeshaked": {
       "rollup": {
-        "code": 98,
-        "import_statements": 98
+        "code": 90,
+        "import_statements": 90
       },
       "webpack": {
-        "code": 1113
+        "code": 1105
       }
     }
   }
