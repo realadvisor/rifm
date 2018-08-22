@@ -40,7 +40,10 @@ export const currencyFormat = (str: string) => {
 export const currencyFormat2 = (str: string, isBlur?: boolean) => {
   const clean = str.replace(/[^\d.]+/gi, ''); // .replace(/0+$/, '');
 
-  const beautify = clean;
+  const beautify =
+    clean.indexOf('.') === -1
+      ? clean
+      : `${clean.split('.')[0]}.${clean.split('.')[1].substr(0, 2)}`;
 
   const r = parseFloat(beautify);
   const formatted = r.toLocaleString('de-CH', {
