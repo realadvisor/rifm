@@ -37,6 +37,29 @@ export const currencyFormat = (str: string) => {
     : '';
 };
 
+export const currencyFormat2 = (str: string, isBlur?: boolean) => {
+  const clean = str.replace(/[^\d.]+/gi, ''); // .replace(/0+$/, '');
+
+  const beautify = clean;
+
+  const r = parseFloat(beautify);
+  const formatted = r.toLocaleString('de-CH', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+
+  const res = Number.isNaN(r)
+    ? ''
+    : formatted +
+      (isBlur
+        ? ''
+        : formatted.indexOf('.') == -1 && clean.indexOf('.') > -1
+          ? '.' + clean.split('.')[1].substr(0, 2)
+          : '');
+
+  return res;
+};
+
 export const dateFormat = (str: string) => {
   const clean = str.replace(/[^\d]+/gi, '');
   const chars = clean.split('');

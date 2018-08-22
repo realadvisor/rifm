@@ -15,6 +15,7 @@ import {
 numberFormat,
 negNumberFormat,
 currencyFormat,
+currencyFormat2,
 dateFormat,
 dateFormatSym,
 formatPhone
@@ -37,6 +38,7 @@ In all examples:
   from react-powerplug is used as State management Component.
 
 - formatters is placed [here](https://github.com/istarkov/rifm/blob/master/docs/format.js)
+
 
 ## Simple input number format
 
@@ -109,6 +111,34 @@ By default all non digit symbols are refused to enter,
 property `refuse` allows you to change this behaviour.
 In later example "." is also added to `refuse` so input will accept `.`
 and allows you to split numbers.
+
+## Input number format with variable fractional part
+
+<Playground>
+  <Value initial={''}>
+    {text => (
+      <Rifm
+        refuse={/[^\d.]/ig}
+        value={text.value}
+        onChange={text.set}
+        format={currencyFormat2}
+      >
+        {({ value, onChange }) => (
+          <>
+            Float&nbsp;&nbsp;
+            <input
+              value={value}
+              onChange={onChange}
+              className={css({textAlign:"right"})}
+              type="tel"
+              onBlur={() => text.set(currencyFormat2(value, true))}
+            />
+          </>
+        )}
+      </Rifm>
+    )}
+  </Value>
+</Playground>
 
 [currencyFormat and other formatters source](https://github.com/istarkov/rifm/blob/master/docs/format.js)
 
