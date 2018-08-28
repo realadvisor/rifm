@@ -52,7 +52,7 @@ In all examples:
       >
         {({ value, onChange }) => (
           <>
-            Int&nbsp;&nbsp;
+            Int{' '}
             <input
               maxLength="20"
               value={value}
@@ -86,14 +86,14 @@ or write your own numberFormat.
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\d.]/ig}
+        refuse={/[^\\d.]/ig}
         value={text.value}
         onChange={text.set}
         format={currencyFormat}
       >
         {({ value, onChange }) => (
           <>
-            Float&nbsp;&nbsp;
+            Float{' '}
             <input
               value={value}
               onChange={onChange}
@@ -118,14 +118,14 @@ and allows you to split numbers.
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\d.]/ig}
+        refuse={/[^\\d.]/ig}
         value={text.value}
         onChange={text.set}
         format={currencyFormat2}
       >
         {({ value, onChange }) => (
           <>
-            Float&nbsp;&nbsp;
+            Float{' '}
             <input
               value={value}
               onChange={onChange}
@@ -150,7 +150,7 @@ It can work with 3rd party Inputs without pain
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\d.]/ig}
+        refuse={/[^\\d.]/ig}
         value={text.value}
         onChange={text.set}
         format={currencyFormat}
@@ -188,7 +188,7 @@ Use `replace` to inform field to use replace operation
       >
         {({ value, onChange }) => (
           <>
-            Date&nbsp;&nbsp;
+            Date{' '}
             <input
               placeholder="dd-mm-yyyy"
               value={value}
@@ -209,14 +209,14 @@ Use `replace` to inform field to use replace operation
     {text => (
       <Rifm
         replace={v => v.substr(9,10) !== '_'}
-        refuse={/[^\d_]/ig}
+        refuse={/[^\\d_]/ig}
         value={text.value}
         onChange={text.set}
         format={dateFormatSym}
       >
         {({ value, onChange }) => (
           <>
-            Date&nbsp;&nbsp;
+            Date{' '}
             <input
               placeholder="__-__-____"
               value={value}
@@ -246,7 +246,7 @@ Example of usage with
       >
         {({ value, onChange }) => (
           <>
-            Phone&nbsp;&nbsp;+1&nbsp;
+            Phone{' '}+1{' '}
             <input  value={value} onChange={onChange} type="tel"/>
           </>
         )}
@@ -267,14 +267,14 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
     <Value initial={''}>
       {text => (
         <Rifm
-          refuse={/[^\d.]/ig}
+          refuse={/[^\\d.]/ig}
           value={text.value}
           onChange={text.set}
           format={currencyFormat}
         >
           {({ value, onChange }) => (
           <>
-            Format&nbsp;&nbsp;
+            Format{' '}
             <input
               value={value}
               onChange={onChange}
@@ -303,7 +303,7 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
         >
           {({ value, onChange }) => (
             <>
-              Parse&nbsp;&nbsp;
+              Parse{' '}
               <input
                 placeholder="dd-mm-yyyy"
                 value={value}
@@ -324,14 +324,14 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\d-]/ig}
+        refuse={/[^\\d-]/ig}
         value={text.value}
         onChange={text.set}
         format={negNumberFormat}
       >
         {({ value, onChange }) => (
           <>
-            Int&nbsp;&nbsp;
+            Int{' '}
             <input
               value={value}
               onChange={onChange}

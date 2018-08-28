@@ -56,12 +56,14 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^23.2.0",
-    "docz": "^0.5.3",
+    "docz": "^0.10.3",
+    "docz-theme-default": "^0.10.3",
     "emotion": "^9.2.4",
     "eslint": "^5.0.1",
     "eslint-plugin-flowtype": "^2.49.3",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
+    "flow": "^0.2.3",
     "flow-bin": "^0.75.0",
     "gh-pages": "^1.2.0",
     "husky": "^0.14.3",
@@ -69,8 +71,8 @@
     "libphonenumber-js": "^1.2.15",
     "lint-staged": "^7.2.0",
     "prettier": "^1.10.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "react-powerplug": "^1.0.0-rc.1",
     "react-test-renderer": "^16.4.1",
     "rimraf": "^2.6.1",
@@ -88,5 +90,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/istarkov/rifm.git"
+  },
+  "resolutions": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   }
 }
