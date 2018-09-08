@@ -14,7 +14,8 @@
     "build:code": "rollup -c",
     "build:flow": "echo \"// @flow\n\nexport * from '../src'\" > dist/rifm.cjs.js.flow",
     "build": "rimraf dist && npm run build:code && npm run build:flow",
-    "test": "jest && flow check && eslint ./",
+    "jest": "NODE_ICU_DATA=`yarn -s run node-full-icu-path` jest",
+    "test": "yarn jest && flow check && eslint ./",
     "docz:build": "docz build",
     "docz:dev": "docz dev",
     "deploy:docz": "yarn docz:build && cp .docz/dist/index.html .docz/dist/404.html && gh-pages -d .docz/dist",
@@ -32,11 +33,18 @@
     "trailingComma": "es5"
   },
   "eslintConfig": {
+    "env": {
+      "node": 1,
+      "browser": 1,
+      "es6": 1,
+      "jest/globals": true
+    },
     "parser": "babel-eslint",
     "plugins": [
       "react",
       "flowtype",
-      "jsx-a11y"
+      "jsx-a11y",
+      "jest"
     ],
     "extends": [
       "eslint:recommended",
@@ -61,10 +69,11 @@
     "emotion": "^9.2.4",
     "eslint": "^5.0.1",
     "eslint-plugin-flowtype": "^2.49.3",
+    "eslint-plugin-jest": "^21.22.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
-    "flow": "^0.2.3",
-    "flow-bin": "^0.75.0",
+    "flow-bin": "^0.80.0",
+    "full-icu": "^1.2.1",
     "gh-pages": "^1.2.0",
     "husky": "^0.14.3",
     "jest": "^23.3.0",

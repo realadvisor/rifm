@@ -6,6 +6,12 @@
 [libs]
 
 [lints]
+sketchy-null=error
+sketchy-number=error
+unsafe-getters-setters=error
+inexact-spread=error
+unnecessary-optional-chain=error
+unnecessary-invariant=error
 
 [options]
 include_warnings=true

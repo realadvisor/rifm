@@ -7,11 +7,11 @@ const makeEvtFromState = (state): SyntheticInputEvent<HTMLInputElement> =>
     target: state,
   }: any);
 
-type InputCommand =
-  | { type: 'PUT_SYMBOL', payload: string }
-  | { type: 'MOVE_CARET', payload: number }
-  | { type: 'BACKSPACE' }
-  | { type: 'DELETE' };
+export type InputCommand =
+  | {| type: 'PUT_SYMBOL', payload: string |}
+  | {| type: 'MOVE_CARET', payload: number |}
+  | {| type: 'BACKSPACE' |}
+  | {| type: 'DELETE' |};
 
 type InputState = {
   value: string,

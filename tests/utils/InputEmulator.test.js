@@ -5,10 +5,6 @@ import TestRenderer from 'react-test-renderer';
 import { Value } from 'react-powerplug';
 import { InputEmulator, renderInputState } from './InputEmulator';
 
-declare var test: Function;
-declare var expect: Function;
-declare var jest: Object;
-
 test('Input emulator commands test', () => {
   let getVal = null;
   let execCommand = null;
