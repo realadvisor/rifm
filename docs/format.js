@@ -37,28 +37,62 @@ export const currencyFormat = (str: string) => {
     : '';
 };
 
-export const currencyFormat2 = (str: string, isBlur?: boolean) => {
+const prepareFraction = (fraction, maximumFractionDigits) => {
+  const removeTrailingZero = false;
+  const substrFrac = fraction.substr(
+    0,
+    maximumFractionDigits -
+      (removeTrailingZero && fraction[maximumFractionDigits - 1] === '0'
+        ? 1
+        : 0)
+  );
+
+  return substrFrac;
+};
+
+// poor raw prototype for future universal number format
+export const currencyFormat2 = (str: string, isInitial?: boolean) => {
+  const maximumFractionDigits = 2;
+  const minimumFractionDigits = 0;
+
   const clean = str.replace(/[^\d.]+/gi, ''); // .replace(/0+$/, '');
 
-  const beautify =
-    clean.indexOf('.') === -1
-      ? clean
-      : `${clean.split('.')[0]}.${clean.split('.')[1].substr(0, 2)}`;
+  const [base, fract = ''] = clean.split('.');
+  const fraction = prepareFraction(fract, maximumFractionDigits);
+  const preventRounding = !fraction
+    ? clean.length > minimumFractionDigits &&
+      minimumFractionDigits > 0 &&
+      isInitial !== true
+      ? `${clean.substr(
+          0,
+          clean.length - minimumFractionDigits
+        )}.${clean.substr(-minimumFractionDigits)}`
+      : clean
+    : `${base}.${fraction}`;
 
-  const r = parseFloat(beautify);
+  const r = parseFloat(preventRounding);
+
   const formatted = r.toLocaleString('de-CH', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
+    minimumFractionDigits,
+    maximumFractionDigits,
   });
+  const [, formattedFraction = ''] = formatted.split('.');
 
   const res = Number.isNaN(r)
     ? ''
     : formatted +
-      (isBlur
+      (isInitial === true
         ? ''
-        : formatted.indexOf('.') == -1 && clean.indexOf('.') > -1
-          ? '.' + clean.split('.')[1].substr(0, 2)
-          : '');
+        : (formattedFraction.length === 0 && clean.indexOf('.') > -1
+            ? '.'
+            : '') +
+          (formattedFraction.length < maximumFractionDigits &&
+          fraction.length > formattedFraction.length
+            ? fraction.substring(
+                formattedFraction.length,
+                maximumFractionDigits
+              )
+            : ''));
 
   return res;
 };

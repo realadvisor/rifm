@@ -4014,6 +4014,10 @@ eslint-plugin-flowtype@^2.49.3:
   dependencies:
     lodash "^4.17.10"
 
+eslint-plugin-jest@^21.22.0:
+  version "21.22.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-21.22.0.tgz#1b9e49b3e5ce9a3d0a51af4579991d517f33726e"
+
 eslint-plugin-jsx-a11y@^6.0.3:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.1.0.tgz#569f6f2d29546cab82cedaa077ec829693b0c42d"
@@ -4540,13 +4544,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flow-bin@^0.75.0:
-  version "0.75.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.75.0.tgz#b96d1ee99d3b446a3226be66b4013224ce9df260"
-
-flow@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/flow/-/flow-0.2.3.tgz#f8da65efa249127ec99376a28896572a9795d1af"
+flow-bin@^0.80.0:
+  version "0.80.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.80.0.tgz#04cc1ee626a6f50786f78170c92ebe1745235403"
 
 flush-write-stream@^1.0.0:
   version "1.0.3"
@@ -4665,6 +4665,10 @@ fsevents@^1.2.2, fsevents@^1.2.3:
   dependencies:
     nan "^2.9.2"
     node-pre-gyp "^0.10.0"
+
+full-icu@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/full-icu/-/full-icu-1.2.1.tgz#28d7f1caafb14cac262364ca584fe7f2044a4ab2"
 
 function-bind@^1.1.1:
   version "1.1.1"
