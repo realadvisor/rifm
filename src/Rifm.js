@@ -32,12 +32,14 @@ export class Rifm extends React.Component<Props, State> {
     before: string,
     input: HTMLInputElement,
     op: boolean,
+    di: boolean,
     del: boolean,
   |} = null;
 
   _del: boolean = false;
 
   _handleChange = (evt: SyntheticInputEvent<HTMLInputElement>) => {
+    // FUTURE: use evt.nativeEvent.inputType for del event, see comments at onkeydown
     let value = evt.target.value;
     const input = evt.target;
     const op = value.length > this.props.value.length;
@@ -50,7 +52,13 @@ export class Rifm extends React.Component<Props, State> {
 
       const before = value.substr(0, selectionStart).replace(refuse, '');
 
-      this._state = { input, before, op, del: del && noOp };
+      this._state = {
+        input,
+        before,
+        op,
+        di: del && noOp,
+        del,
+      };
 
       if (
         this.props.replace &&
@@ -73,8 +81,11 @@ export class Rifm extends React.Component<Props, State> {
     });
   };
 
+  // until https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType will be supported
+  // by all major browsers (now supported by: +chrome, +safari, ?edge, !firefox)
   // there is no way I found to distinguish in onChange
-  // event backspace or delete was called in some situations
+  // backspace or delete was called in some situations
+  // firefox track https://bugzilla.mozilla.org/show_bug.cgi?id=1447239
   _hKD = (evt: KeyboardEvent) => {
     if (evt.code === 'Delete') {
       this._del = true;
@@ -104,11 +115,13 @@ export class Rifm extends React.Component<Props, State> {
     return children({ value, onChange: _handleChange });
   }
 
+  // delete when  https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType will be supported by all major browsers
   componentWillUnmount() {
     document.removeEventListener('keydown', this._hKD);
     document.removeEventListener('keyup', this._hKU);
   }
 
+  // delete when  https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType will be supported by all major browsers
   componentDidMount() {
     document.addEventListener('keydown', this._hKD);
     document.addEventListener('keyup', this._hKU);
@@ -125,7 +138,8 @@ export class Rifm extends React.Component<Props, State> {
         start = Math.max(start, value.indexOf(_state.before[i], start + 1));
       }
 
-      if (this.props.replace && _state.op) {
+      // format usually looks better without this
+      if (this.props.replace && (_state.op || _state.del)) {
         while (
           value[start + 1] &&
           (this.props.refuse || /[^\d]+/).test(value[start + 1])
@@ -135,7 +149,7 @@ export class Rifm extends React.Component<Props, State> {
       }
 
       _state.input.selectionStart = _state.input.selectionEnd =
-        start + 1 + (_state.del ? 1 : 0);
+        start + 1 + (_state.di ? 1 : 0);
     }
 
     this._state = null;
