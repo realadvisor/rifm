@@ -9,6 +9,7 @@ into formatted or masked input.
 
 import { Playground, PropsTable } from 'docz'
 import { Value } from 'react-powerplug';
+import StringMask from "string-mask";
 import { Rifm } from '../src';
 // import { Rifm } from '../dist/rifm.esm';
 import {
@@ -229,6 +230,31 @@ Use `replace` to inform field to use replace operation
     )}
   </Value>
 </Playground>
+
+
+## String-mask input
+
+Example of usage with [string-mask](https://github.com/the-darc/string-mask)
+
+<Playground>
+  <Value initial={""}>
+    {v => (
+      <Rifm
+        replace={v => v.length >= 10}
+        value={v.value}
+        onChange={v.set}
+        format={str => {
+          const mask = new StringMask("0000-0000-0000-0000");
+          const r = str.replace(/[^\\d]+/gi, "");
+          return mask.apply(r);
+        }}
+      >
+        {({ value, onChange }) => <input onChange={onChange} value={value} />}
+      </Rifm>
+    )}
+  </Value>
+</Playground>
+
 
 ## Masked Phone Input
 
