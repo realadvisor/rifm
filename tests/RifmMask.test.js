@@ -15,27 +15,32 @@ test('mask behaviour', async () => {
   const snaphot = [];
   let getVal = null;
   let execCommand = null;
+  let stateValue_ = null;
 
   TestRenderer.create(
     <Value initial={''}>
-      {input => (
-        <Rifm
-          replace={v => v.length >= 10}
-          value={input.value}
-          onChange={input.set}
-          format={dateFormat}
-        >
-          {({ value, onChange }) => (
-            <InputEmulator value={value} onChange={onChange}>
-              {(exec, val) => {
-                execCommand = exec;
-                getVal = val;
-                return null;
-              }}
-            </InputEmulator>
-          )}
-        </Rifm>
-      )}
+      {input => {
+        stateValue_ = input.value;
+
+        return (
+          <Rifm
+            replace={v => v.length >= 10}
+            value={input.value}
+            onChange={input.set}
+            format={dateFormat}
+          >
+            {({ value, onChange }) => (
+              <InputEmulator value={value} onChange={onChange}>
+                {(exec, val) => {
+                  execCommand = exec;
+                  getVal = val;
+                  return null;
+                }}
+              </InputEmulator>
+            )}
+          </Rifm>
+        );
+      }}
     </Value>
   );
 
@@ -45,6 +50,7 @@ test('mask behaviour', async () => {
     }
 
     execCommand(cmd);
+    expect(stateValue_).toEqual(getVal().value);
     snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
 
@@ -94,27 +100,32 @@ test('mask behaviour with bad symbols', async () => {
   const snaphot = [];
   let getVal = null;
   let execCommand = null;
+  let stateValue_ = null;
 
   TestRenderer.create(
     <Value initial={''}>
-      {input => (
-        <Rifm
-          replace={v => v.length >= 10}
-          value={input.value}
-          onChange={input.set}
-          format={dateFormat}
-        >
-          {({ value, onChange }) => (
-            <InputEmulator value={value} onChange={onChange}>
-              {(exec, val) => {
-                execCommand = exec;
-                getVal = val;
-                return null;
-              }}
-            </InputEmulator>
-          )}
-        </Rifm>
-      )}
+      {input => {
+        stateValue_ = input.value;
+
+        return (
+          <Rifm
+            replace={v => v.length >= 10}
+            value={input.value}
+            onChange={input.set}
+            format={dateFormat}
+          >
+            {({ value, onChange }) => (
+              <InputEmulator value={value} onChange={onChange}>
+                {(exec, val) => {
+                  execCommand = exec;
+                  getVal = val;
+                  return null;
+                }}
+              </InputEmulator>
+            )}
+          </Rifm>
+        );
+      }}
     </Value>
   );
 
@@ -124,6 +135,7 @@ test('mask behaviour with bad symbols', async () => {
     }
 
     execCommand(cmd);
+    expect(stateValue_).toEqual(getVal().value);
     snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
 
@@ -138,27 +150,32 @@ test('mask behaviour with delete', async () => {
   const snaphot = [];
   let getVal = null;
   let execCommand = null;
+  let stateValue_ = null;
 
   TestRenderer.create(
     <Value initial={''}>
-      {input => (
-        <Rifm
-          replace={v => v.length >= 10}
-          value={input.value}
-          onChange={input.set}
-          format={dateFormat}
-        >
-          {({ value, onChange }) => (
-            <InputEmulator value={value} onChange={onChange}>
-              {(exec, val) => {
-                execCommand = exec;
-                getVal = val;
-                return null;
-              }}
-            </InputEmulator>
-          )}
-        </Rifm>
-      )}
+      {input => {
+        stateValue_ = input.value;
+
+        return (
+          <Rifm
+            replace={v => v.length >= 10}
+            value={input.value}
+            onChange={input.set}
+            format={dateFormat}
+          >
+            {({ value, onChange }) => (
+              <InputEmulator value={value} onChange={onChange}>
+                {(exec, val) => {
+                  execCommand = exec;
+                  getVal = val;
+                  return null;
+                }}
+              </InputEmulator>
+            )}
+          </Rifm>
+        );
+      }}
     </Value>
   );
 
@@ -168,6 +185,7 @@ test('mask behaviour with delete', async () => {
     }
 
     execCommand(cmd);
+    expect(stateValue_).toEqual(getVal().value);
     snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
 
@@ -193,6 +211,75 @@ test('mask behaviour with delete', async () => {
   exec({ type: 'PUT_SYMBOL', payload: '78' });
   exec({ type: 'MOVE_CARET', payload: -5 });
   exec({ type: 'DELETE' });
+
+  expect(snaphot).toMatchSnapshot();
+});
+
+test('mask works even if state is not updated on equal vals', async () => {
+  const snaphot = [];
+  let getVal = null;
+  let execCommand = null;
+  let stateValue_ = null;
+  let callCount_ = 0;
+
+  TestRenderer.create(
+    <Value initial={''}>
+      {input => {
+        stateValue_ = input.value;
+
+        return (
+          <Rifm
+            replace={v => v.length >= 10}
+            value={input.value}
+            onChange={v => {
+              if (input.value !== v) {
+                callCount_++;
+                input.set(v);
+              }
+            }}
+            format={dateFormat}
+          >
+            {({ value, onChange }) => (
+              <InputEmulator value={value} onChange={onChange}>
+                {(exec, val) => {
+                  execCommand = exec;
+                  getVal = val;
+                  return null;
+                }}
+              </InputEmulator>
+            )}
+          </Rifm>
+        );
+      }}
+    </Value>
+  );
+
+  const exec = cmd => {
+    if (!execCommand || !getVal) {
+      throw Error('rifm is not initialized');
+    }
+
+    execCommand(cmd);
+    expect(stateValue_).toEqual(getVal().value);
+    snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
+  };
+
+  exec({ type: 'PUT_SYMBOL', payload: '18081978' });
+  exec({ type: 'MOVE_CARET', payload: -100 });
+  exec({ type: 'PUT_SYMBOL', payload: '18081978' });
+  exec({ type: 'MOVE_CARET', payload: -4 });
+  exec({ type: 'PUT_SYMBOL', payload: '1978' });
+  exec({ type: 'MOVE_CARET', payload: -4 });
+  exec({ type: 'BACKSPACE' });
+  exec({ type: 'DELETE' });
+
+  exec({ type: 'PUT_SYMBOL', payload: 'x' });
+  exec({ type: 'MOVE_CARET', payload: -1 });
+  exec({ type: 'PUT_SYMBOL', payload: 'x' });
+  exec({ type: 'MOVE_CARET', payload: -1 });
+  exec({ type: 'PUT_SYMBOL', payload: '1' });
+
+  expect(callCount_).toEqual(1);
 
   expect(snaphot).toMatchSnapshot();
 });

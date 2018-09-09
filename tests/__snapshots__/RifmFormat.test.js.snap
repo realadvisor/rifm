@@ -699,3 +699,66 @@ Array [
   },
 ]
 `;
+
+exports[`format works even if state is not updated on equal vals 1`] = `
+Array [
+  Object {
+    "cmd": Object {
+      "payload": "123456",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 7,
+    "selectionStart": 7,
+    "value": "123,456",
+    "withCaret": "123,456|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -3,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "123,456",
+    "withCaret": "123,|456",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "123,456",
+    "withCaret": "123|,456",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "123,456",
+    "withCaret": "123,|456",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "x",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "123,456",
+    "withCaret": "123|,456",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "x",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "123,456",
+    "withCaret": "123|,456",
+  },
+]
+`;

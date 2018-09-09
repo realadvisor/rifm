@@ -527,3 +527,136 @@ Array [
   },
 ]
 `;
+
+exports[`mask works even if state is not updated on equal vals 1`] = `
+Array [
+  Object {
+    "cmd": Object {
+      "payload": "18081978",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 10,
+    "selectionStart": 10,
+    "value": "18-08-1978",
+    "withCaret": "18-08-1978|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -100,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "18-08-1978",
+    "withCaret": "|18-08-1978",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "18081978",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 10,
+    "selectionStart": 10,
+    "value": "18-08-1978",
+    "withCaret": "18-08-1978|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -4,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-1978",
+    "withCaret": "18-08-|1978",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "1978",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 10,
+    "selectionStart": 10,
+    "value": "18-08-1978",
+    "withCaret": "18-08-1978|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -4,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-1978",
+    "withCaret": "18-08-|1978",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 5,
+    "selectionStart": 5,
+    "value": "18-08-1978",
+    "withCaret": "18-08|-1978",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-1978",
+    "withCaret": "18-08-|1978",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "x",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-1978",
+    "withCaret": "18-08-|1978",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -1,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 5,
+    "selectionStart": 5,
+    "value": "18-08-1978",
+    "withCaret": "18-08|-1978",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "x",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-1978",
+    "withCaret": "18-08-|1978",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -1,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 5,
+    "selectionStart": 5,
+    "value": "18-08-1978",
+    "withCaret": "18-08|-1978",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "1",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 7,
+    "selectionStart": 7,
+    "value": "18-08-1978",
+    "withCaret": "18-08-1|978",
+  },
+]
+`;
