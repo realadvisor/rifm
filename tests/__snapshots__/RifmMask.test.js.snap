@@ -314,3 +314,187 @@ Array [
   },
 ]
 `;
+
+exports[`mask behaviour with delete 1`] = `
+Array [
+  Object {
+    "cmd": Object {
+      "payload": "18081978",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 10,
+    "selectionStart": 10,
+    "value": "18-08-1978",
+    "withCaret": "18-08-1978|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -4,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-1978",
+    "withCaret": "18-08-|1978",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-978",
+    "withCaret": "18-08-|978",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-78",
+    "withCaret": "18-08-|78",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-8",
+    "withCaret": "18-08-|8",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 5,
+    "selectionStart": 5,
+    "value": "18-08",
+    "withCaret": "18-08|",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08",
+    "withCaret": "18-08|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "1978",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 10,
+    "selectionStart": 10,
+    "value": "18-08-1978",
+    "withCaret": "18-08-1978|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -100,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "18-08-1978",
+    "withCaret": "|18-08-1978",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "80-81-978",
+    "withCaret": "|80-81-978",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "08-19-78",
+    "withCaret": "|08-19-78",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "18",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "18-08-1978",
+    "withCaret": "18-|08-1978",
+  },
+  Object {
+    "cmd": Object {
+      "payload": 1,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "18-08-1978",
+    "withCaret": "18-0|8-1978",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "18-01-978",
+    "withCaret": "18-0|1-978",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "8",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-1978",
+    "withCaret": "18-08-|1978",
+  },
+  Object {
+    "cmd": Object {
+      "payload": 2,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 8,
+    "selectionStart": 8,
+    "value": "18-08-1978",
+    "withCaret": "18-08-19|78",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 8,
+    "selectionStart": 8,
+    "value": "18-08-198",
+    "withCaret": "18-08-19|8",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 8,
+    "selectionStart": 8,
+    "value": "18-08-19",
+    "withCaret": "18-08-19|",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 9,
+    "selectionStart": 9,
+    "value": "18-08-19",
+    "withCaret": "18-08-19|",
+  },
+]
+`;
