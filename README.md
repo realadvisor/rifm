@@ -1,6 +1,6 @@
 # RIFM - React Input Format & Mask
 
-Is a tiny (≈ 650-750b) component to transform any input component
+Is a tiny (≈ 800b) component to transform any input component
 into formatted or masked input.
 
 [Demo](https://istarkov.github.io/rifm/docs-readme)
@@ -9,7 +9,7 @@ into formatted or masked input.
 
 - Requires React 16.4+
 - Dependency free
-- Tiny (≈ 650b)
+- Tiny (≈ 800b)
 - Supports any [input](https://istarkov.github.io/rifm/docs-readme#material-ui).
 - Can mask input and format
 
