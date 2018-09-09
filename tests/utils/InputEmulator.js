@@ -60,6 +60,10 @@ export class InputEmulator extends React.Component<{|
     }
 
     if (cmd.type === 'DELETE') {
+      document.dispatchEvent(
+        new KeyboardEvent('keydown', { keyCode: 46, code: 'Delete' })
+      );
+
       this._state.value =
         this._state.value.substr(0, this._state.selectionStart) +
         this._state.value.substr(this._state.selectionStart + 1);
@@ -70,6 +74,10 @@ export class InputEmulator extends React.Component<{|
       );
       */
       this.props.onChange(makeEvtFromState(this._state));
+
+      document.dispatchEvent(
+        new KeyboardEvent('keyup', { keyCode: 46, code: 'Delete' })
+      );
     }
   };
 

@@ -4,7 +4,7 @@ import * as React from 'react';
 import TestRenderer from 'react-test-renderer';
 import { Value } from 'react-powerplug';
 import { Rifm } from '../src';
-import { numberFormat, currencyFormat2 } from '../docs/format';
+import { numberFormat, currencyFormat, currencyFormat2 } from '../docs/format';
 import {
   InputEmulator,
   renderInputState,
@@ -141,6 +141,67 @@ test('format with custom refuse works', async () => {
   exec({ type: 'MOVE_CARET', payload: -1 });
   exec({ type: 'BACKSPACE' });
   exec({ type: 'BACKSPACE' });
+
+  exec({ type: 'DELETE' });
+  exec({ type: 'DELETE' });
+  exec({ type: 'DELETE' });
+  exec({ type: 'DELETE' });
+
+  exec({ type: 'PUT_SYMBOL', payload: '123456789.12' });
+  exec({ type: 'MOVE_CARET', payload: -11 });
+  exec({ type: 'DELETE' });
+  exec({ type: 'DELETE' });
+  exec({ type: 'DELETE' });
+  exec({ type: 'DELETE' });
+  exec({ type: 'MOVE_CARET', payload: 1 });
+  exec({ type: 'BACKSPACE' });
+  exec({ type: 'MOVE_CARET', payload: 4 });
+  exec({ type: 'DELETE' });
+
+  expect(snaphot).toMatchSnapshot();
+});
+
+test('format with fixed point delete backspace', async () => {
+  const snaphot = [];
+  let getVal = null;
+  let execCommand = null;
+
+  TestRenderer.create(
+    <Value initial={''}>
+      {input => (
+        <Rifm
+          refuse={/[^\d.]/gi}
+          value={input.value}
+          onChange={input.set}
+          format={currencyFormat}
+        >
+          {({ value, onChange }) => (
+            <InputEmulator value={value} onChange={onChange}>
+              {(exec, val) => {
+                execCommand = exec;
+                getVal = val;
+                return null;
+              }}
+            </InputEmulator>
+          )}
+        </Rifm>
+      )}
+    </Value>
+  );
+
+  const exec = (cmd: InputCommand) => {
+    if (!execCommand || !getVal) {
+      throw Error('rifm is not initialized');
+    }
+
+    execCommand(cmd);
+    snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
+  };
+
+  exec({ type: 'PUT_SYMBOL', payload: '123' });
+  exec({ type: 'MOVE_CARET', payload: -2 });
+  exec({ type: 'BACKSPACE' });
+  exec({ type: 'DELETE' });
 
   expect(snaphot).toMatchSnapshot();
 });

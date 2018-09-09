@@ -324,6 +324,179 @@ Array [
     "value": "0.34",
     "withCaret": "|0.34",
   },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 1,
+    "selectionStart": 1,
+    "value": "0.34",
+    "withCaret": "0|.34",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "34",
+    "withCaret": "|34",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "4",
+    "withCaret": "|4",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 0,
+    "selectionStart": 0,
+    "value": "",
+    "withCaret": "|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": "123456789.12",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 14,
+    "selectionStart": 14,
+    "value": "123’456’789.12",
+    "withCaret": "123’456’789.12|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -11,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "123’456’789.12",
+    "withCaret": "123|’456’789.12",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "123’456’789.12",
+    "withCaret": "123’|456’789.12",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "12’356’789.12",
+    "withCaret": "12’3|56’789.12",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "1’236’789.12",
+    "withCaret": "1’23|6’789.12",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "123’789.12",
+    "withCaret": "123|’789.12",
+  },
+  Object {
+    "cmd": Object {
+      "payload": 1,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "123’789.12",
+    "withCaret": "123’|789.12",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 3,
+    "selectionStart": 3,
+    "value": "123’789.12",
+    "withCaret": "123|’789.12",
+  },
+  Object {
+    "cmd": Object {
+      "payload": 4,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 7,
+    "selectionStart": 7,
+    "value": "123’789.12",
+    "withCaret": "123’789|.12",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 8,
+    "selectionStart": 8,
+    "value": "12’378’912",
+    "withCaret": "12’378’9|12",
+  },
+]
+`;
+
+exports[`format with fixed point delete backspace 1`] = `
+Array [
+  Object {
+    "cmd": Object {
+      "payload": "123",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 4,
+    "selectionStart": 4,
+    "value": "1.23",
+    "withCaret": "1.23|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -2,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 2,
+    "selectionStart": 2,
+    "value": "1.23",
+    "withCaret": "1.|23",
+  },
+  Object {
+    "cmd": Object {
+      "type": "BACKSPACE",
+    },
+    "selectionEnd": 1,
+    "selectionStart": 1,
+    "value": "1.23",
+    "withCaret": "1|.23",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 2,
+    "selectionStart": 2,
+    "value": "1.23",
+    "withCaret": "1.|23",
+  },
 ]
 `;
 

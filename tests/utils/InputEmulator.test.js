@@ -11,6 +11,12 @@ test('Input emulator commands test', () => {
   let snaphot = [];
   let reactVal = '';
 
+  const keyDownHandler = jest.fn().mockReturnValue(null);
+  const keyUpHandler = jest.fn().mockReturnValue(null);
+
+  document.addEventListener('keydown', keyDownHandler);
+  document.addEventListener('keyup', keyUpHandler);
+
   TestRenderer.create(
     <Value
       initial=""
@@ -71,6 +77,8 @@ test('Input emulator commands test', () => {
   exec({ type: 'DELETE' });
 
   expect(reactVal).toEqual(getVal && getVal().value);
+  expect(keyDownHandler).toBeCalled();
+  expect(keyUpHandler).toBeCalled();
 
   expect(snaphot).toMatchSnapshot();
 });
