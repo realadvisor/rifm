@@ -24,7 +24,7 @@ export class Rifm extends React.Component<Props, State> {
     super(props);
     this.state = {
       value: props.value,
-      local: false,
+      local: true,
     };
   }
 
@@ -40,11 +40,12 @@ export class Rifm extends React.Component<Props, State> {
 
   _handleChange = (evt: SyntheticInputEvent<HTMLInputElement>) => {
     // FUTURE: use evt.nativeEvent.inputType for del event, see comments at onkeydown
+    const stateValue = this.state.value;
     let value = evt.target.value;
     const input = evt.target;
-    const op = value.length > this.props.value.length;
+    const op = value.length > stateValue.length;
     const del = this._del;
-    const noOp = this.props.value === this.props.format(value);
+    const noOp = stateValue === this.props.format(value);
 
     this.setState({ value, local: true }, () => {
       const { selectionStart } = input;
@@ -60,12 +61,7 @@ export class Rifm extends React.Component<Props, State> {
         del,
       };
 
-      if (
-        this.props.replace &&
-        this.props.replace(this.props.value) &&
-        op &&
-        !noOp
-      ) {
+      if (this.props.replace && this.props.replace(stateValue) && op && !noOp) {
         let start = -1;
         for (let i = 0; i !== before.length; ++i) {
           start = Math.max(start, value.indexOf(before[i], start + 1));
@@ -77,7 +73,13 @@ export class Rifm extends React.Component<Props, State> {
         value = `${value.substr(0, start)}${value.substr(start + 1)}`;
       }
 
-      this.props.onChange(this.props.format(value));
+      const fv = this.props.format(value);
+
+      if (stateValue === fv) {
+        this.setState({ value });
+      } else {
+        this.props.onChange(fv);
+      }
     });
   };
 

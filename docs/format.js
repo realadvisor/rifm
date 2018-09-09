@@ -17,19 +17,19 @@ export const negNumberFormat = (str: string) => {
   return r ? r.toLocaleString('en') : '';
 };
 
-export const currencyFormat = (str: string) => {
+export const currencyFormat = (str: string, isInitial?: boolean) => {
   const clean = str.replace(/[^\d.]+/gi, '');
 
   const beautify =
-    clean.length > 2
-      ? clean.indexOf('.') === -1
+    clean.indexOf('.') === -1
+      ? clean.length > 2 && isInitial !== true
         ? `${clean.substr(0, clean.length - 2)}.${clean.substr(-2)}`
-        : `${clean.split('.')[0]}.${clean.split('.')[1].substr(0, 2)}`
-      : clean;
+        : clean
+      : `${clean.split('.')[0]}.${clean.split('.')[1].substr(0, 2)}`;
 
   const r = parseFloat(beautify);
 
-  return r
+  return !Number.isNaN(r)
     ? r.toLocaleString('de-CH', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,

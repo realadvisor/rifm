@@ -4,7 +4,7 @@ import { Value } from 'react-powerplug';
 import { Rifm } from '../src';
 import { css } from 'emotion';
 
-const numberFormat = str => {
+const numberFormat = (str: string) => {
   const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
   return r ? r.toLocaleString('ch') : '';
 };
