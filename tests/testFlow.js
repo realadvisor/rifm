@@ -12,7 +12,12 @@ const numberFormat = (str: string) => {
 export const TestFlow = () => (
   <Value initial={''}>
     {text => (
-      <Rifm value={text.value} onChange={text.set} format={numberFormat}>
+      <Rifm
+        replace={undefined}
+        value={text.value}
+        onChange={text.set}
+        format={numberFormat}
+      >
         {({ value, onChange }) => (
           <input
             value={value}
