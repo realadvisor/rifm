@@ -255,6 +255,10 @@ Example of usage with [string-mask](https://github.com/the-darc/string-mask)
   </Value>
 </Playground>
 
+if replace attribute is defined input will try to skip refused symbols when reached,
+like in 2 examples above it skips '-' symbols.
+Or example below. Possibly this need additional prop for simplicity
+
 
 ## Masked Phone Input
 
@@ -265,7 +269,8 @@ Example of usage with
   <Value initial={''}>
     {text => (
       <Rifm
-        replace={v => v.length >= 14}
+        // do not jump after ) until see number before
+        replace={text.value.length < 6 && (/[^\\d]+/).test(text.value[3]) ? undefined : v => v.length >= 14}
         value={text.value}
         onChange={text.set}
         format={formatPhone}
