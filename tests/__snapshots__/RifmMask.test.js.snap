@@ -496,5 +496,34 @@ Array [
     "value": "18-08-19",
     "withCaret": "18-08-19|",
   },
+  Object {
+    "cmd": Object {
+      "payload": "78",
+      "type": "PUT_SYMBOL",
+    },
+    "selectionEnd": 10,
+    "selectionStart": 10,
+    "value": "18-08-1978",
+    "withCaret": "18-08-1978|",
+  },
+  Object {
+    "cmd": Object {
+      "payload": -5,
+      "type": "MOVE_CARET",
+    },
+    "selectionEnd": 5,
+    "selectionStart": 5,
+    "value": "18-08-1978",
+    "withCaret": "18-08|-1978",
+  },
+  Object {
+    "cmd": Object {
+      "type": "DELETE",
+    },
+    "selectionEnd": 6,
+    "selectionStart": 6,
+    "value": "18-08-1978",
+    "withCaret": "18-08-|1978",
+  },
 ]
 `;

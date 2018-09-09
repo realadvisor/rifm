@@ -139,7 +139,7 @@ export class Rifm extends React.Component<Props, State> {
       }
 
       // format usually looks better without this
-      if (this.props.replace && (_state.op || _state.del)) {
+      if (this.props.replace && (_state.op || (_state.del && !_state.di))) {
         while (
           value[start + 1] &&
           (this.props.refuse || /[^\d]+/).test(value[start + 1])

@@ -190,6 +190,9 @@ test('mask behaviour with delete', async () => {
   exec({ type: 'DELETE' });
   exec({ type: 'DELETE' });
   exec({ type: 'DELETE' });
+  exec({ type: 'PUT_SYMBOL', payload: '78' });
+  exec({ type: 'MOVE_CARET', payload: -5 });
+  exec({ type: 'DELETE' });
 
   expect(snaphot).toMatchSnapshot();
 });
