@@ -32,21 +32,25 @@ export class Rifm extends React.Component<Props, State> {
     before: string,
     input: HTMLInputElement,
     op: boolean,
+    del: boolean,
   |} = null;
+
+  _del: boolean = false;
 
   _handleChange = (evt: SyntheticInputEvent<HTMLInputElement>) => {
     let value = evt.target.value;
     const input = evt.target;
     const op = value.length > this.props.value.length;
+    const del = this._del;
     const noOp = this.props.value === this.props.format(value);
 
     this.setState({ value, local: true }, () => {
       const { selectionStart } = input;
-      const refuse = this.props.refuse || /[^\d]+/gi;
+      const refuse = this.props.refuse || /[^\d]+/g;
 
       const before = value.substr(0, selectionStart).replace(refuse, '');
 
-      this._state = { input, before, op };
+      this._state = { input, before, op, del: del && noOp };
 
       if (
         this.props.replace &&
@@ -69,6 +73,20 @@ export class Rifm extends React.Component<Props, State> {
     });
   };
 
+  // there is no way I found to distinguish in onChange
+  // event backspace or delete was called in some situations
+  _hKD = (evt: KeyboardEvent) => {
+    if (evt.code === 'Delete') {
+      this._del = true;
+    }
+  };
+
+  _hKU = (evt: KeyboardEvent) => {
+    if (evt.code === 'Delete') {
+      this._del = false;
+    }
+  };
+
   static getDerivedStateFromProps(props: Props, state: State) {
     return {
       value: state.local ? state.value : props.value,
@@ -86,6 +104,16 @@ export class Rifm extends React.Component<Props, State> {
     return children({ value, onChange: _handleChange });
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this._hKD);
+    document.removeEventListener('keyup', this._hKU);
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this._hKD);
+    document.addEventListener('keyup', this._hKU);
+  }
+
   componentDidUpdate() {
     const { _state } = this;
 
@@ -100,14 +128,14 @@ export class Rifm extends React.Component<Props, State> {
       if (this.props.replace && _state.op) {
         while (
           value[start + 1] &&
-          (this.props.refuse || /[^\d]+/gi).test(value[start + 1])
+          (this.props.refuse || /[^\d]+/).test(value[start + 1])
         ) {
           start += 1;
         }
       }
 
-      _state.input.selectionStart = start + 1;
-      _state.input.selectionEnd = start + 1;
+      _state.input.selectionStart = _state.input.selectionEnd =
+        start + 1 + (_state.del ? 1 : 0);
     }
 
     this._state = null;
