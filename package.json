@@ -8,7 +8,8 @@
   "module": "dist/rifm.esm.js",
   "files": [
     "dist",
-    "src"
+    "src",
+    "index.d.ts"
   ],
   "scripts": {
     "build:code": "rollup -c",
@@ -105,5 +106,6 @@
   "resolutions": {
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
-  }
+  },
+  "typings": "./index.d.ts"
 }
