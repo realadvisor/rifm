@@ -8,8 +8,7 @@
   "module": "dist/rifm.esm.js",
   "files": [
     "dist",
-    "src",
-    "index.d.ts"
+    "src"
   ],
   "scripts": {
     "build:code": "rollup -c",
