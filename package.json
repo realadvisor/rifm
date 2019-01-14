@@ -15,7 +15,8 @@
     "build:flow": "echo \"// @flow\n\nexport * from '../src'\" > dist/rifm.cjs.js.flow",
     "build": "rimraf dist && npm run build:code && npm run build:flow",
     "jest": "NODE_ICU_DATA=`yarn -s run node-full-icu-path` jest",
-    "test": "yarn jest && flow check && eslint ./",
+    "test": "eslint ./ && flow check && yarn test:ts && yarn jest",
+    "test:ts": "tslint -p tsconfig.json",
     "docz:build": "docz build",
     "docz:dev": "docz dev",
     "deploy:docz": "yarn docz:build && cp .docz/dist/index.html .docz/dist/404.html && gh-pages -d .docz/dist",
@@ -67,6 +68,7 @@
     "babel-jest": "^23.2.0",
     "docz": "^0.10.3",
     "docz-theme-default": "^0.10.3",
+    "dtslint": "^0.4.2",
     "emotion": "^9.2.4",
     "eslint": "^5.0.1",
     "eslint-plugin-flowtype": "^2.49.3",
@@ -90,7 +92,8 @@
     "rollup-plugin-babel": "^4.0.1",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-size-snapshot": "^0.6.1",
-    "string-mask": "^0.3.0"
+    "string-mask": "^0.3.0",
+    "tslint": "^5.12.0"
   },
   "peerDependencies": {
     "react": ">=16.4"
@@ -105,5 +108,6 @@
   "resolutions": {
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
-  }
+  },
+  "typings": "./src/index.d.ts"
 }
