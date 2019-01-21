@@ -10,7 +10,9 @@ type Props = {|
   refuse?: RegExp,
   children: ({
     value: string,
-    onChange: (evt: SyntheticInputEvent<HTMLInputElement>) => void,
+    onChange: (
+      evt: SyntheticInputEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => void,
   }) => React.Node,
 |};
 
@@ -38,7 +40,9 @@ export class Rifm extends React.Component<Props, State> {
 
   _del: boolean = false;
 
-  _handleChange = (evt: SyntheticInputEvent<HTMLInputElement>) => {
+  _handleChange = (
+    evt: SyntheticInputEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     // FUTURE: use evt.nativeEvent.inputType for del event, see comments at onkeydown
     const stateValue = this.state.value;
     let value = evt.target.value;
