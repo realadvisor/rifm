@@ -83,10 +83,10 @@
     "libphonenumber-js": "^1.2.15",
     "lint-staged": "^7.2.0",
     "prettier": "^1.10.2",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
     "react-powerplug": "^1.0.0-rc.1",
-    "react-test-renderer": "^16.5.0",
+    "react-test-renderer": "^16.8.2",
     "rimraf": "^2.6.1",
     "rollup": "^1.1.0",
     "rollup-plugin-babel": "^4.3.0",
@@ -96,7 +96,7 @@
     "tslint": "^5.12.0"
   },
   "peerDependencies": {
-    "react": ">=16.4"
+    "react": ">=16.8"
   },
   "dependencies": {
     "@babel/runtime": "^7.3.1"
@@ -106,8 +106,8 @@
     "url": "https://github.com/istarkov/rifm.git"
   },
   "resolutions": {
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react": "~16.8.0",
+    "react-dom": "~16.8.0"
   },
   "typings": "./src/index.d.ts"
 }
