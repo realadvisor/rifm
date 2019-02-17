@@ -75,7 +75,7 @@
     "eslint-plugin-jest": "^21.22.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
-    "flow-bin": "^0.90.0",
+    "flow-bin": "^0.93.0",
     "full-icu": "^1.2.1",
     "gh-pages": "^1.2.0",
     "husky": "^0.14.3",
