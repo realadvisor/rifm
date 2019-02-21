@@ -43,6 +43,14 @@ export class Rifm extends React.Component<Props, State> {
   _handleChange = (
     evt: SyntheticInputEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    if (process.env.NODE_ENV !== 'production') {
+      if (evt.target.type === 'number') {
+        console.error(
+          'Rifm does not support input type=number, use type=tel instead.'
+        );
+        return;
+      }
+    }
     // FUTURE: use evt.nativeEvent.inputType for del event, see comments at onkeydown
     const stateValue = this.state.value;
     let value = evt.target.value;
