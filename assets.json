@@ -1,13 +1,13 @@
 {
-  "vendors.js": "/static/js/vendors.11552358.js",
-  "vendors.js.map": "/static/js/vendors.cc076b8c7b4546f1c6e1.js.map",
-  "app.js": "/static/js/app.5c5cfbba.js",
-  "app.js.map": "/static/js/app.cc076b8c7b4546f1c6e1.js.map",
-  "docs-readme.js": "/static/js/docs-readme.fe034b79.js",
-  "docs-readme.js.map": "/static/js/docs-readme.cc076b8c7b4546f1c6e1.js.map",
-  "runtime~app.js": "/static/js/runtime~app.cc076b8c7b4546f1c6e1.js",
-  "runtime~app.js.map": "/static/js/runtime~app.cc076b8c7b4546f1c6e1.js.map",
-  "static/js/4.565dea2a.js": "/static/js/4.565dea2a.js",
-  "static/js/4.cc076b8c7b4546f1c6e1.js.map": "/static/js/4.cc076b8c7b4546f1c6e1.js.map",
-  "index.html": "/index.html"
+  "vendors.js": "/rifm/static/js/vendors.33b2d944.js",
+  "vendors.js.map": "/rifm/static/js/vendors.d3c406cc3f8fd38cfd20.js.map",
+  "app.js": "/rifm/static/js/app.82307224.js",
+  "app.js.map": "/rifm/static/js/app.d3c406cc3f8fd38cfd20.js.map",
+  "docs-readme.js": "/rifm/static/js/docs-readme.fe034b79.js",
+  "docs-readme.js.map": "/rifm/static/js/docs-readme.d3c406cc3f8fd38cfd20.js.map",
+  "runtime~app.js": "/rifm/static/js/runtime~app.d3c406cc3f8fd38cfd20.js",
+  "runtime~app.js.map": "/rifm/static/js/runtime~app.d3c406cc3f8fd38cfd20.js.map",
+  "static/js/4.565dea2a.js": "/rifm/static/js/4.565dea2a.js",
+  "static/js/4.d3c406cc3f8fd38cfd20.js.map": "/rifm/static/js/4.d3c406cc3f8fd38cfd20.js.map",
+  "index.html": "/rifm/index.html"
 }
