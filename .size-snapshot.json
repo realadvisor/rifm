@@ -4,6 +4,11 @@
     "minified": 2088,
     "gzipped": 935
   },
+  "dist/rifm.min.js": {
+    "bundled": 4751,
+    "minified": 2088,
+    "gzipped": 935
+  },
   "dist/rifm.cjs.js": {
     "bundled": 4227,
     "minified": 2005,
