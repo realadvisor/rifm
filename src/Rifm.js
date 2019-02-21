@@ -68,7 +68,10 @@ export class Rifm extends React.Component<Props, State> {
       if (this.props.replace && this.props.replace(stateValue) && op && !noOp) {
         let start = -1;
         for (let i = 0; i !== before.length; ++i) {
-          start = Math.max(start, value.indexOf(before[i], start + 1));
+          start = Math.max(
+            start,
+            value.toLowerCase().indexOf(before[i].toLowerCase(), start + 1)
+          );
         }
 
         const c = value.substr(start + 1).replace(refuse, '')[0];
@@ -141,7 +144,10 @@ export class Rifm extends React.Component<Props, State> {
 
       let start = -1;
       for (let i = 0; i !== _state.before.length; ++i) {
-        start = Math.max(start, value.indexOf(_state.before[i], start + 1));
+        start = Math.max(
+          start,
+          value.toLowerCase().indexOf(_state.before[i].toLowerCase(), start + 1)
+        );
       }
 
       // format usually looks better without this

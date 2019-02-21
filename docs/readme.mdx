@@ -7,31 +7,33 @@ name: Rifm
 Is a tiny (≈ 650-750b) component to transform any input component
 into formatted or masked input.
 
-import { Playground, PropsTable } from 'docz'
+import { Playground, PropsTable } from 'docz';
 import { Value } from 'react-powerplug';
-import StringMask from "string-mask";
+import StringMask from 'string-mask';
 import { Rifm } from '../src';
 // import { Rifm } from '../dist/rifm.esm';
 import {
-numberFormat,
-negNumberFormat,
-currencyFormat,
-currencyFormat2,
-dateFormat,
-dateFormatSym,
-formatPhone
+  numberFormat,
+  negNumberFormat,
+  currencyFormat,
+  currencyFormat2,
+  dateFormat,
+  dateFormatSym,
+  formatPhone,
 } from './format';
 import TextField from '@material-ui/core/TextField';
 import { css } from 'emotion';
 import { injectGlobal } from 'emotion/macro';
 
-<div data-run={(()=>{
-  injectGlobal(`
+<div
+  data-run={(() => {
+    injectGlobal(`
     .react-prism {
       overflow-x: auto;
     }
-  `)
-})()} />
+  `);
+  })()}
+/>
 
 In all examples:
 
@@ -40,6 +42,34 @@ In all examples:
 
 - formatters is placed [here](https://github.com/istarkov/rifm/blob/master/docs/format.js)
 
+## Lowercase format
+
+<Playground>
+  <Value initial={''}>
+    {text => (
+      <Rifm
+        value={text.value}
+        onChange={text.set}
+        refuse={/[^\w.]/gi}
+        format={str => str.toLowerCase()}
+      >
+        {({ value, onChange }) => (
+          <>
+            ALowercase{' '}
+            <input
+              maxLength="20"
+              value={value}
+              onChange={onChange}
+              className={css({textAlign:"right"})}
+              type="text"
+            />
+          </>
+        )}
+      </Rifm>
+    )}
+
+  </Value>
+</Playground>
 
 ## Simple input number format
 
@@ -72,7 +102,7 @@ In all examples:
 ```javascript
 // numberFormat from example above
 const numberFormat = (str: string) => {
-  const r = parseInt(str.replace(/[^\\d]+/gi, ''), 10);
+  const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
   return r ? r.toLocaleString('en') : '';
 };
 ```
@@ -80,14 +110,13 @@ const numberFormat = (str: string) => {
 to prevent parseInt overflow you can use `maxLength` on input field
 or write your own numberFormat.
 
-
 ## Input number format with fractional part
 
 <Playground>
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\\d.]/ig}
+        refuse={/[^\d.]/gi}
         value={text.value}
         onChange={text.set}
         format={currencyFormat}
@@ -98,7 +127,7 @@ or write your own numberFormat.
             <input
               value={value}
               onChange={onChange}
-              className={css({textAlign:"right"})}
+              className={css({ textAlign: 'right' })}
               type="tel"
             />
           </>
@@ -119,7 +148,7 @@ and allows you to split numbers.
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\\d.]/ig}
+        refuse={/[^\d.]/gi}
         value={text.value}
         onChange={text.set}
         format={currencyFormat2}
@@ -130,7 +159,7 @@ and allows you to split numbers.
             <input
               value={value}
               onChange={onChange}
-              className={css({textAlign:"right"})}
+              className={css({ textAlign: 'right' })}
               type="tel"
               onBlur={() => text.set(currencyFormat2(value, true))}
             />
@@ -151,7 +180,7 @@ It can work with 3rd party Inputs without pain
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\\d.]/ig}
+        refuse={/[^\d.]/gi}
         value={text.value}
         onChange={text.set}
         format={currencyFormat}
@@ -161,7 +190,7 @@ It can work with 3rd party Inputs without pain
             value={value}
             label={'Float'}
             onChange={onChange}
-            className={css({input: {textAlign:"right"}})}
+            className={css({ input: { textAlign: 'right' } })}
             type="tel"
           />
         )}
@@ -209,8 +238,8 @@ Use `replace` to inform field to use replace operation
   <Value initial={''}>
     {text => (
       <Rifm
-        replace={v => v.substr(9,10) !== '_'}
-        refuse={/[^\\d_]/ig}
+        replace={v => v.substr(9, 10) !== '_'}
+        refuse={/[^\d_]/gi}
         value={text.value}
         onChange={text.set}
         format={dateFormatSym}
@@ -231,21 +260,20 @@ Use `replace` to inform field to use replace operation
   </Value>
 </Playground>
 
-
 ## String-mask input
 
 Example of usage with [string-mask](https://github.com/the-darc/string-mask)
 
 <Playground>
-  <Value initial={""}>
+  <Value initial={''}>
     {v => (
       <Rifm
         replace={v => v.length >= 10}
         value={v.value}
         onChange={v.set}
         format={str => {
-          const mask = new StringMask("0000-0000-0000-0000");
-          const r = str.replace(/[^\\d]+/gi, "");
+          const mask = new StringMask('0000-0000-0000-0000');
+          const r = str.replace(/[^\d]+/gi, '');
           return mask.apply(r);
         }}
       >
@@ -259,7 +287,6 @@ if replace attribute is defined input will try to skip refused symbols when reac
 like in 2 examples above it skips '-' symbols.
 Or example below. Possibly this need additional prop for simplicity
 
-
 ## Masked Phone Input
 
 Example of usage with
@@ -270,7 +297,7 @@ Example of usage with
     {text => (
       <Rifm
         // do not jump after ) until see number before
-        replace={text.value.length < 6 && (/[^\\d]+/).test(text.value[3]) ? undefined : v => v.length >= 14}
+        replace={text.value.length < 6 && (/[^\d]+/).test(text.value[3]) ? undefined : v => v.length >= 14}
         value={text.value}
         onChange={text.set}
         format={formatPhone}
@@ -298,21 +325,21 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
     <Value initial={''}>
       {text => (
         <Rifm
-          refuse={/[^\\d.]/ig}
+          refuse={/[^\d.]/gi}
           value={text.value}
           onChange={text.set}
           format={currencyFormat}
         >
           {({ value, onChange }) => (
-          <>
-            Format{' '}
-            <input
-              value={value}
-              onChange={onChange}
-              className={css({textAlign:"right"})}
-              type="tel"
-            />
-          </>
+            <>
+              Format{' '}
+              <input
+                value={value}
+                onChange={onChange}
+                className={css({ textAlign: 'right' })}
+                type="tel"
+              />
+            </>
           )}
         </Rifm>
       )}
@@ -355,7 +382,7 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\\d-]/ig}
+        refuse={/[^\d-]/ig}
         value={text.value}
         onChange={text.set}
         format={negNumberFormat}
@@ -376,7 +403,6 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
 
   </Value>
 </Playground>
-
 
 ## Note!
 
