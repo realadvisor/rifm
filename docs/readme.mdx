@@ -11,7 +11,6 @@ import { Playground, PropsTable } from 'docz';
 import { Value } from 'react-powerplug';
 import StringMask from 'string-mask';
 import { Rifm } from '../src';
-// import { Rifm } from '../dist/rifm.esm';
 import {
   numberFormat,
   negNumberFormat,
@@ -50,12 +49,12 @@ In all examples:
       <Rifm
         value={text.value}
         onChange={text.set}
-        refuse={/[^\w.]/gi}
+        refuse={/$^/}
         format={str => str.toLowerCase()}
       >
         {({ value, onChange }) => (
           <>
-            ALowercase{' '}
+            Lowercase{' '}
             <input
               maxLength="20"
               value={value}
