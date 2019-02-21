@@ -41,6 +41,7 @@ In all examples:
 
 - formatters is placed [here](https://github.com/istarkov/rifm/blob/master/docs/format.js)
 
+
 ## Lowercase format
 
 <Playground>
@@ -403,6 +404,33 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
   </Value>
 </Playground>
 
-## Note!
+## Number input type
 
-Inputs with type `number` is not supported, use type `tel` instead.
+Input with type `number` is not supported, use type `tel` instead.
+
+<Playground>
+  <Value initial={''}>
+    {text => (
+      <Rifm
+        value={text.value}
+        onChange={text.set}
+        refuse={/$^/}
+        format={str => str}
+      >
+        {({ value, onChange }) => (
+          <>
+            Number input type{' '}
+            <input
+              maxLength="20"
+              value={value}
+              onChange={onChange}
+              className={css({textAlign:"right"})}
+              type="number"
+            />
+          </>
+        )}
+      </Rifm>
+    )}
+
+  </Value>
+</Playground>
