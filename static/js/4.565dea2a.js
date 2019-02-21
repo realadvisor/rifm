@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{"./.docz/app/imports.js":function(n,e,o){"use strict";o.r(e),o.d(e,"imports",function(){return r});var r={"docs/readme.mdx":function(){return Promise.all([o.e(0),o.e(2)]).then(o.bind(null,"./docs/readme.mdx"))}}}},0,[0,2]]);
+//# sourceMappingURL=4.d3c406cc3f8fd38cfd20.js.map
