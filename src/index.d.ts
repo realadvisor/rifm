@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-interface RifmRenderArgs<E> {
+export interface RifmRenderArgs<E> {
   value: string;
   onChange: React.ChangeEventHandler<E>;
 }
 
-interface RifmProps<E> {
+export interface RifmProps<E> {
   value: string;
   onChange: (str: string) => void;
   format: (str: string) => string;
