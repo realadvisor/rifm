@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import TestRenderer from 'react-test-renderer';
+import TestRenderer, { act } from 'react-test-renderer';
 import { Value } from 'react-powerplug';
 import { Rifm } from '../src';
 import { dateFormat } from '../docs/format.js';
@@ -49,7 +49,14 @@ test('mask behaviour', async () => {
       throw Error('rifm is not initialized');
     }
 
-    execCommand(cmd);
+    act(() => {
+      if (!execCommand) {
+        throw Error('rifm is not initialized');
+      }
+
+      execCommand(cmd);
+    });
+
     expect(stateValue_).toEqual(getVal().value);
     snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
@@ -134,7 +141,14 @@ test('mask behaviour with bad symbols', async () => {
       throw Error('rifm is not initialized');
     }
 
-    execCommand(cmd);
+    act(() => {
+      if (!execCommand) {
+        throw Error('rifm is not initialized');
+      }
+
+      execCommand(cmd);
+    });
+
     expect(stateValue_).toEqual(getVal().value);
     snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
@@ -184,7 +198,14 @@ test('mask behaviour with delete', async () => {
       throw Error('rifm is not initialized');
     }
 
-    execCommand(cmd);
+    act(() => {
+      if (!execCommand) {
+        throw Error('rifm is not initialized');
+      }
+
+      execCommand(cmd);
+    });
+
     expect(stateValue_).toEqual(getVal().value);
     snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
@@ -259,7 +280,14 @@ test('mask works even if state is not updated on equal vals', async () => {
       throw Error('rifm is not initialized');
     }
 
-    execCommand(cmd);
+    act(() => {
+      if (!execCommand) {
+        throw Error('rifm is not initialized');
+      }
+
+      execCommand(cmd);
+    });
+
     expect(stateValue_).toEqual(getVal().value);
     snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };

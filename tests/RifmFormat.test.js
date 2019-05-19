@@ -1,7 +1,8 @@
 // @flow
 
 import * as React from 'react';
-import TestRenderer from 'react-test-renderer';
+import TestRenderer, { act } from 'react-test-renderer';
+// import { act } from 'react-dom/test-utils';
 import { Value } from 'react-powerplug';
 import { Rifm } from '../src';
 import { numberFormat, currencyFormat, currencyFormat2 } from '../docs/format';
@@ -40,11 +41,17 @@ test('format works', async () => {
   );
 
   const exec = (cmd: InputCommand) => {
-    if (!execCommand || !getVal) {
+    act(() => {
+      if (!execCommand) {
+        throw Error('rifm is not initialized');
+      }
+
+      execCommand(cmd);
+    });
+
+    if (!getVal) {
       throw Error('rifm is not initialized');
     }
-
-    execCommand(cmd);
 
     expect(stateValue_).toEqual(getVal().value);
 
@@ -57,8 +64,10 @@ test('format works', async () => {
 
   exec({ type: 'PUT_SYMBOL', payload: '1' });
   exec({ type: 'PUT_SYMBOL', payload: '46' });
+
   exec({ type: 'MOVE_CARET', payload: -2 });
   exec({ type: 'PUT_SYMBOL', payload: '23' });
+
   exec({ type: 'MOVE_CARET', payload: 1 });
   exec({ type: 'PUT_SYMBOL', payload: '5' });
 
@@ -69,6 +78,7 @@ test('format works', async () => {
   exec({ type: 'BACKSPACE' });
   exec({ type: 'BACKSPACE' });
   exec({ type: 'MOVE_CARET', payload: 1 });
+
   exec({ type: 'BACKSPACE' });
   exec({ type: 'MOVE_CARET', payload: 100 });
   exec({ type: 'BACKSPACE' });
@@ -77,7 +87,6 @@ test('format works', async () => {
   exec({ type: 'BACKSPACE' });
   exec({ type: 'PUT_SYMBOL', payload: '1' });
   exec({ type: 'PUT_SYMBOL', payload: 'x' });
-
   expect(snaphot).toMatchSnapshot();
 });
 
@@ -119,7 +128,14 @@ test('format with custom refuse works', async () => {
       throw Error('rifm is not initialized');
     }
 
-    execCommand(cmd);
+    act(() => {
+      if (!execCommand) {
+        throw Error('rifm is not initialized');
+      }
+
+      execCommand(cmd);
+    });
+
     expect(stateValue_).toEqual(getVal().value);
     snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
@@ -217,7 +233,14 @@ test('format with fixed point delete backspace', async () => {
       throw Error('rifm is not initialized');
     }
 
-    execCommand(cmd);
+    act(() => {
+      if (!execCommand) {
+        throw Error('rifm is not initialized');
+      }
+
+      execCommand(cmd);
+    });
+
     expect(stateValue_).toEqual(getVal().value);
     snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
@@ -271,7 +294,13 @@ test('format works even if state is not updated on equal vals', async () => {
       throw Error('rifm is not initialized');
     }
 
-    execCommand(cmd);
+    act(() => {
+      if (!execCommand) {
+        throw Error('rifm is not initialized');
+      }
+
+      execCommand(cmd);
+    });
 
     expect(stateValue_).toEqual(getVal().value);
 
