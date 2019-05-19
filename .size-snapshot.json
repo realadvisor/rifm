@@ -1,21 +1,21 @@
 {
   "dist/rifm.umd.js": {
-    "bundled": 6488,
+    "bundled": 6543,
     "minified": 1639,
     "gzipped": 808
   },
   "dist/rifm.min.js": {
-    "bundled": 6274,
+    "bundled": 6329,
     "minified": 1498,
     "gzipped": 729
   },
   "dist/rifm.cjs.js": {
-    "bundled": 6046,
+    "bundled": 6101,
     "minified": 1565,
     "gzipped": 783
   },
   "dist/rifm.esm.js": {
-    "bundled": 5975,
+    "bundled": 6030,
     "minified": 1502,
     "gzipped": 737,
     "treeshaked": {
@@ -29,7 +29,7 @@
     }
   },
   "dist/rifm.esm.production.js": {
-    "bundled": 5689,
+    "bundled": 5744,
     "minified": 1287,
     "gzipped": 615,
     "treeshaked": {

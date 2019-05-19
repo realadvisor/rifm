@@ -46,10 +46,10 @@ export const Rifm = (props: Props) => {
       value === props.format(eventValue), // isNoOperation
     ];
 
-    // The main trick is to update underlying input with new value
-    // then get input.selectionStart after, then calculate selectionStart/End positions
-    // needed to get that positions afterwards
-    // then call props.onChange with masked/formatted value and set calulated positions
+    // The main trick is to update underlying input with non formatted value (= eventValue)
+    // that allows us to calculate right cursor position after formatting (see getCursorPosition)
+    // then we format new value and call props.onChange with masked/formatted value
+    // and finally we are able to set cursor position into right place
     refresh();
   };
 
