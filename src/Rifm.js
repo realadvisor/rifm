@@ -19,7 +19,9 @@ type Props = {|
 export const Rifm = (props: Props) => {
   const [, refresh] = React.useReducer(c => c + 1, 0);
   const valueRef = React.useRef(null);
-  const delRef = React.useRef(false);
+
+  // state of delete button see comments below about inputType support
+  const isDeleleteButtonDownRef = React.useRef(false);
 
   const onChange = (
     evt: SyntheticInputEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -34,18 +36,20 @@ export const Rifm = (props: Props) => {
     }
 
     const value = props.value;
-    const evtValue = evt.target.value;
+    const eventValue = evt.target.value;
 
     valueRef.current = [
-      evtValue, // target value
-      evt.target, // target itself
-      evtValue.length > value.length, // insert operation
-      delRef.current,
-      value === props.format(evtValue), // noOp
+      eventValue, // eventValue
+      evt.target, // input
+      eventValue.length > value.length, // isSizeIncreaseOperation
+      isDeleleteButtonDownRef.current, // isDeleleteButtonDown
+      value === props.format(eventValue), // isNoOperation
     ];
+
     // The main trick is to update underlying input with new value
-    // then get right input.selectionStart calculate there it should be
-    // and reupdate with masked/formatted value
+    // then get input.selectionStart after, then calculate selectionStart/End positions
+    // needed to get that positions afterwards
+    // then call props.onChange with masked/formatted value and set calulated positions
     refresh();
   };
 
@@ -54,45 +58,68 @@ export const Rifm = (props: Props) => {
   if (process.env.NODE_ENV === 'production' || typeof window !== 'undefined') {
     React.useLayoutEffect(() => {
       if (valueRef.current != null) {
-        let [evtValue, input, op, del, noOp] = valueRef.current;
+        let [
+          eventValue,
+          input,
+          isSizeIncreaseOperation,
+          isDeleleteButtonDown,
+          // No operation means that value itself hasn't been changed, BTW cursor, selection etc can be changed
+          isNoOperation,
+        ] = valueRef.current;
         valueRef.current = null;
 
         // this usually occurs on deleting special symbols like ' here 123'123.00
-        // in case of del cursor should move differently vs backspace
-        const delWasNoOp = del && noOp;
+        // in case of isDeleleteButtonDown cursor should move differently vs backspace
+        const deleteWasNoOp = isDeleleteButtonDown && isNoOperation;
 
         const refuse = props.refuse || /[^\d]+/g;
 
-        const before = evtValue
+        const valueBeforeSelectionStart = eventValue
           .substr(0, input.selectionStart)
           .replace(refuse, '')
           .toLowerCase();
 
+        // trying to find same symbols as in valueBeforeSelectionStart inside value.
+        // In just format mode (without mask) it will be needed cursor position - 1/
+        // It wroks because we assume that format doesn't change the order of non refused symbols and
+        // this assumption allows us to detect final cursor position:
+        // for example we had input = 12|4 (| cursor position) then user entered '3' symbol
+        // inputValue = 123|4 so valueBeforeSelectionStart = 123
+        // so cursor + 1 if we pass as val something formatted like 1'2'3'4 will be at
+        // right position 1'2'3|'4
         const getStart = val => {
           let start = -1;
-          for (let i = 0; i !== before.length; ++i) {
+          for (let i = 0; i !== valueBeforeSelectionStart.length; ++i) {
             start = Math.max(
               start,
-              val.toLowerCase().indexOf(before[i], start + 1)
+              val.toLowerCase().indexOf(valueBeforeSelectionStart[i], start + 1)
             );
           }
           return start;
         };
 
-        if (props.replace && props.replace(props.value) && op && !noOp) {
-          let start = getStart(evtValue);
+        if (
+          props.replace &&
+          props.replace(props.value) &&
+          isSizeIncreaseOperation &&
+          !isNoOperation
+        ) {
+          // Masking part, for masks if size of mask is above some value (props.replace checks that)
+          // we need to replace symbols instead of do nothing as like in format
+          let start = getStart(eventValue);
 
-          const c = evtValue.substr(start + 1).replace(refuse, '')[0];
-          start = evtValue.indexOf(c, start + 1);
+          const c = eventValue.substr(start + 1).replace(refuse, '')[0];
+          start = eventValue.indexOf(c, start + 1);
 
-          evtValue = `${evtValue.substr(0, start)}${evtValue.substr(
+          eventValue = `${eventValue.substr(0, start)}${eventValue.substr(
             start + 1
           )}`;
         }
 
-        const formattedValue = props.format(evtValue);
+        const formattedValue = props.format(eventValue);
 
         if (props.value === formattedValue) {
+          // if nothing changed for formatted value, just refresh so props.value will be used at render
           refresh();
         } else {
           props.onChange(formattedValue);
@@ -101,8 +128,13 @@ export const Rifm = (props: Props) => {
         return () => {
           let start = getStart(formattedValue);
 
-          // format usually looks better without this
-          if (props.replace && (op || (del && !delWasNoOp))) {
+          // Visually improves working with masked values,
+          // like cursor jumping over refused symbols
+          if (
+            props.replace &&
+            (isSizeIncreaseOperation ||
+              (isDeleleteButtonDown && !deleteWasNoOp))
+          ) {
             while (
               formattedValue[start + 1] &&
               refuse.test(formattedValue[start + 1])
@@ -112,7 +144,7 @@ export const Rifm = (props: Props) => {
           }
 
           input.selectionStart = input.selectionEnd =
-            start + 1 + (delWasNoOp ? 1 : 0);
+            start + 1 + (deleteWasNoOp ? 1 : 0);
         };
       }
     });
@@ -126,13 +158,13 @@ export const Rifm = (props: Props) => {
     // firefox track https://bugzilla.mozilla.org/show_bug.cgi?id=1447239
     const handleKeyDown = (evt: KeyboardEvent) => {
       if (evt.code === 'Delete') {
-        delRef.current = true;
+        isDeleleteButtonDownRef.current = true;
       }
     };
 
     const handleKeyUp = (evt: KeyboardEvent) => {
       if (evt.code === 'Delete') {
-        delRef.current = false;
+        isDeleleteButtonDownRef.current = false;
       }
     };
 
