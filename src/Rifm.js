@@ -79,20 +79,20 @@ export const Rifm = (props: Props) => {
           .replace(refuse, '')
           .toLowerCase();
 
-        // trying to find same symbols as in valueBeforeSelectionStart inside value.
-        // In just format mode (without mask) it will be needed cursor position - 1/
-        // It wroks because we assume that format doesn't change the order of non refused symbols and
-        // this assumption allows us to detect final cursor position:
-        // for example we had input = 12|4 (| cursor position) then user entered '3' symbol
-        // inputValue = 123|4 so valueBeforeSelectionStart = 123
-        // so cursor + 1 if we pass as val something formatted like 1'2'3'4 will be at
-        // right position 1'2'3|'4
-        const getStart = val => {
-          let start = -1;
+        // trying to find cursor position in formatted value having knowledge about valueBeforeSelectionStart
+        // This works because we assume that format doesn't change the order of non refused symbols.
+        // Imagine we have formatter which adds ' symbol between numbers, and by default we refuse all non numeric symbols
+        // for example we had input = 1'2|'4 (| means cursor position) then user entered '3' symbol
+        // inputValue = 1'23'|4 so valueBeforeSelectionStart = 123 and formatted value = 1'2'3'4
+        // calling getCursorPosition("1'2'3'4") will give us position after 3, 1'2'3|'4
+        // so for formatting just this function to determine cursor position after formatting is enough
+        // with masking we need to do some additional checks see `replace` below
+        const getCursorPosition = val => {
+          let start = 0;
           for (let i = 0; i !== valueBeforeSelectionStart.length; ++i) {
             start = Math.max(
               start,
-              val.toLowerCase().indexOf(valueBeforeSelectionStart[i], start + 1)
+              val.toLowerCase().indexOf(valueBeforeSelectionStart[i], start) + 1
             );
           }
           return start;
@@ -106,10 +106,10 @@ export const Rifm = (props: Props) => {
           isSizeIncreaseOperation &&
           !isNoOperation
         ) {
-          let start = getStart(eventValue);
+          let start = getCursorPosition(eventValue);
 
-          const c = eventValue.substr(start + 1).replace(refuse, '')[0];
-          start = eventValue.indexOf(c, start + 1);
+          const c = eventValue.substr(start).replace(refuse, '')[0];
+          start = eventValue.indexOf(c, start);
 
           eventValue = `${eventValue.substr(0, start)}${eventValue.substr(
             start + 1
@@ -126,7 +126,7 @@ export const Rifm = (props: Props) => {
         }
 
         return () => {
-          let start = getStart(formattedValue);
+          let start = getCursorPosition(formattedValue);
 
           // Visually improves working with masked values,
           // like cursor jumping over refused symbols
@@ -136,15 +136,15 @@ export const Rifm = (props: Props) => {
               (isDeleleteButtonDown && !deleteWasNoOp))
           ) {
             while (
-              formattedValue[start + 1] &&
-              refuse.test(formattedValue[start + 1])
+              formattedValue[start] &&
+              refuse.test(formattedValue[start])
             ) {
               start += 1;
             }
           }
 
           input.selectionStart = input.selectionEnd =
-            start + 1 + (deleteWasNoOp ? 1 : 0);
+            start + (deleteWasNoOp ? 1 : 0);
         };
       }
     });
