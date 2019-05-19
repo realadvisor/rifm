@@ -98,14 +98,14 @@ export const Rifm = (props: Props) => {
           return start;
         };
 
+        // Masking part, for masks if size of mask is above some value (props.replace checks that)
+        // we need to replace symbols instead of do nothing as like in format
         if (
           props.replace &&
           props.replace(props.value) &&
           isSizeIncreaseOperation &&
           !isNoOperation
         ) {
-          // Masking part, for masks if size of mask is above some value (props.replace checks that)
-          // we need to replace symbols instead of do nothing as like in format
           let start = getStart(eventValue);
 
           const c = eventValue.substr(start + 1).replace(refuse, '')[0];
