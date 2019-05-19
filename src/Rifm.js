@@ -24,6 +24,15 @@ export const Rifm = (props: Props) => {
   const onChange = (
     evt: SyntheticInputEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    if (process.env.NODE_ENV !== 'production') {
+      if (evt.target.type === 'number') {
+        console.error(
+          'Rifm does not support input type=number, use type=tel instead.'
+        );
+        return;
+      }
+    }
+
     const value = props.value;
     const evtValue = evt.target.value;
 
@@ -40,70 +49,81 @@ export const Rifm = (props: Props) => {
     refresh();
   };
 
-  React.useLayoutEffect(() => {
-    if (valueRef.current != null) {
-      let [evtValue, input, op, del, noOp] = valueRef.current;
-      valueRef.current = null;
+  // React prints warn on server in non production mode about useLayoutEffect usage
+  // in both cases it's noop
+  if (process.env.NODE_ENV === 'production' || typeof window !== 'undefined') {
+    React.useLayoutEffect(() => {
+      if (valueRef.current != null) {
+        let [evtValue, input, op, del, noOp] = valueRef.current;
+        valueRef.current = null;
 
-      // this usually occurs on deleting special symbols like ' here 123'123.00
-      // in case of del cursor should move differently vs backspace
-      const delWasNoOp = del && noOp;
+        // this usually occurs on deleting special symbols like ' here 123'123.00
+        // in case of del cursor should move differently vs backspace
+        const delWasNoOp = del && noOp;
 
-      const refuse = props.refuse || /[^\d]+/g;
+        const refuse = props.refuse || /[^\d]+/g;
 
-      const before = evtValue
-        .substr(0, input.selectionStart)
-        .replace(refuse, '')
-        .toLowerCase();
+        const before = evtValue
+          .substr(0, input.selectionStart)
+          .replace(refuse, '')
+          .toLowerCase();
 
-      const getStart = val => {
-        let start = -1;
-        for (let i = 0; i !== before.length; ++i) {
-          start = Math.max(
-            start,
-            val.toLowerCase().indexOf(before[i], start + 1)
-          );
-        }
-        return start;
-      };
-
-      if (props.replace && props.replace(props.value) && op && !noOp) {
-        let start = getStart(evtValue);
-
-        const c = evtValue.substr(start + 1).replace(refuse, '')[0];
-        start = evtValue.indexOf(c, start + 1);
-
-        evtValue = `${evtValue.substr(0, start)}${evtValue.substr(start + 1)}`;
-      }
-
-      const formattedValue = props.format(evtValue);
-
-      if (props.value === formattedValue) {
-        refresh();
-      } else {
-        props.onChange(formattedValue);
-      }
-
-      return () => {
-        let start = getStart(formattedValue);
-
-        // format usually looks better without this
-        if (props.replace && (op || (del && !delWasNoOp))) {
-          while (
-            formattedValue[start + 1] &&
-            refuse.test(formattedValue[start + 1])
-          ) {
-            start += 1;
+        const getStart = val => {
+          let start = -1;
+          for (let i = 0; i !== before.length; ++i) {
+            start = Math.max(
+              start,
+              val.toLowerCase().indexOf(before[i], start + 1)
+            );
           }
+          return start;
+        };
+
+        if (props.replace && props.replace(props.value) && op && !noOp) {
+          let start = getStart(evtValue);
+
+          const c = evtValue.substr(start + 1).replace(refuse, '')[0];
+          start = evtValue.indexOf(c, start + 1);
+
+          evtValue = `${evtValue.substr(0, start)}${evtValue.substr(
+            start + 1
+          )}`;
         }
 
-        input.selectionStart = input.selectionEnd =
-          start + 1 + (delWasNoOp ? 1 : 0);
-      };
-    }
-  });
+        const formattedValue = props.format(evtValue);
+
+        if (props.value === formattedValue) {
+          refresh();
+        } else {
+          props.onChange(formattedValue);
+        }
+
+        return () => {
+          let start = getStart(formattedValue);
+
+          // format usually looks better without this
+          if (props.replace && (op || (del && !delWasNoOp))) {
+            while (
+              formattedValue[start + 1] &&
+              refuse.test(formattedValue[start + 1])
+            ) {
+              start += 1;
+            }
+          }
+
+          input.selectionStart = input.selectionEnd =
+            start + 1 + (delWasNoOp ? 1 : 0);
+        };
+      }
+    });
+  }
 
   React.useEffect(() => {
+    // until https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType will be supported
+    // by all major browsers (now supported by: +chrome, +safari, ?edge, !firefox)
+    // there is no way I found to distinguish in onChange
+    // backspace or delete was called in some situations
+    // firefox track https://bugzilla.mozilla.org/show_bug.cgi?id=1447239
     const handleKeyDown = (evt: KeyboardEvent) => {
       if (evt.code === 'Delete') {
         delRef.current = true;

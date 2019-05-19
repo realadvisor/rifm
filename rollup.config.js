@@ -58,4 +58,16 @@ export default [
     external,
     plugins: [babel(getBabelOptions({ useESModules: true })), sizeSnapshot()],
   },
+
+  // to check esm production size
+  {
+    input,
+    output: { file: 'dist/rifm.esm.production.js', format: 'esm' },
+    external,
+    plugins: [
+      babel(getBabelOptions({ useESModules: true })),
+      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+      sizeSnapshot(),
+    ],
+  },
 ];
