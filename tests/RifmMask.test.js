@@ -5,14 +5,9 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { Value } from 'react-powerplug';
 import { Rifm } from '../src';
 import { dateFormat } from '../docs/format.js';
-import {
-  InputEmulator,
-  renderInputState,
-  type InputCommand,
-} from './utils/InputEmulator';
+import { InputEmulator, renderInputState, type InputCommand } from './utils/InputEmulator';
 
-test('mask behaviour', async () => {
-  const snaphot = [];
+const createExec = props => {
   let getVal = null;
   let execCommand = null;
   let stateValue_ = null;
@@ -23,12 +18,7 @@ test('mask behaviour', async () => {
         stateValue_ = input.value;
 
         return (
-          <Rifm
-            replace={v => v.length >= 10}
-            value={input.value}
-            onChange={input.set}
-            format={dateFormat}
-          >
+          <Rifm value={input.value} onChange={input.set} {...props}>
             {({ value, onChange }) => (
               <InputEmulator value={value} onChange={onChange}>
                 {(exec, val) => {
@@ -45,10 +35,6 @@ test('mask behaviour', async () => {
   );
 
   const exec = (cmd: InputCommand) => {
-    if (!execCommand || !getVal) {
-      throw Error('rifm is not initialized');
-    }
-
     act(() => {
       if (!execCommand) {
         throw Error('rifm is not initialized');
@@ -57,257 +43,126 @@ test('mask behaviour', async () => {
       execCommand(cmd);
     });
 
+    if (!getVal) {
+      throw Error('rifm is not initialized');
+    }
+
     expect(stateValue_).toEqual(getVal().value);
-    snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
+
+    return expect(renderInputState(getVal()));
   };
 
-  exec({ type: 'PUT_SYMBOL', payload: '1' });
-  exec({ type: 'PUT_SYMBOL', payload: '23' });
-  exec({ type: 'MOVE_CARET', payload: -1 });
-  exec({ type: 'PUT_SYMBOL', payload: '4' });
-  exec({ type: 'MOVE_CARET', payload: -100 }); // -100 at begin
+  return exec;
+};
 
-  exec({ type: 'PUT_SYMBOL', payload: '5' });
-  exec({ type: 'PUT_SYMBOL', payload: '6' });
-  exec({ type: 'MOVE_CARET', payload: +100 }); // 100 at end
-  exec({ type: 'PUT_SYMBOL', payload: '789' });
+test('mask behaviour', async () => {
+  const exec = createExec({
+    replace: v => v.length >= 10,
+    format: dateFormat,
+  });
+
+  exec({ type: 'PUT_SYMBOL', payload: '1' }).toMatchInlineSnapshot(`"1|"`);
+  exec({ type: 'PUT_SYMBOL', payload: '23' }).toMatchInlineSnapshot(`"12-3|"`);
+  exec({ type: 'MOVE_CARET', payload: -1 }).toMatchInlineSnapshot(`"12-|3"`);
+  exec({ type: 'PUT_SYMBOL', payload: '4' }).toMatchInlineSnapshot(`"12-4|3"`);
+  exec({ type: 'MOVE_CARET', payload: -100 }).toMatchInlineSnapshot(`"|12-43"`); // -100 at begin
+
+  exec({ type: 'PUT_SYMBOL', payload: '5' }).toMatchInlineSnapshot(`"5|1-24-3"`);
+  exec({ type: 'PUT_SYMBOL', payload: '6' }).toMatchInlineSnapshot(`"56-|12-43"`);
+  exec({ type: 'MOVE_CARET', payload: +100 }).toMatchInlineSnapshot(`"56-12-43|"`); // 100 at end
+  exec({ type: 'PUT_SYMBOL', payload: '789' }).toMatchInlineSnapshot(`"56-12-4378|"`);
+
   // now check that replace works
-  exec({ type: 'MOVE_CARET', payload: -4 });
-  exec({ type: 'PUT_SYMBOL', payload: '9' });
-  exec({ type: 'PUT_SYMBOL', payload: '8' });
-  exec({ type: 'PUT_SYMBOL', payload: '7' });
-  exec({ type: 'PUT_SYMBOL', payload: '6' });
+  exec({ type: 'MOVE_CARET', payload: -4 }).toMatchInlineSnapshot(`"56-12-|4378"`);
+  exec({ type: 'PUT_SYMBOL', payload: '9' }).toMatchInlineSnapshot(`"56-12-9|378"`);
+  exec({ type: 'PUT_SYMBOL', payload: '8' }).toMatchInlineSnapshot(`"56-12-98|78"`);
+  exec({ type: 'PUT_SYMBOL', payload: '7' }).toMatchInlineSnapshot(`"56-12-987|8"`);
+  exec({ type: 'PUT_SYMBOL', payload: '6' }).toMatchInlineSnapshot(`"56-12-9876|"`);
 
-  exec({ type: 'BACKSPACE' });
-  exec({ type: 'PUT_SYMBOL', payload: '6' });
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"56-12-987|"`);
 
-  exec({ type: 'MOVE_CARET', payload: -3 });
-  exec({ type: 'BACKSPACE' });
+  exec({ type: 'PUT_SYMBOL', payload: '6' }).toMatchInlineSnapshot(`"56-12-9876|"`);
 
-  exec({ type: 'PUT_SYMBOL', payload: '0' });
+  exec({ type: 'MOVE_CARET', payload: -3 }).toMatchInlineSnapshot(`"56-12-9|876"`);
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"56-12|-876"`);
 
-  exec({ type: 'BACKSPACE' });
-  exec({ type: 'PUT_SYMBOL', payload: '01' });
+  exec({ type: 'PUT_SYMBOL', payload: '0' }).toMatchInlineSnapshot(`"56-12-0|876"`);
 
-  exec({ type: 'PUT_SYMBOL', payload: '2345678' });
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"56-12|-876"`);
+  exec({ type: 'PUT_SYMBOL', payload: '01' }).toMatchInlineSnapshot(`"56-12-01|87"`);
 
-  exec({ type: 'MOVE_CARET', payload: -100 }); // -100 at begin
-  exec({ type: 'MOVE_CARET', payload: 2 });
+  exec({ type: 'PUT_SYMBOL', payload: '2345678' }).toMatchInlineSnapshot(`"56-12-0123|"`);
 
-  exec({ type: 'BACKSPACE' });
-  exec({ type: 'BACKSPACE' });
+  exec({ type: 'MOVE_CARET', payload: -100 }).toMatchInlineSnapshot(`"|56-12-0123"`); // -100 at begin
+  exec({ type: 'MOVE_CARET', payload: 2 }).toMatchInlineSnapshot(`"56|-12-0123"`);
 
-  exec({ type: 'PUT_SYMBOL', payload: '9876' });
-  exec({ type: 'PUT_SYMBOL', payload: '5' });
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"5|1-20-123"`);
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"|12-01-23"`);
 
-  expect(snaphot).toMatchSnapshot();
+  exec({ type: 'PUT_SYMBOL', payload: '9876' }).toMatchInlineSnapshot(`"98-76-|1201"`);
+  exec({ type: 'PUT_SYMBOL', payload: '5' }).toMatchInlineSnapshot(`"98-76-5|201"`);
 });
 
 test('mask behaviour with bad symbols', async () => {
-  const snaphot = [];
-  let getVal = null;
-  let execCommand = null;
-  let stateValue_ = null;
+  const exec = createExec({
+    replace: v => v.length >= 10,
+    format: dateFormat,
+  });
 
-  TestRenderer.create(
-    <Value initial={''}>
-      {input => {
-        stateValue_ = input.value;
-
-        return (
-          <Rifm
-            replace={v => v.length >= 10}
-            value={input.value}
-            onChange={input.set}
-            format={dateFormat}
-          >
-            {({ value, onChange }) => (
-              <InputEmulator value={value} onChange={onChange}>
-                {(exec, val) => {
-                  execCommand = exec;
-                  getVal = val;
-                  return null;
-                }}
-              </InputEmulator>
-            )}
-          </Rifm>
-        );
-      }}
-    </Value>
-  );
-
-  const exec = cmd => {
-    if (!execCommand || !getVal) {
-      throw Error('rifm is not initialized');
-    }
-
-    act(() => {
-      if (!execCommand) {
-        throw Error('rifm is not initialized');
-      }
-
-      execCommand(cmd);
-    });
-
-    expect(stateValue_).toEqual(getVal().value);
-    snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
-  };
-
-  exec({ type: 'PUT_SYMBOL', payload: '18081978' });
-  exec({ type: 'MOVE_CARET', payload: -4 });
-  exec({ type: 'PUT_SYMBOL', payload: 'x' });
-
-  expect(snaphot).toMatchSnapshot();
+  exec({ type: 'PUT_SYMBOL', payload: '18081978' }).toMatchInlineSnapshot(`"18-08-1978|"`);
+  exec({ type: 'MOVE_CARET', payload: -4 }).toMatchInlineSnapshot(`"18-08-|1978"`);
+  exec({ type: 'PUT_SYMBOL', payload: 'x' }).toMatchInlineSnapshot(`"18-08-|1978"`);
 });
 
 test('mask behaviour with delete', async () => {
-  const snaphot = [];
-  let getVal = null;
-  let execCommand = null;
-  let stateValue_ = null;
+  const exec = createExec({
+    replace: v => v.length >= 10,
+    format: dateFormat,
+  });
 
-  TestRenderer.create(
-    <Value initial={''}>
-      {input => {
-        stateValue_ = input.value;
+  exec({ type: 'PUT_SYMBOL', payload: '18081978' }).toMatchInlineSnapshot(`"18-08-1978|"`);
+  exec({ type: 'MOVE_CARET', payload: -4 }).toMatchInlineSnapshot(`"18-08-|1978"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"18-08-|978"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"18-08-|78"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"18-08-|8"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"18-08|"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"18-08|"`);
+  exec({ type: 'PUT_SYMBOL', payload: '1978' }).toMatchInlineSnapshot(`"18-08-1978|"`);
+  exec({ type: 'MOVE_CARET', payload: -100 }).toMatchInlineSnapshot(`"|18-08-1978"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"|80-81-978"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"|08-19-78"`);
+  exec({ type: 'PUT_SYMBOL', payload: '18' }).toMatchInlineSnapshot(`"18-|08-1978"`);
 
-        return (
-          <Rifm
-            replace={v => v.length >= 10}
-            value={input.value}
-            onChange={input.set}
-            format={dateFormat}
-          >
-            {({ value, onChange }) => (
-              <InputEmulator value={value} onChange={onChange}>
-                {(exec, val) => {
-                  execCommand = exec;
-                  getVal = val;
-                  return null;
-                }}
-              </InputEmulator>
-            )}
-          </Rifm>
-        );
-      }}
-    </Value>
-  );
-
-  const exec = cmd => {
-    if (!execCommand || !getVal) {
-      throw Error('rifm is not initialized');
-    }
-
-    act(() => {
-      if (!execCommand) {
-        throw Error('rifm is not initialized');
-      }
-
-      execCommand(cmd);
-    });
-
-    expect(stateValue_).toEqual(getVal().value);
-    snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
-  };
-
-  exec({ type: 'PUT_SYMBOL', payload: '18081978' });
-  exec({ type: 'MOVE_CARET', payload: -4 });
-  exec({ type: 'DELETE' });
-  exec({ type: 'DELETE' });
-  exec({ type: 'DELETE' });
-  exec({ type: 'DELETE' });
-  exec({ type: 'DELETE' });
-  exec({ type: 'PUT_SYMBOL', payload: '1978' });
-  exec({ type: 'MOVE_CARET', payload: -100 });
-  exec({ type: 'DELETE' });
-  exec({ type: 'DELETE' });
-  exec({ type: 'PUT_SYMBOL', payload: '18' });
-  exec({ type: 'MOVE_CARET', payload: 1 });
-  exec({ type: 'DELETE' });
-  exec({ type: 'PUT_SYMBOL', payload: '8' });
-  exec({ type: 'MOVE_CARET', payload: 2 });
-  exec({ type: 'DELETE' });
-  exec({ type: 'DELETE' });
-  exec({ type: 'DELETE' });
-  exec({ type: 'PUT_SYMBOL', payload: '78' });
-  exec({ type: 'MOVE_CARET', payload: -5 });
-  exec({ type: 'DELETE' });
-
-  expect(snaphot).toMatchSnapshot();
+  exec({ type: 'MOVE_CARET', payload: 1 }).toMatchInlineSnapshot(`"18-0|8-1978"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"18-0|1-978"`);
+  exec({ type: 'PUT_SYMBOL', payload: '8' }).toMatchInlineSnapshot(`"18-08-|1978"`);
+  exec({ type: 'MOVE_CARET', payload: 2 }).toMatchInlineSnapshot(`"18-08-19|78"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"18-08-19|8"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"18-08-19|"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"18-08-19|"`);
+  exec({ type: 'PUT_SYMBOL', payload: '78' }).toMatchInlineSnapshot(`"18-08-1978|"`);
+  exec({ type: 'MOVE_CARET', payload: -5 }).toMatchInlineSnapshot(`"18-08|-1978"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"18-08-|1978"`);
 });
 
 test('mask works even if state is not updated on equal vals', async () => {
-  const snaphot = [];
-  let getVal = null;
-  let execCommand = null;
-  let stateValue_ = null;
-  let callCount_ = 0;
+  const exec = createExec({
+    replace: v => v.length >= 10,
+    format: dateFormat,
+  });
 
-  TestRenderer.create(
-    <Value initial={''}>
-      {input => {
-        stateValue_ = input.value;
+  exec({ type: 'PUT_SYMBOL', payload: '18081978' }).toMatchInlineSnapshot(`"18-08-1978|"`);
+  exec({ type: 'MOVE_CARET', payload: -100 }).toMatchInlineSnapshot(`"|18-08-1978"`);
+  exec({ type: 'PUT_SYMBOL', payload: '18081978' }).toMatchInlineSnapshot(`"18-08-1978|"`);
+  exec({ type: 'MOVE_CARET', payload: -4 }).toMatchInlineSnapshot(`"18-08-|1978"`);
+  exec({ type: 'PUT_SYMBOL', payload: '1978' }).toMatchInlineSnapshot(`"18-08-1978|"`);
+  exec({ type: 'MOVE_CARET', payload: -4 }).toMatchInlineSnapshot(`"18-08-|1978"`);
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"18-08|-1978"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"18-08-|1978"`);
 
-        return (
-          <Rifm
-            replace={v => v.length >= 10}
-            value={input.value}
-            onChange={v => {
-              if (input.value !== v) {
-                callCount_++;
-                input.set(v);
-              }
-            }}
-            format={dateFormat}
-          >
-            {({ value, onChange }) => (
-              <InputEmulator value={value} onChange={onChange}>
-                {(exec, val) => {
-                  execCommand = exec;
-                  getVal = val;
-                  return null;
-                }}
-              </InputEmulator>
-            )}
-          </Rifm>
-        );
-      }}
-    </Value>
-  );
-
-  const exec = cmd => {
-    if (!execCommand || !getVal) {
-      throw Error('rifm is not initialized');
-    }
-
-    act(() => {
-      if (!execCommand) {
-        throw Error('rifm is not initialized');
-      }
-
-      execCommand(cmd);
-    });
-
-    expect(stateValue_).toEqual(getVal().value);
-    snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
-  };
-
-  exec({ type: 'PUT_SYMBOL', payload: '18081978' });
-  exec({ type: 'MOVE_CARET', payload: -100 });
-  exec({ type: 'PUT_SYMBOL', payload: '18081978' });
-  exec({ type: 'MOVE_CARET', payload: -4 });
-  exec({ type: 'PUT_SYMBOL', payload: '1978' });
-  exec({ type: 'MOVE_CARET', payload: -4 });
-  exec({ type: 'BACKSPACE' });
-  exec({ type: 'DELETE' });
-
-  exec({ type: 'PUT_SYMBOL', payload: 'x' });
-  exec({ type: 'MOVE_CARET', payload: -1 });
-  exec({ type: 'PUT_SYMBOL', payload: 'x' });
-  exec({ type: 'MOVE_CARET', payload: -1 });
-  exec({ type: 'PUT_SYMBOL', payload: '1' });
-
-  expect(callCount_).toEqual(1);
-
-  expect(snaphot).toMatchSnapshot();
+  exec({ type: 'PUT_SYMBOL', payload: 'x' }).toMatchInlineSnapshot(`"18-08-|1978"`);
+  exec({ type: 'MOVE_CARET', payload: -1 }).toMatchInlineSnapshot(`"18-08|-1978"`);
+  exec({ type: 'PUT_SYMBOL', payload: 'x' }).toMatchInlineSnapshot(`"18-08-|1978"`);
+  exec({ type: 'MOVE_CARET', payload: -1 }).toMatchInlineSnapshot(`"18-08|-1978"`);
+  exec({ type: 'PUT_SYMBOL', payload: '1' }).toMatchInlineSnapshot(`"18-08-1|978"`);
 });
