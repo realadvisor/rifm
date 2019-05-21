@@ -131,6 +131,8 @@ export const Rifm = (props: Props) => {
 
         // Visually improves working with masked values,
         // like cursor jumping over refused symbols
+        // as an example date mask: was "5|1-24-3" then user pressed "6"
+        // it becomes "56-|12-43" with this code, and "56|-12-43" without
         if (
           props.replace &&
           (isSizeIncreaseOperation || (isDeleleteButtonDown && !deleteWasNoOp))
