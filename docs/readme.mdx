@@ -41,7 +41,7 @@ In all examples:
 
 - formatters is placed [here](https://github.com/istarkov/rifm/blob/master/docs/format.js)
 
-## Lowercase format
+## Lowercasse format
 
 <Playground>
   <Value initial={''}>
@@ -49,7 +49,7 @@ In all examples:
       <Rifm
         value={text.value}
         onChange={text.set}
-        refuse={/$^/}
+        accept={/./g}
         format={str => str.toLowerCase()}
       >
         {({ value, onChange }) => (
@@ -115,10 +115,10 @@ or write your own numberFormat.
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\d.]/gi}
         value={text.value}
         onChange={text.set}
         format={currencyFormat}
+        accept={/[\d.]/gi}
       >
         {({ value, onChange }) => (
           <>
@@ -136,9 +136,9 @@ or write your own numberFormat.
   </Value>
 </Playground>
 
-By default all non digit symbols are refused to enter,
-property `refuse` allows you to change this behaviour.
-In later example "." is also added to `refuse` so input will accept `.`
+By default only digit symbols are accepted,
+property `accept` allows you to change this behaviour.
+In later example "." is also added to `accept` so input will accept `.`
 and allows you to split numbers.
 
 ## Input number format with variable fractional part
@@ -147,7 +147,7 @@ and allows you to split numbers.
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\d.]/gi}
+        accept={/[\d.]/gi}
         value={text.value}
         onChange={text.set}
         format={currencyFormat2}
@@ -179,7 +179,7 @@ It can work with 3rd party Inputs without pain
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\d.]/gi}
+        accept={/[\d.]/gi}
         value={text.value}
         onChange={text.set}
         format={currencyFormat}
@@ -238,7 +238,7 @@ Use `replace` to inform field to use replace operation
     {text => (
       <Rifm
         replace={v => v.substr(9, 10) !== '_'}
-        refuse={/[^\d_]/gi}
+        accept={/[\d_]/gi}
         value={text.value}
         onChange={text.set}
         format={dateFormatSym}
@@ -324,7 +324,7 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
     <Value initial={''}>
       {text => (
         <Rifm
-          refuse={/[^\d.]/gi}
+          accept={/[\d.]/g}
           value={text.value}
           onChange={text.set}
           format={currencyFormat}
@@ -381,7 +381,7 @@ Check that it will work with new async React [see strict-mode](https://reactjs.o
   <Value initial={''}>
     {text => (
       <Rifm
-        refuse={/[^\d-]/ig}
+        accept={/[\d-]/g}
         value={text.value}
         onChange={text.set}
         format={negNumberFormat}
@@ -413,7 +413,6 @@ Input with type `number` is not supported, use type `tel` instead.
       <Rifm
         value={text.value}
         onChange={text.set}
-        refuse={/$^/}
         format={str => str}
       >
         {({ value, onChange }) => (

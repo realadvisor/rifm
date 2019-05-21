@@ -7,7 +7,7 @@ type Props = {|
   onChange: string => void,
   format: (str: string) => string,
   replace?: string => boolean,
-  refuse?: RegExp,
+  accept?: RegExp,
   children: ({
     value: string,
     onChange: (
@@ -72,15 +72,15 @@ export const Rifm = (props: Props) => {
         // in case of isDeleleteButtonDown cursor should move differently vs backspace
         const deleteWasNoOp = isDeleleteButtonDown && isNoOperation;
 
-        const refuse = props.refuse || /[^\d]+/g;
+        // Create string from only accepted symbols
+        const clean = str => (str.match(props.accept || /\d/g) || []).join('');
 
-        const valueBeforeSelectionStart = eventValue
-          .substr(0, input.selectionStart)
-          .replace(refuse, '')
-          .toLowerCase();
+        const valueBeforeSelectionStart = clean(
+          eventValue.substr(0, input.selectionStart)
+        ).toLowerCase();
 
         // trying to find cursor position in formatted value having knowledge about valueBeforeSelectionStart
-        // This works because we assume that format doesn't change the order of non refused symbols.
+        // This works because we assume that format doesn't change the order of accepted symbols.
         // Imagine we have formatter which adds ' symbol between numbers, and by default we refuse all non numeric symbols
         // for example we had input = 1'2|'4 (| means cursor position) then user entered '3' symbol
         // inputValue = 1'23'|4 so valueBeforeSelectionStart = 123 and formatted value = 1'2'3'4
@@ -108,7 +108,7 @@ export const Rifm = (props: Props) => {
         ) {
           let start = getCursorPosition(eventValue);
 
-          const c = eventValue.substr(start).replace(refuse, '')[0];
+          const c = clean(eventValue.substr(start))[0];
           start = eventValue.indexOf(c, start);
 
           eventValue = `${eventValue.substr(0, start)}${eventValue.substr(
@@ -135,10 +135,7 @@ export const Rifm = (props: Props) => {
             (isSizeIncreaseOperation ||
               (isDeleleteButtonDown && !deleteWasNoOp))
           ) {
-            while (
-              formattedValue[start] &&
-              refuse.test(formattedValue[start])
-            ) {
+            while (formattedValue[start] && !clean(formattedValue[start])) {
               start += 1;
             }
           }
