@@ -135,7 +135,10 @@ export const Rifm = (props: Props) => {
             (isSizeIncreaseOperation ||
               (isDeleleteButtonDown && !deleteWasNoOp))
           ) {
-            while (formattedValue[start] && !clean(formattedValue[start])) {
+            while (
+              formattedValue[start] &&
+              clean(formattedValue[start]) === ''
+            ) {
               start += 1;
             }
           }
