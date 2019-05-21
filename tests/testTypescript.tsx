@@ -12,6 +12,7 @@ const TestFlow = () => (
   <Value initial={''}>
     {text => (
       <Rifm
+        accept={/a/gi}
         replace={undefined}
         value={text.value}
         onChange={text.set}
