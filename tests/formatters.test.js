@@ -12,8 +12,6 @@ test('currencyFormat', async () => {
 
   for (let i = 0; i != 1000; ++i) {
     const val = prng() * i;
-    expect(currencyFormat(currencyFormat(`${val}`, true))).toEqual(
-      currencyFormat(`${val}`, true)
-    );
+    expect(currencyFormat(currencyFormat(`${val}`, true))).toEqual(currencyFormat(`${val}`, true));
   }
 });
