@@ -12,7 +12,7 @@ const Example = () => {
   const [capitalized, setCapitalized] = React.useState('');
 
   return (
-    <>
+    <React.Fragment>
       <div>Lower case</div>
       <Rifm
         refuse={/$^/}
@@ -42,7 +42,7 @@ const Example = () => {
       >
         {renderInput}
       </Rifm>
-    </>
+    </React.Fragment>
   );
 };
 
