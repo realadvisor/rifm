@@ -4,7 +4,12 @@ import { Rifm } from 'rifm';
 
 const renderInput = ({ value, onChange }) => (
   // type=number is not allowed
-  <input type="tel" value={value} onChange={onChange} />
+  <input
+    type="tel"
+    style={{ textAlign: 'right' }}
+    value={value}
+    onChange={onChange}
+  />
 );
 
 // To prevent parseInt overflow you can use `maxLength` on input field
