@@ -148,4 +148,11 @@ const Example = () => {
   );
 };
 
-ReactDOM.render(<Example />, document.getElementById('root'));
+if (typeof document !== 'undefined') {
+  const root = document.getElementById('root');
+  if (root) {
+    ReactDOM.render(<Example />, root);
+  }
+}
+
+export default Example;
