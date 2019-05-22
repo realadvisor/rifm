@@ -71,7 +71,8 @@
             "info"
           ]
         }
-      ]
+      ],
+      "react/prop-types": "off"
     }
   },
   "devDependencies": {
