@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export const EmbedCodesandbox = ({ href }) => {
+export const EmbedCodesandbox = ({ title, href }) => {
   const iframeStyle = {
     width: '100%',
     height: 500,
@@ -11,7 +11,7 @@ export const EmbedCodesandbox = ({ href }) => {
   return (
     <iframe
       src={`https://codesandbox.io/embed/${href}?fontsize=14`}
-      title="istarkob/rifm: case-enforcement"
+      title={title}
       style={iframeStyle}
       sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
     />
