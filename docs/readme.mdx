@@ -11,15 +11,7 @@ import { Playground, PropsTable } from 'docz';
 import { Value } from 'react-powerplug';
 import StringMask from 'string-mask';
 import { Rifm } from '../src';
-import {
-  numberFormat,
-  negNumberFormat,
-  currencyFormat,
-  currencyFormat2,
-  dateFormat,
-  dateFormatSym,
-  formatPhone,
-} from './format';
+import { currencyFormat, dateFormat, formatPhone } from './format';
 import TextField from '@material-ui/core/TextField';
 import { css } from 'emotion';
 import { injectGlobal } from 'emotion/macro';
@@ -52,6 +44,14 @@ or write your own numberFormat.
   href='github/istarkov/rifm/tree/master/codesandboxes/pages/number-format'
 />
 
+## Date format
+
+<EmbedCodesandbox
+  title="istarkob/rifm: date-format"
+  href='github/istarkov/rifm/tree/master/codesandboxes/pages/date-format'
+/>
+
+
 ## Material UI
 
 It can work with 3rd party Inputs without pain
@@ -73,67 +73,6 @@ It can work with 3rd party Inputs without pain
             className={css({ input: { textAlign: 'right' } })}
             type="tel"
           />
-        )}
-      </Rifm>
-    )}
-  </Value>
-</Playground>
-
-## Masked date input
-
-Mask mostly the same as format, the difference that at some moment
-when you enter symbols replace operation used instead of insert
-for example when field value reached maximum length
-
-Use `replace` to inform field to use replace operation
-
-<Playground>
-  <Value initial={'18-08-1978'}>
-    {text => (
-      <Rifm
-        replace={v => v.length >= 10}
-        value={text.value}
-        onChange={text.set}
-        format={dateFormat}
-      >
-        {({ value, onChange }) => (
-          <>
-            Date{' '}
-            <input
-              placeholder="dd-mm-yyyy"
-              value={value}
-              onChange={onChange}
-              type="tel"
-            />
-          </>
-        )}
-      </Rifm>
-    )}
-  </Value>
-</Playground>
-
-## Masked date input 2
-
-<Playground>
-  <Value initial={''}>
-    {text => (
-      <Rifm
-        replace={v => v.substr(9, 10) !== '_'}
-        accept={/[\d_]/gi}
-        value={text.value}
-        onChange={text.set}
-        format={dateFormatSym}
-      >
-        {({ value, onChange }) => (
-          <>
-            Date{' '}
-            <input
-              placeholder="__-__-____"
-              value={value}
-              onChange={onChange}
-              type="tel"
-            />
-          </>
         )}
       </Rifm>
     )}
