@@ -40,7 +40,7 @@ const Example = () => {
     <React.Fragment>
       <div>Date format</div>
       <Rifm
-        refuse={/[^\d-]+/g}
+        refuse={/[^\d]+/g}
         format={formatDate}
         value={formatDate(formatted)}
         onChange={setFormatted}
@@ -50,7 +50,7 @@ const Example = () => {
 
       <div>Date format with mask</div>
       <Rifm
-        refuse={/[^\d-]+/g}
+        refuse={/[^\d]+/g}
         format={formatDateWithMask}
         value={formatDateWithMask(masked)}
         onChange={setMasked}
