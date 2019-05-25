@@ -50,7 +50,7 @@ const parseNumber = string => (string.match(numberAccept) || []).join('');
 
 const floor = (number, scale) => {
   const ratio = 10 ** scale;
-  return Math.floor((number * ratio) / ratio);
+  return Math.floor(number * ratio) / ratio;
 };
 
 const formatNumber = (string, scale, fixed) => {
