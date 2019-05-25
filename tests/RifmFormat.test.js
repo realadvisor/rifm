@@ -1,6 +1,6 @@
 // @flow
 
-import { numberFormat, currencyFormat, currencyFormat2 } from '../docs/format';
+import { numberFormat, currencyFormat, currencyFormat2 } from './format';
 import { createExec } from './utils/exec';
 
 test('format works', async () => {

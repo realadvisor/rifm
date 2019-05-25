@@ -1,6 +1,6 @@
 // @flow
 
-import { dateFormat } from '../docs/format.js';
+import { dateFormat } from './format.js';
 import { createExec } from './utils/exec';
 
 test('mask behaviour', async () => {
