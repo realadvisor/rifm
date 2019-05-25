@@ -4,12 +4,7 @@ import { Rifm } from 'rifm';
 import { AsYouType } from 'libphonenumber-js';
 
 const renderInput = ({ value, onChange }) => (
-  <input
-    type="tel"
-    placeholder="dd-mm-yyyy"
-    value={value}
-    onChange={onChange}
-  />
+  <input type="tel" value={value} onChange={onChange} />
 );
 
 const parseDigits = string => (string.match(/\d+/g) || []).join('');
