@@ -41,6 +41,7 @@ const Example = () => {
       <div>Date format</div>
       <Rifm
         refuse={/[^\d]+/g}
+        replace={v => 10 <= v.length}
         format={formatDate}
         value={formatDate(formatted)}
         onChange={setFormatted}
@@ -51,6 +52,7 @@ const Example = () => {
       <div>Date format with mask</div>
       <Rifm
         refuse={/[^\d]+/g}
+        replace={v => v.substr(9, 10) !== '_'}
         format={formatDateWithMask}
         value={formatDateWithMask(masked)}
         onChange={setMasked}
