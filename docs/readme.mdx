@@ -11,7 +11,7 @@ import { Playground, PropsTable } from 'docz';
 import { Value } from 'react-powerplug';
 import StringMask from 'string-mask';
 import { Rifm } from '../src';
-import { currencyFormat, dateFormat, formatPhone } from './format';
+import { currencyFormat, dateFormat } from './format';
 import TextField from '@material-ui/core/TextField';
 import { css } from 'emotion';
 import { injectGlobal } from 'emotion/macro';
@@ -46,11 +46,26 @@ or write your own numberFormat.
 
 ## Date format
 
+Mask mostly the same as format, the difference that at some moment
+when you enter symbols replace operation used instead of insert
+for example when field value reached maximum length.
+
+Use `replace` to inform field to use replace operation.
+
 <EmbedCodesandbox
   title="istarkob/rifm: date-format"
   href='github/istarkov/rifm/tree/master/codesandboxes/pages/date-format'
 />
 
+## Phone format
+
+Example of usage with
+[libphonenumber-js](https://github.com/catamphetamine/libphonenumber-js) formatter
+
+<EmbedCodesandbox
+  title="istarkob/rifm: phone-format"
+  href='github/istarkov/rifm/tree/master/codesandboxes/pages/phone-format'
+/>
 
 ## Material UI
 
@@ -105,33 +120,6 @@ Example of usage with [string-mask](https://github.com/the-darc/string-mask)
 if replace attribute is defined input will try to skip refused symbols when reached,
 like in 2 examples above it skips '-' symbols.
 Or example below. Possibly this need additional prop for simplicity
-
-## Masked Phone Input
-
-Example of usage with
-[libphonenumber-js](https://github.com/catamphetamine/libphonenumber-js) formatter
-
-<Playground>
-  <Value initial={''}>
-    {text => (
-      <Rifm
-        // do not jump after ) until see number before
-        replace={text.value.length < 6 && (/[^\d]+/).test(text.value[3]) ? undefined : v => v.length >= 14}
-        value={text.value}
-        onChange={text.set}
-        format={formatPhone}
-      >
-        {({ value, onChange }) => (
-          <>
-            Phone{' '}+1{' '}
-            <input  value={value} onChange={onChange} type="tel"/>
-          </>
-        )}
-      </Rifm>
-    )}
-
-  </Value>
-</Playground>
 
 ## React async ready
 
