@@ -81,14 +81,14 @@ const Index = () => {
         </P>
       </section>
 
-      <H2>Case enforcement</H2>
+      <H2 id="case-enforcement">Case enforcement</H2>
 
       <EmbedCodesandbox
         title="istarkob/rifm: case-enforcement"
         href="github/istarkov/rifm/tree/master/pages/case-enforcement"
       />
 
-      <H2> Number format</H2>
+      <H2 id="number-format">Number format</H2>
 
       <P>
         Note: to prevent parseInt overflow you can use <code>maxLength</code> on
@@ -100,7 +100,7 @@ const Index = () => {
         href="github/istarkov/rifm/tree/master/pages/number-format"
       />
 
-      <H2>Date format</H2>
+      <H2 id="date-format">Date format</H2>
 
       <P>
         Mask mostly the same as format, the difference that at some moment when
@@ -117,7 +117,7 @@ const Index = () => {
         href="github/istarkov/rifm/tree/master/pages/date-format"
       />
 
-      <H2>Phone format</H2>
+      <H2 id="phone-format">Phone format</H2>
 
       <P>
         Example of usage with{' '}
@@ -132,7 +132,7 @@ const Index = () => {
         href="github/istarkov/rifm/tree/master/pages/phone-format"
       />
 
-      <H2>Format Material UI text field</H2>
+      <H2 id="material-ui">Format Material UI text field</H2>
 
       <P>It can work with 3rd party Inputs without pain</P>
 
