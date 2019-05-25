@@ -1,5 +1,5 @@
 import Alea from 'alea';
-import { currencyFormat } from '../docs/format';
+import { currencyFormat } from './format';
 
 test('currencyFormat', async () => {
   expect(currencyFormat('0', true)).toEqual('0.00');
