@@ -17,7 +17,7 @@
     "jest": "NODE_ICU_DATA=`yarn -s run node-full-icu-path` jest",
     "test": "eslint ./ && flow check && yarn test:ts && yarn jest",
     "test:ts": "tslint -p tsconfig.json",
-    "deploy": "yarn build && yarn export && gh-pages -d out",
+    "deploy": "yarn next build && yarn next export && gh-pages -d out",
     "precommit": "lint-staged",
     "prepublishOnly": "yarn test && yarn build"
   },
