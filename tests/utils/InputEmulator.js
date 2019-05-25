@@ -18,68 +18,78 @@ type InputState = {
   selectionStart: number,
   selectionEnd: number,
 };
-export class InputEmulator extends React.Component<{|
+
+type Props = {|
   value: string,
   onChange: (evt: SyntheticInputEvent<HTMLInputElement>) => void,
   children: ((cmd: InputCommand) => void, () => InputState) => React.Node,
-|}> {
-  _state: InputState = {
-    value: this.props.value,
-    selectionStart: 0,
-    selectionEnd: 0,
-  };
+|};
 
-  _execCommand = (cmd: InputCommand) => {
-    if (cmd.type === 'PUT_SYMBOL') {
-      this._state.value =
-        this._state.value.substr(0, this._state.selectionStart) +
-        cmd.payload +
-        this._state.value.substr(this._state.selectionStart);
-      this._state.selectionStart += cmd.payload.length;
-      this._state.selectionEnd = this._state.selectionStart;
+export class InputEmulator extends React.Component<Props> {
+  _execCommand: (cmd: InputCommand) => void;
+  _state: InputState;
 
-      this.props.onChange(makeEvtFromState(this._state));
-    }
-    if (cmd.type === 'MOVE_CARET') {
-      this._state.selectionStart = this._state.selectionEnd = Math.min(
-        Math.max(this._state.selectionStart + cmd.payload, 0),
-        this._state.value.length
-      );
-    }
+  constructor(props: Props) {
+    super(props);
 
-    if (cmd.type === 'BACKSPACE') {
-      this._state.value =
-        this._state.value.substr(0, this._state.selectionStart - 1) +
-        this._state.value.substr(this._state.selectionStart);
+    this._state = {
+      value: this.props.value,
+      selectionStart: 0,
+      selectionEnd: 0,
+    };
 
-      this._state.selectionStart = this._state.selectionEnd = Math.min(
-        Math.max(this._state.selectionStart - 1, 0),
-        this._state.value.length
-      );
-      this.props.onChange(makeEvtFromState(this._state));
-    }
+    this._execCommand = (cmd: InputCommand) => {
+      if (cmd.type === 'PUT_SYMBOL') {
+        this._state.value =
+          this._state.value.substr(0, this._state.selectionStart) +
+          cmd.payload +
+          this._state.value.substr(this._state.selectionStart);
+        this._state.selectionStart += cmd.payload.length;
+        this._state.selectionEnd = this._state.selectionStart;
 
-    if (cmd.type === 'DELETE') {
-      document.dispatchEvent(
-        new KeyboardEvent('keydown', { keyCode: 46, code: 'Delete' })
-      );
+        this.props.onChange(makeEvtFromState(this._state));
+      }
+      if (cmd.type === 'MOVE_CARET') {
+        this._state.selectionStart = this._state.selectionEnd = Math.min(
+          Math.max(this._state.selectionStart + cmd.payload, 0),
+          this._state.value.length
+        );
+      }
 
-      this._state.value =
-        this._state.value.substr(0, this._state.selectionStart) +
-        this._state.value.substr(this._state.selectionStart + 1);
-      /*
+      if (cmd.type === 'BACKSPACE') {
+        this._state.value =
+          this._state.value.substr(0, this._state.selectionStart - 1) +
+          this._state.value.substr(this._state.selectionStart);
+
+        this._state.selectionStart = this._state.selectionEnd = Math.min(
+          Math.max(this._state.selectionStart - 1, 0),
+          this._state.value.length
+        );
+        this.props.onChange(makeEvtFromState(this._state));
+      }
+
+      if (cmd.type === 'DELETE') {
+        document.dispatchEvent(
+          new KeyboardEvent('keydown', { keyCode: 46, code: 'Delete' })
+        );
+
+        this._state.value =
+          this._state.value.substr(0, this._state.selectionStart) +
+          this._state.value.substr(this._state.selectionStart + 1);
+        /*
       this._state.selectionStart = this._state.selectionEnd = Math.min(
         Math.max(this._state.selectionStart - 1, 0),
         this._state.value.length
       );
       */
-      this.props.onChange(makeEvtFromState(this._state));
+        this.props.onChange(makeEvtFromState(this._state));
 
-      document.dispatchEvent(
-        new KeyboardEvent('keyup', { keyCode: 46, code: 'Delete' })
-      );
-    }
-  };
+        document.dispatchEvent(
+          new KeyboardEvent('keyup', { keyCode: 46, code: 'Delete' })
+        );
+      }
+    };
+  }
 
   render() {
     // emulate React behaviour of cursor moved to end if new value is not equal to internal value
