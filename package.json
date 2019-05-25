@@ -17,7 +17,6 @@
     "jest": "NODE_ICU_DATA=`yarn -s run node-full-icu-path` jest",
     "test": "eslint ./ && flow check && yarn test:ts && yarn jest",
     "test:ts": "tslint -p tsconfig.json",
-    "codesandboxes": "cd codesandboxes && next dev",
     "docz:build": "docz build",
     "docz:dev": "docz dev",
     "deploy:docz": "yarn docz:build && cp .docz/dist/index.html .docz/dist/404.html && gh-pages -d .docz/dist",

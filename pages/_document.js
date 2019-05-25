@@ -27,7 +27,7 @@ class MyDocument extends Document {
   }
 }
 
-MyDocument.getInitialProps = async ctx => {
+MyDocument.getInitialProps = ctx => {
   // Resolution order
   //
   // On the server:
@@ -59,13 +59,13 @@ MyDocument.getInitialProps = async ctx => {
       enhanceApp: App => props => sheets.collect(<App {...props} />),
     });
 
-  const initialProps = await Document.getInitialProps(ctx);
-
-  return {
-    ...initialProps,
-    // Styles fragment is rendered after the app and page rendering finish.
-    styles: <React.Fragment>{sheets.getStyleElement()}</React.Fragment>,
-  };
+  return Document.getInitialProps(ctx).then(initialProps => {
+    return {
+      ...initialProps,
+      // Styles fragment is rendered after the app and page rendering finish.
+      styles: <React.Fragment>{sheets.getStyleElement()}</React.Fragment>,
+    };
+  });
 };
 
 export default MyDocument;
