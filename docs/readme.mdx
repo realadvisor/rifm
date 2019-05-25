@@ -7,13 +7,6 @@ name: Rifm
 Is a tiny (≈ 650-750b) component to transform any input component
 into formatted or masked input.
 
-import { Playground, PropsTable } from 'docz';
-import { Value } from 'react-powerplug';
-import StringMask from 'string-mask';
-import { Rifm } from '../src';
-import { currencyFormat, dateFormat } from './format';
-import TextField from '@material-ui/core/TextField';
-import { css } from 'emotion';
 import { injectGlobal } from 'emotion/macro';
 import { EmbedCodesandbox } from './helpers.js';
 
@@ -67,118 +60,11 @@ Example of usage with
   href='github/istarkov/rifm/tree/master/codesandboxes/pages/phone-format'
 />
 
-## Material UI
+## Format Material UI text field
 
 It can work with 3rd party Inputs without pain
 
-<Playground>
-  <Value initial={''}>
-    {text => (
-      <Rifm
-        accept={/[\d.]/gi}
-        value={text.value}
-        onChange={text.set}
-        format={currencyFormat}
-      >
-        {({ value, onChange }) => (
-          <TextField
-            value={value}
-            label={'Float'}
-            onChange={onChange}
-            className={css({ input: { textAlign: 'right' } })}
-            type="tel"
-          />
-        )}
-      </Rifm>
-    )}
-  </Value>
-</Playground>
-
-## String-mask input
-
-Example of usage with [string-mask](https://github.com/the-darc/string-mask)
-
-<Playground>
-  <Value initial={''}>
-    {v => (
-      <Rifm
-        replace={v => v.length >= 10}
-        value={v.value}
-        onChange={v.set}
-        format={str => {
-          const mask = new StringMask('0000-0000-0000-0000');
-          const r = str.replace(/[^\d]+/gi, '');
-          return mask.apply(r);
-        }}
-      >
-        {({ value, onChange }) => <input onChange={onChange} value={value} />}
-      </Rifm>
-    )}
-  </Value>
-</Playground>
-
-if replace attribute is defined input will try to skip refused symbols when reached,
-like in 2 examples above it skips '-' symbols.
-Or example below. Possibly this need additional prop for simplicity
-
-## React async ready
-
-Check that it will work with new async React [see strict-mode](https://reactjs.org/docs/strict-mode.html)
-
-### Format Async Ready
-
-<Playground>
-  <React.StrictMode>
-    <Value initial={''}>
-      {text => (
-        <Rifm
-          accept={/[\d.]/g}
-          value={text.value}
-          onChange={text.set}
-          format={currencyFormat}
-        >
-          {({ value, onChange }) => (
-            <>
-              Format{' '}
-              <input
-                value={value}
-                onChange={onChange}
-                className={css({ textAlign: 'right' })}
-                type="tel"
-              />
-            </>
-          )}
-        </Rifm>
-      )}
-    </Value>
-  </React.StrictMode>
-</Playground>
-
-### Mask Async Ready
-
-<Playground>
-  <React.StrictMode>
-    <Value initial={'18-08-1978'}>
-      {text => (
-        <Rifm
-          replace={v => v.length >= 10}
-          value={text.value}
-          onChange={text.set}
-          format={dateFormat}
-        >
-          {({ value, onChange }) => (
-            <>
-              Parse{' '}
-              <input
-                placeholder="dd-mm-yyyy"
-                value={value}
-                onChange={onChange}
-                type="tel"
-              />
-            </>
-          )}
-        </Rifm>
-      )}
-    </Value>
-  </React.StrictMode>
-</Playground>
+<EmbedCodesandbox
+  title="istarkob/rifm: material-ui"
+  href='github/istarkov/rifm/tree/master/codesandboxes/pages/material-ui'
+/>
