@@ -21,6 +21,18 @@
     "precommit": "lint-staged",
     "prepublishOnly": "yarn test && yarn build"
   },
+  "babel": {
+    "presets": [
+      [
+        "@babel/env",
+        {
+          "loose": true
+        }
+      ],
+      "@babel/flow",
+      "@babel/react"
+    ]
+  },
   "lint-staged": {
     "*.{js,md,ts,tsx}": [
       "prettier --write",
@@ -75,7 +87,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
-    "@babel/plugin-proposal-class-properties": "^7.3.3",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-flow": "^7.0.0",
