@@ -53,8 +53,7 @@ const Example = () => {
 
       <div>Date format with mask</div>
       <Rifm
-        accept={/[\d_]/g}
-        replace={v => v.substr(9, 10) !== '_'}
+        accept={/[\d]/g}
         format={formatDateWithMask}
         value={formatDateWithMask(masked)}
         onChange={setMasked}
