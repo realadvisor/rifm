@@ -3,10 +3,81 @@
 
 import { AsYouType } from 'libphonenumber-js';
 
-export const numberFormat = (str: string) => {
-  const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
+const numberAccept = /[\d.]+/g;
 
-  return r ? r.toLocaleString('en') : '';
+const parseNumber = string => (string.match(numberAccept) || []).join('');
+
+export const formatFixedPointNumber = (
+  value: string,
+  digits: number
+): string => {
+  const parsed = parseNumber(value);
+  const [head, tail] = parsed.split('.');
+  // Avoid rounding errors at toLocaleString as when user enters 1.239 and maxDigits=2 we
+  // must not to convert it to 1.24, it must stay 1.23
+  const scaledTail = tail != null ? tail.slice(0, digits) : '';
+
+  let number = Number.parseFloat(`${head}.${scaledTail}`);
+
+  // For fixed format numbers deleting "." must be no-op
+  // as imagine u have 123.45 then delete "." and get 12345.00 looks bad in UI
+  // so we transform here 12345 into 123.45 instead of 12345.00.
+  // The main disadvantage of this, that you need carefully check input value
+  // that it always has fractional part
+  if (digits > 0 && tail == null) {
+    const paddedHead = head.padStart(digits + 1 - head.length, '0');
+    number = Number.parseFloat(
+      `${paddedHead.slice(0, -digits)}.${paddedHead.slice(-digits)}`
+    );
+  }
+
+  if (Number.isNaN(number)) {
+    return '';
+  }
+
+  const formatted = number.toLocaleString('de-CH', {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  });
+
+  return formatted;
+};
+
+export const formatFloatingPointNumber = (
+  value: string,
+  maxDigits: number
+): string => {
+  const parsed = parseNumber(value);
+  const [head, tail] = parsed.split('.');
+  // Avoid rounding errors at toLocaleString as when user enters 1.239 and maxDigits=2 we
+  // must not to convert it to 1.24, it must stay 1.23
+  const scaledTail = tail != null ? tail.slice(0, maxDigits) : '';
+
+  const number = Number.parseFloat(`${head}.${scaledTail}`);
+
+  if (Number.isNaN(number)) {
+    return '';
+  }
+
+  const formatted = number.toLocaleString('de-CH', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: maxDigits,
+  });
+
+  if (parsed.includes('.')) {
+    const [formattedHead] = formatted.split('.');
+
+    // skip zero at digits position for non fixed floats
+    // as at digits 2 for non fixed floats numbers like 1.50 has no sense, just 1.5 allowed
+    // but 1.0 has sense as otherwise you will not be able to enter 1.05 for example
+    const formattedTail =
+      scaledTail !== '' && scaledTail[maxDigits - 1] === '0'
+        ? scaledTail.slice(0, -1)
+        : scaledTail;
+
+    return `${formattedHead}.${formattedTail}`;
+  }
+  return formatted;
 };
 
 export const negNumberFormat = (str: string) => {
@@ -15,86 +86,6 @@ export const negNumberFormat = (str: string) => {
   const r = parseInt(clean, 10);
 
   return r ? r.toLocaleString('en') : '';
-};
-
-export const currencyFormat = (str: string, isInitial?: boolean) => {
-  const clean = str.replace(/[^\d.]+/gi, '');
-
-  const beautify =
-    clean.indexOf('.') === -1
-      ? clean.length > 2 && isInitial !== true
-        ? `${clean.substr(0, clean.length - 2)}.${clean.substr(-2)}`
-        : clean
-      : `${clean.split('.')[0]}.${clean.split('.')[1].substr(0, 2)}`;
-
-  const r = parseFloat(beautify);
-
-  return !Number.isNaN(r)
-    ? r.toLocaleString('de-CH', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })
-    : '';
-};
-
-const prepareFraction = (fraction, maximumFractionDigits) => {
-  const removeTrailingZero = false;
-  const substrFrac = fraction.substr(
-    0,
-    maximumFractionDigits -
-      (removeTrailingZero && fraction[maximumFractionDigits - 1] === '0'
-        ? 1
-        : 0)
-  );
-
-  return substrFrac;
-};
-
-// poor raw prototype for future universal number format
-export const currencyFormat2 = (str: string, isInitial?: boolean) => {
-  const maximumFractionDigits = 2;
-  const minimumFractionDigits = 0;
-
-  const clean = str.replace(/[^\d.]+/gi, ''); // .replace(/0+$/, '');
-
-  const [base, fract = ''] = clean.split('.');
-  const fraction = prepareFraction(fract, maximumFractionDigits);
-  const preventRounding = !fraction
-    ? clean.length > minimumFractionDigits &&
-      minimumFractionDigits > 0 &&
-      isInitial !== true
-      ? `${clean.substr(
-          0,
-          clean.length - minimumFractionDigits
-        )}.${clean.substr(-minimumFractionDigits)}`
-      : clean
-    : `${base}.${fraction}`;
-
-  const r = parseFloat(preventRounding);
-
-  const formatted = r.toLocaleString('de-CH', {
-    minimumFractionDigits,
-    maximumFractionDigits,
-  });
-  const [, formattedFraction = ''] = formatted.split('.');
-
-  const res = Number.isNaN(r)
-    ? ''
-    : formatted +
-      (isInitial === true
-        ? ''
-        : (formattedFraction.length === 0 && clean.indexOf('.') > -1
-            ? '.'
-            : '') +
-          (formattedFraction.length < maximumFractionDigits &&
-          fraction.length > formattedFraction.length
-            ? fraction.substring(
-                formattedFraction.length,
-                maximumFractionDigits
-              )
-            : ''));
-
-  return res;
 };
 
 export const dateFormat = (str: string) => {
