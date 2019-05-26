@@ -7,23 +7,21 @@ const numberAccept = /[\d.]+/g;
 
 const parseNumber = string => (string.match(numberAccept) || []).join('');
 
-const floor = (number, scale) => {
-  const ratio = 10 ** scale;
-  return Math.floor(number * ratio) / ratio;
-};
-
 export const formatNumber = (
   string: string,
   scale: number,
   fixed: boolean
 ): string => {
   const parsed = parseNumber(string);
-  const number = Number.parseFloat(parsed);
+  const [head, tail] = parsed.split('.');
+
+  const number = Number.parseFloat(`${head}.${tail && tail.slice(0, scale)}`);
   if (Number.isNaN(number)) {
     return '';
   }
+
   // floor to prevent incrementing rounded number
-  const formatted = floor(number, scale).toLocaleString('de-CH', {
+  const formatted = number.toLocaleString('de-CH', {
     minimumFractionDigits: fixed ? scale : 0,
     maximumFractionDigits: scale,
   });
