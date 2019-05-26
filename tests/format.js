@@ -13,7 +13,8 @@ export const formatFixedPointNumber = (
 ): string => {
   const parsed = parseNumber(value);
   const [head, tail] = parsed.split('.');
-  // Avoid rounding errors at toLocaleString
+  // Avoid rounding errors at toLocaleString as when user enter 1.239 and maxDigits=2 we
+  // must not to convert it to 1.24, it must stay 1.23
   const scaledTail = tail != null ? tail.slice(0, digits) : '';
 
   let number = Number.parseFloat(`${head}.${scaledTail}`);
@@ -48,6 +49,8 @@ export const formatFloatingPointNumber = (
 ): string => {
   const parsed = parseNumber(value);
   const [head, tail] = parsed.split('.');
+  // Avoid rounding errors at toLocaleString as when user enter 1.239 and maxDigits=2 we
+  // must not to convert it to 1.24, it must stay 1.23
   const scaledTail = tail != null ? tail.slice(0, maxDigits) : '';
 
   const number = Number.parseFloat(`${head}.${scaledTail}`);
