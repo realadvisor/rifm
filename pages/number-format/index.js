@@ -88,7 +88,7 @@ const Example = () => {
     <React.Fragment>
       <div>Integer number format: {integer}</div>
       <Rifm
-        refuse={/[^\d]+/g}
+        accept={/\d/g}
         format={formatInteger}
         value={formatInteger(integer)}
         onChange={value => setInteger(parseInteger(value))}
@@ -98,7 +98,7 @@ const Example = () => {
 
       <div>Negative number format: {negative}</div>
       <Rifm
-        refuse={/[^\d-]+/g}
+        accept={/[\d-]/g}
         format={formatNegative}
         value={formatNegative(negative)}
         onChange={value => setNegative(parseNegative(value))}
@@ -108,7 +108,7 @@ const Example = () => {
 
       <div>Number with fractional part: {fixedFloat}</div>
       <Rifm
-        refuse={/[^\d.]+/g}
+        accept={/[\d.]/g}
         format={v => formatNumber(v, 2, true)}
         value={formatNumber(fixedFloat, 2, true)}
         onChange={value => setFixedFloat(parseNumber(value))}
@@ -118,7 +118,7 @@ const Example = () => {
 
       <div>Number with variable fractional part: {variableFloat}</div>
       <Rifm
-        refuse={/[^\d.]+/g}
+        accept={/[\d.]/g}
         format={v => formatNumber(v, 2, false)}
         value={formatNumber(variableFloat, 2, false)}
         onChange={value => setVariableFloat(parseNumber(value))}
@@ -128,7 +128,7 @@ const Example = () => {
 
       <div>Square meters number: {variableFloat}</div>
       <Rifm
-        refuse={/[^\d.]+/g}
+        accept={/[\d.]/g}
         format={formatMeters}
         value={formatMeters(variableFloat)}
         onChange={value => setVariableFloat(parseNumber(value))}
@@ -139,7 +139,7 @@ const Example = () => {
       <div>Currency number: {variableFloat}</div>
       <Rifm
         // $ need to be in regexp to prevent cursor jumping on backspace
-        refuse={/[^\d.$]+/g}
+        accept={/[\d.$]/g}
         format={formatCurrency}
         value={formatCurrency(variableFloat)}
         onChange={value => setVariableFloat(parseNumber(value))}

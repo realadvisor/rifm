@@ -23,7 +23,7 @@ const Example = () => {
     <React.Fragment>
       <div>Phone format</div>
       <Rifm
-        refuse={/[^\d]+/g}
+        accept={/\d+/g}
         // do not jump after ) until see number before
         replace={
           phone.length < 6 && /[^\d]+/.test(phone[3])

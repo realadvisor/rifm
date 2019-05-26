@@ -42,7 +42,7 @@ const Example = () => {
     <React.Fragment>
       <div>Date format</div>
       <Rifm
-        refuse={/[^\d]+/g}
+        accept={/\d/g}
         replace={v => 10 <= v.length}
         format={formatDate}
         value={formatDate(formatted)}
@@ -53,7 +53,7 @@ const Example = () => {
 
       <div>Date format with mask</div>
       <Rifm
-        refuse={/[^\d]+/g}
+        accept={/[\d_]/g}
         replace={v => v.substr(9, 10) !== '_'}
         format={formatDateWithMask}
         value={formatDateWithMask(masked)}
