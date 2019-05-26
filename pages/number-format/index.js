@@ -50,10 +50,11 @@ const numberAccept = /[\d.]+/g;
 
 const parseNumber = string => (string.match(numberAccept) || []).join('');
 
-const formatNumber = (string, scale, fixed) => {
-  const parsed = parseNumber(string);
+const formatFixedPointNumber = (value, digits) => {
+  const parsed = parseNumber(value);
   const [head, tail] = parsed.split('.');
-  const scaledTail = tail != null ? tail.slice(0, scale) : '';
+  // Avoid rounding errors at toLocaleString
+  const scaledTail = tail != null ? tail.slice(0, digits) : '';
 
   let number = Number.parseFloat(`${head}.${scaledTail}`);
 
@@ -62,10 +63,10 @@ const formatNumber = (string, scale, fixed) => {
   // so we transform here 12345 into 123.45 instead of 12345.00.
   // The main disadvantage of this, that you need carefully check input value
   // that it always has fractional part
-  if (scale > 0 && fixed && tail == null) {
-    const paddedHead = head.padStart(scale + 1 - head.length, '0');
+  if (digits > 0 && tail == null) {
+    const paddedHead = head.padStart(digits + 1 - head.length, '0');
     number = Number.parseFloat(
-      `${paddedHead.slice(0, -scale)}.${paddedHead.slice(-scale)}`
+      `${paddedHead.slice(0, -digits)}.${paddedHead.slice(-digits)}`
     );
   }
 
@@ -74,28 +75,50 @@ const formatNumber = (string, scale, fixed) => {
   }
 
   const formatted = number.toLocaleString('de-CH', {
-    minimumFractionDigits: fixed ? scale : 0,
-    maximumFractionDigits: scale,
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
   });
 
-  if (!fixed && parsed.includes('.')) {
+  return formatted;
+};
+
+const formatFloatingPointNumber = (value, maxDigits) => {
+  const parsed = parseNumber(value);
+  const [head, tail] = parsed.split('.');
+  const scaledTail = tail != null ? tail.slice(0, maxDigits) : '';
+
+  let number = Number.parseFloat(`${head}.${scaledTail}`);
+
+  if (Number.isNaN(number)) {
+    return '';
+  }
+
+  const formatted = number.toLocaleString('de-CH', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: maxDigits,
+  });
+
+  if (parsed.includes('.')) {
     const [formattedHead] = formatted.split('.');
-    return `${formattedHead}.${
-      // skip zero at scale position for non fixed floats
-      // as at scale 2 for non fixed floats numbers like 1.50 has no sense, just 1.5 allowed
-      // but 1.0 has sense as otherwise you will not be able to enter 1.05 for example
-      scaledTail !== '' && scaledTail[scale - 1] === '0'
+
+    // skip zero at digits position for non fixed floats
+    // as at digits 2 for non fixed floats numbers like 1.50 has no sense, just 1.5 allowed
+    // but 1.0 has sense as otherwise you will not be able to enter 1.05 for example
+    const formattedTail =
+      scaledTail !== '' && scaledTail[maxDigits - 1] === '0'
         ? scaledTail.slice(0, -1)
-        : scaledTail
-    }`;
+        : scaledTail;
+
+    return `${formattedHead}.${formattedTail}`;
   }
   return formatted;
 };
 
 // 2 in m^2 should not be a number to not match regexp
-const formatMeters = string => formatNumber(string, 2, false) + ' m\u00B2';
+const formatMeters = string =>
+  formatFloatingPointNumber(string, 2) + ' m\u00B2';
 
-const formatCurrency = string => '$' + formatNumber(string, 2, false);
+const formatCurrency = string => '$' + formatFloatingPointNumber(string, 2);
 
 const Example = () => {
   const [integer, setInteger] = React.useState('12345');
@@ -128,9 +151,9 @@ const Example = () => {
       <div>Number with fractional part: {fixedFloat}</div>
       <Rifm
         accept={/[\d.]/g}
-        format={v => formatNumber(v, 2, true)}
+        format={v => formatFixedPointNumber(v, 2)}
         // 00 is needed here see disadvantages comment at formatNumber
-        value={formatNumber(`${fixedFloat}00`, 2, true)}
+        value={formatFixedPointNumber(`${fixedFloat}00`, 2)}
         onChange={value => setFixedFloat(parseNumber(value))}
       >
         {renderInput}
@@ -139,8 +162,8 @@ const Example = () => {
       <div>Number with variable fractional part: {variableFloat}</div>
       <Rifm
         accept={/[\d.]/g}
-        format={v => formatNumber(v, 2, false)}
-        value={formatNumber(variableFloat, 2, false)}
+        format={v => formatFloatingPointNumber(v, 2)}
+        value={formatFloatingPointNumber(variableFloat, 2)}
         onChange={value => setVariableFloat(parseNumber(value))}
       >
         {renderInput}

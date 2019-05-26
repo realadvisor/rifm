@@ -7,10 +7,14 @@ const numberAccept = /[\d.]+/g;
 
 const parseNumber = string => (string.match(numberAccept) || []).join('');
 
-const formatNumber = (string, scale, fixed) => {
-  const parsed = parseNumber(string);
+export const formatFixedPointNumber = (
+  value: string,
+  digits: number
+): string => {
+  const parsed = parseNumber(value);
   const [head, tail] = parsed.split('.');
-  const scaledTail = tail != null ? tail.slice(0, scale) : '';
+  // Avoid rounding errors at toLocaleString
+  const scaledTail = tail != null ? tail.slice(0, digits) : '';
 
   let number = Number.parseFloat(`${head}.${scaledTail}`);
 
@@ -19,10 +23,10 @@ const formatNumber = (string, scale, fixed) => {
   // so we transform here 12345 into 123.45 instead of 12345.00.
   // The main disadvantage of this, that you need carefully check input value
   // that it always has fractional part
-  if (scale > 0 && fixed && tail == null) {
-    const paddedHead = head.padStart(scale + 1 - head.length, '0');
+  if (digits > 0 && tail == null) {
+    const paddedHead = head.padStart(digits + 1 - head.length, '0');
     number = Number.parseFloat(
-      `${paddedHead.slice(0, -scale)}.${paddedHead.slice(-scale)}`
+      `${paddedHead.slice(0, -digits)}.${paddedHead.slice(-digits)}`
     );
   }
 
@@ -31,36 +35,46 @@ const formatNumber = (string, scale, fixed) => {
   }
 
   const formatted = number.toLocaleString('de-CH', {
-    minimumFractionDigits: fixed ? scale : 0,
-    maximumFractionDigits: scale,
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
   });
 
-  if (!fixed && parsed.includes('.')) {
-    const [formattedHead] = formatted.split('.');
-    return `${formattedHead}.${
-      // skip zero at scale position for non fixed floats
-      // as at scale 2 for non fixed floats numbers like 1.50 has no sense, just 1.5 allowed
-      // but 1.0 has sense as otherwise you will not be able to enter 1.05 for example
-      scaledTail !== '' && scaledTail[scale - 1] === '0'
-        ? scaledTail.slice(0, -1)
-        : scaledTail
-    }`;
-  }
   return formatted;
-};
-
-export const formatFixedPointNumber = (
-  value: string,
-  scale: number
-): string => {
-  return formatNumber(value, scale, true);
 };
 
 export const formatFloatingPointNumber = (
   value: string,
-  maxScale: number
+  maxDigits: number
 ): string => {
-  return formatNumber(value, maxScale, false);
+  const parsed = parseNumber(value);
+  const [head, tail] = parsed.split('.');
+  const scaledTail = tail != null ? tail.slice(0, maxDigits) : '';
+
+  let number = Number.parseFloat(`${head}.${scaledTail}`);
+
+  if (Number.isNaN(number)) {
+    return '';
+  }
+
+  const formatted = number.toLocaleString('de-CH', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: maxDigits,
+  });
+
+  if (parsed.includes('.')) {
+    const [formattedHead] = formatted.split('.');
+
+    // skip zero at digits position for non fixed floats
+    // as at digits 2 for non fixed floats numbers like 1.50 has no sense, just 1.5 allowed
+    // but 1.0 has sense as otherwise you will not be able to enter 1.05 for example
+    const formattedTail =
+      scaledTail !== '' && scaledTail[maxDigits - 1] === '0'
+        ? scaledTail.slice(0, -1)
+        : scaledTail;
+
+    return `${formattedHead}.${formattedTail}`;
+  }
+  return formatted;
 };
 
 export const negNumberFormat = (str: string) => {
