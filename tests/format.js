@@ -50,7 +50,7 @@ export const formatFloatingPointNumber = (
   const [head, tail] = parsed.split('.');
   const scaledTail = tail != null ? tail.slice(0, maxDigits) : '';
 
-  let number = Number.parseFloat(`${head}.${scaledTail}`);
+  const number = Number.parseFloat(`${head}.${scaledTail}`);
 
   if (Number.isNaN(number)) {
     return '';
