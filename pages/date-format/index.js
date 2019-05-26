@@ -17,6 +17,20 @@ const formatDate = string => {
     .substr(0, 10);
 };
 
+const formatDateOther = string => {
+  const dt = formatDate(string);
+
+  if (dt.length === 2) {
+    return `${dt}-`;
+  }
+
+  if (dt.length === 5) {
+    return `${dt}-`;
+  }
+
+  return dt;
+};
+
 const formatDateWithMask = string => {
   const digits = parseDigits(string);
   const days = digits.slice(0, 2).padEnd(2, '_');
@@ -27,6 +41,7 @@ const formatDateWithMask = string => {
 
 const Example = () /*:React.Node*/ => {
   const [formatted, setFormatted] = React.useState('18-08-1978');
+  const [formattedO, setFormattedO] = React.useState('18-08-1978');
   const [masked, setMasked] = React.useState('');
 
   return (
@@ -45,9 +60,34 @@ const Example = () /*:React.Node*/ => {
       </div>
 
       <div>
+        <div>Date format other</div>
+        <Rifm
+          accept={/\d/g}
+          replace={v => 10 <= v.length}
+          format={formatDateOther}
+          value={formatDateOther(formattedO)}
+          onChange={setFormattedO}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
+
+      <div>
         <div>Date format with mask</div>
         <Rifm
           accept={/[\d]/g}
+          format={formatDateWithMask}
+          value={formatDateWithMask(masked)}
+          onChange={setMasked}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
+
+      <div>
+        <div>Date format with mask other</div>
+        <Rifm
+          accept={/[\d-]/g}
           format={formatDateWithMask}
           value={formatDateWithMask(masked)}
           onChange={setMasked}
