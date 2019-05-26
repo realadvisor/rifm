@@ -1,20 +1,5 @@
 import Alea from 'alea';
-import { currencyFormat, formatNumber } from './format';
-
-test('currencyFormat', async () => {
-  expect(currencyFormat('0', true)).toEqual('0.00');
-  expect(currencyFormat('10', true)).toEqual('10.00');
-  expect(currencyFormat('100', true)).toEqual('100.00');
-  expect(currencyFormat('100', true)).toEqual('100.00');
-  expect(currencyFormat('100')).toEqual('1.00');
-
-  const prng = new Alea(1000);
-
-  for (let i = 0; i != 1000; ++i) {
-    const val = prng() * i;
-    expect(currencyFormat(currencyFormat(`${val}`, true))).toEqual(currencyFormat(`${val}`, true));
-  }
-});
+import { formatNumber } from './format';
 
 test('formatNumber check that format(format(v)) === format(v) in case of parse is identity', () => {
   const prng = new Alea(1000);
@@ -63,7 +48,7 @@ test('formatNumber fixed must return equal to scale amount of digits at fraction
   }
 });
 
-test('formatNumber non fixed must not allow 0 as scale position', () => {
+test('formatNumber non fixed must not allow 0 at scale position', () => {
   // because parseFloat will always remove that 0, and at least at scale position we can prevent it
   const formatNonFixed1 = v => formatNumber(v, 1, false);
   const formatNonFixed2 = v => formatNumber(v, 2, false);
@@ -75,7 +60,18 @@ test('formatNumber non fixed must not allow 0 as scale position', () => {
   expect(formatNonFixed4('0.1110')).toEqual('0.111');
 });
 
-test('formatNumber non fixed must allow 0 otherwise impossible to enter 0.101', () => {
+test('formatNumber non fixed must allow 0 at non scale position otherwise impossible to enter 0.101', () => {
   const formatNonFixed = v => formatNumber(v, 3, false);
-  expect(formatNonFixed('0.1')).toEqual('0.10');
+  expect(formatNonFixed('0.10')).toEqual('0.10');
+  expect(formatNonFixed('0.100')).toEqual('0.10');
+});
+
+test('formatNumber fixed in absense of fixed point should insert it instead of adding .00', () => {
+  // needed for ability skip delete backspace commands on fixed points
+  const formatFixed = v => formatNumber(v, 2, true);
+
+  expect(formatFixed('123')).toEqual('1.23');
+  expect(formatFixed('12')).toEqual('0.12');
+  expect(formatFixed('1')).toEqual('0.01');
+  expect(formatFixed('')).toEqual('0.00');
 });
