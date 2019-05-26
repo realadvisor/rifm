@@ -14,28 +14,36 @@ export const formatNumber = (
 ): string => {
   const parsed = parseNumber(string);
   const [head, tail] = parsed.split('.');
+  const tl = tail != null ? tail.slice(0, scale) : '';
 
-  const number = Number.parseFloat(`${head}.${tail && tail.slice(0, scale)}`);
+  let number = Number.parseFloat(`${head}.${tl}`);
+
+  if (scale > 0 && fixed && tail == null) {
+    const headPad = head.padStart(scale + 1 - head.length, '0');
+    number = Number.parseFloat(
+      `${headPad.slice(0, -scale)}.${headPad.slice(-scale)}`
+    );
+  }
+
   if (Number.isNaN(number)) {
     return '';
   }
 
-  // floor to prevent incrementing rounded number
   const formatted = number.toLocaleString('de-CH', {
     minimumFractionDigits: fixed ? scale : 0,
     maximumFractionDigits: scale,
   });
-  if (!formatted.includes('.') && parsed.includes('.')) {
-    const [, tail] = parsed.split('.');
-    return formatted + '.' + tail.slice(0, scale);
+
+  // non fixed part can be removed for fixed floats
+  if (!fixed && parsed.includes('.')) {
+    return (
+      formatted.split('.')[0] +
+      '.' +
+      // skip zero at scale position for non fixed floats
+      (tl !== '' && tl[scale - 1] === '0' ? tl.slice(0, -1) : tl)
+    );
   }
   return formatted;
-};
-
-export const numberFormat = (str: string) => {
-  const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
-
-  return r ? r.toLocaleString('en') : '';
 };
 
 export const negNumberFormat = (str: string) => {
@@ -44,86 +52,6 @@ export const negNumberFormat = (str: string) => {
   const r = parseInt(clean, 10);
 
   return r ? r.toLocaleString('en') : '';
-};
-
-export const currencyFormat = (str: string, isInitial?: boolean) => {
-  const clean = str.replace(/[^\d.]+/gi, '');
-
-  const beautify =
-    clean.indexOf('.') === -1
-      ? clean.length > 2 && isInitial !== true
-        ? `${clean.substr(0, clean.length - 2)}.${clean.substr(-2)}`
-        : clean
-      : `${clean.split('.')[0]}.${clean.split('.')[1].substr(0, 2)}`;
-
-  const r = parseFloat(beautify);
-
-  return !Number.isNaN(r)
-    ? r.toLocaleString('de-CH', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })
-    : '';
-};
-
-const prepareFraction = (fraction, maximumFractionDigits) => {
-  const removeTrailingZero = false;
-  const substrFrac = fraction.substr(
-    0,
-    maximumFractionDigits -
-      (removeTrailingZero && fraction[maximumFractionDigits - 1] === '0'
-        ? 1
-        : 0)
-  );
-
-  return substrFrac;
-};
-
-// poor raw prototype for future universal number format
-export const currencyFormat2 = (str: string, isInitial?: boolean) => {
-  const maximumFractionDigits = 2;
-  const minimumFractionDigits = 0;
-
-  const clean = str.replace(/[^\d.]+/gi, ''); // .replace(/0+$/, '');
-
-  const [base, fract = ''] = clean.split('.');
-  const fraction = prepareFraction(fract, maximumFractionDigits);
-  const preventRounding = !fraction
-    ? clean.length > minimumFractionDigits &&
-      minimumFractionDigits > 0 &&
-      isInitial !== true
-      ? `${clean.substr(
-          0,
-          clean.length - minimumFractionDigits
-        )}.${clean.substr(-minimumFractionDigits)}`
-      : clean
-    : `${base}.${fraction}`;
-
-  const r = parseFloat(preventRounding);
-
-  const formatted = r.toLocaleString('de-CH', {
-    minimumFractionDigits,
-    maximumFractionDigits,
-  });
-  const [, formattedFraction = ''] = formatted.split('.');
-
-  const res = Number.isNaN(r)
-    ? ''
-    : formatted +
-      (isInitial === true
-        ? ''
-        : (formattedFraction.length === 0 && clean.indexOf('.') > -1
-            ? '.'
-            : '') +
-          (formattedFraction.length < maximumFractionDigits &&
-          fraction.length > formattedFraction.length
-            ? fraction.substring(
-                formattedFraction.length,
-                maximumFractionDigits
-              )
-            : ''));
-
-  return res;
 };
 
 export const dateFormat = (str: string) => {
