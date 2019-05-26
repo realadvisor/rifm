@@ -53,7 +53,8 @@ const parseNumber = string => (string.match(numberAccept) || []).join('');
 const formatFixedPointNumber = (value, digits) => {
   const parsed = parseNumber(value);
   const [head, tail] = parsed.split('.');
-  // Avoid rounding errors at toLocaleString
+  // Avoid rounding errors at toLocaleString as when user enters 1.239 and maxDigits=2 we
+  // must not to convert it to 1.24, it must stay 1.23
   const scaledTail = tail != null ? tail.slice(0, digits) : '';
 
   let number = Number.parseFloat(`${head}.${scaledTail}`);
@@ -85,9 +86,11 @@ const formatFixedPointNumber = (value, digits) => {
 const formatFloatingPointNumber = (value, maxDigits) => {
   const parsed = parseNumber(value);
   const [head, tail] = parsed.split('.');
+  // Avoid rounding errors at toLocaleString as when user enters 1.239 and maxDigits=2 we
+  // must not to convert it to 1.24, it must stay 1.23
   const scaledTail = tail != null ? tail.slice(0, maxDigits) : '';
 
-  let number = Number.parseFloat(`${head}.${scaledTail}`);
+  const number = Number.parseFloat(`${head}.${scaledTail}`);
 
   if (Number.isNaN(number)) {
     return '';
