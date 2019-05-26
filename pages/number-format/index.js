@@ -50,25 +50,37 @@ const numberAccept = /[\d.]+/g;
 
 const parseNumber = string => (string.match(numberAccept) || []).join('');
 
-const floor = (number, scale) => {
-  const ratio = 10 ** scale;
-  return Math.floor(number * ratio) / ratio;
-};
-
 const formatNumber = (string, scale, fixed) => {
   const parsed = parseNumber(string);
-  const number = Number.parseFloat(parsed);
+  const [head, tail] = parsed.split('.');
+  const tl = tail != null ? tail.slice(0, scale) : '';
+
+  let number = Number.parseFloat(`${head}.${tl}`);
+
+  if (scale > 0 && fixed && tail == null) {
+    const headPad = head.padStart(scale + 1 - head.length, '0');
+    number = Number.parseFloat(
+      `${headPad.slice(0, -scale)}.${headPad.slice(-scale)}`
+    );
+  }
+
   if (Number.isNaN(number)) {
     return '';
   }
-  // floor to prevent incrementing rounded number
-  const formatted = floor(number, scale).toLocaleString('de-CH', {
+
+  const formatted = number.toLocaleString('de-CH', {
     minimumFractionDigits: fixed ? scale : 0,
     maximumFractionDigits: scale,
   });
-  if (!formatted.includes('.') && parsed.includes('.')) {
-    const [, tail] = parsed.split('.');
-    return formatted + '.' + tail.slice(0, scale);
+
+  // non fixed part can be removed for fixed floats
+  if (!fixed && parsed.includes('.')) {
+    return (
+      formatted.split('.')[0] +
+      '.' +
+      // skip zero at scale position for non fixed floats
+      (tl !== '' && tl[scale - 1] === '0' ? tl.slice(0, -1) : tl)
+    );
   }
   return formatted;
 };
@@ -82,7 +94,7 @@ const Example = () => {
   const [integer, setInteger] = React.useState('12345');
   const [negative, setNegative] = React.useState('12345');
   const [variableFloat, setVariableFloat] = React.useState('12345');
-  const [fixedFloat, setFixedFloat] = React.useState('12345');
+  const [fixedFloat, setFixedFloat] = React.useState('12345.00');
 
   return (
     <React.Fragment>
