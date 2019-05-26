@@ -3,6 +3,37 @@
 
 import { AsYouType } from 'libphonenumber-js';
 
+const numberAccept = /[\d.]+/g;
+
+const parseNumber = string => (string.match(numberAccept) || []).join('');
+
+const floor = (number, scale) => {
+  const ratio = 10 ** scale;
+  return Math.floor(number * ratio) / ratio;
+};
+
+export const formatNumber = (
+  string: string,
+  scale: number,
+  fixed: boolean
+): string => {
+  const parsed = parseNumber(string);
+  const number = Number.parseFloat(parsed);
+  if (Number.isNaN(number)) {
+    return '';
+  }
+  // floor to prevent incrementing rounded number
+  const formatted = floor(number, scale).toLocaleString('de-CH', {
+    minimumFractionDigits: fixed ? scale : 0,
+    maximumFractionDigits: scale,
+  });
+  if (!formatted.includes('.') && parsed.includes('.')) {
+    const [, tail] = parsed.split('.');
+    return formatted + '.' + tail.slice(0, scale);
+  }
+  return formatted;
+};
+
 export const numberFormat = (str: string) => {
   const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
 
