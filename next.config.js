@@ -2,7 +2,12 @@ const path = require('path');
 
 module.exports = {
   webpack: config => {
-    config.resolve.alias['rifm'] = path.resolve('./dist/rifm.esm.js');
+    const rifmPath =
+      process.env.NODE_ENV === 'production'
+        ? './dist/rifm.esm.js'
+        : './src/index.js';
+
+    config.resolve.alias['rifm'] = path.resolve(rifmPath);
     return config;
   },
 };

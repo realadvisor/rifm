@@ -85,7 +85,7 @@ const Index = () => {
 
       <EmbedCodesandbox
         title="istarkob/rifm: case-enforcement"
-        href="github/istarkov/rifm/tree/master/pages/case-enforcement"
+        href="github/istarkov/rifm/tree/gh-pages/pages/case-enforcement"
       />
 
       <H2 id="number-format">Number format</H2>
@@ -97,7 +97,7 @@ const Index = () => {
 
       <EmbedCodesandbox
         title="istarkob/rifm: number-format"
-        href="github/istarkov/rifm/tree/master/pages/number-format"
+        href="github/istarkov/rifm/tree/gh-pages/pages/number-format"
       />
 
       <H2 id="date-format">Date format</H2>
@@ -114,7 +114,7 @@ const Index = () => {
 
       <EmbedCodesandbox
         title="istarkob/rifm: date-format"
-        href="github/istarkov/rifm/tree/master/pages/date-format"
+        href="github/istarkov/rifm/tree/gh-pages/pages/date-format"
       />
 
       <H2 id="phone-format">Phone format</H2>
@@ -129,7 +129,7 @@ const Index = () => {
 
       <EmbedCodesandbox
         title="istarkob/rifm: phone-format"
-        href="github/istarkov/rifm/tree/master/pages/phone-format"
+        href="github/istarkov/rifm/tree/gh-pages/pages/phone-format"
       />
 
       <H2 id="material-ui">Format Material UI text field</H2>
@@ -138,7 +138,7 @@ const Index = () => {
 
       <EmbedCodesandbox
         title="istarkob/rifm: material-ui"
-        href="github/istarkov/rifm/tree/master/pages/material-ui"
+        href="github/istarkov/rifm/tree/gh-pages/pages/material-ui"
       />
     </Container>
   );

@@ -17,7 +17,9 @@
     "jest": "NODE_ICU_DATA=`yarn -s run node-full-icu-path` jest",
     "test": "eslint ./ && flow check && yarn test:ts && yarn jest",
     "test:ts": "tslint -p tsconfig.json",
-    "deploy": "yarn next build && yarn next export && gh-pages -d out",
+    "copy-sandbox-examples": "mkdir -p ./out/pages && find ./pages -type d -mindepth 1 -maxdepth 1 -exec cp -R \\{\\} ./out/pages \\;",
+    "export": "yarn rimraf ./out && yarn next build && yarn next export && yarn copy-sandbox-examples",
+    "deploy": "yarn export && gh-pages -d out",
     "precommit": "lint-staged",
     "prepublishOnly": "yarn test && yarn build"
   },
