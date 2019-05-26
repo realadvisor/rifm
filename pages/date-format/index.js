@@ -17,6 +17,21 @@ const formatDate = string => {
     .substr(0, 10);
 };
 
+const formatDateOther = string => {
+  const res = formatDate(string);
+
+  if (string.endsWith('-')) {
+    if (res.length === 2) {
+      return `${res}-`;
+    }
+
+    if (res.length === 5) {
+      return `${res}-`;
+    }
+  }
+  return res;
+};
+
 const formatDateWithMask = string => {
   const digits = parseDigits(string);
   const days = digits.slice(0, 2).padEnd(2, '_');
@@ -27,6 +42,7 @@ const formatDateWithMask = string => {
 
 const Example = () /*:React.Node*/ => {
   const [formatted, setFormatted] = React.useState('18-08-1978');
+  const [formattedA, setFormattedA] = React.useState('');
   const [masked, setMasked] = React.useState('');
 
   return (
@@ -39,6 +55,19 @@ const Example = () /*:React.Node*/ => {
           format={formatDate}
           value={formatDate(formatted)}
           onChange={setFormatted}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
+
+      <div>
+        <div>Date format another</div>
+        <Rifm
+          accept={/[\d-]+/g}
+          replace={v => 10 <= v.length}
+          format={formatDateOther}
+          value={formatDateOther(formattedA)}
+          onChange={setFormattedA}
         >
           {renderInput}
         </Rifm>
