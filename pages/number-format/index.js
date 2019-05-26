@@ -4,16 +4,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Rifm } from 'rifm';
 
-const renderInput = ({ value, onChange }) => (
-  // type=number is not allowed
-  <input
-    type="tel"
-    style={{ textAlign: 'right' }}
-    value={value}
-    onChange={onChange}
-  />
-);
-
 // To prevent parseInt overflow you can use `maxLength` on input field
 // or write your own numberFormat.
 
@@ -123,76 +113,120 @@ const formatMeters = string =>
 
 const formatCurrency = string => '$' + formatFloatingPointNumber(string, 2);
 
-const Example = () => {
+const Example = () /*:React.Node*/ => {
   const [integer, setInteger] = React.useState('12345');
   const [negative, setNegative] = React.useState('12345');
   const [variableFloat, setVariableFloat] = React.useState('12345');
   const [fixedFloat, setFixedFloat] = React.useState('12345');
 
   return (
-    <React.Fragment>
-      <div>Integer number format: {integer}</div>
-      <Rifm
-        accept={/\d/g}
-        format={formatInteger}
-        value={formatInteger(integer)}
-        onChange={value => setInteger(parseInteger(value))}
-      >
-        {renderInput}
-      </Rifm>
+    <Grid>
+      <div>
+        <div>Integer number format: {integer}</div>
+        <Rifm
+          accept={/\d/g}
+          format={formatInteger}
+          value={formatInteger(integer)}
+          onChange={value => setInteger(parseInteger(value))}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
 
-      <div>Negative number format: {negative}</div>
-      <Rifm
-        accept={/[\d-]/g}
-        format={formatNegative}
-        value={formatNegative(negative)}
-        onChange={value => setNegative(parseNegative(value))}
-      >
-        {renderInput}
-      </Rifm>
+      <div>
+        <div>Negative number format: {negative}</div>
+        <Rifm
+          accept={/[\d-]/g}
+          format={formatNegative}
+          value={formatNegative(negative)}
+          onChange={value => setNegative(parseNegative(value))}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
 
-      <div>Number with fractional part: {fixedFloat}</div>
-      <Rifm
-        accept={/[\d.]/g}
-        format={v => formatFixedPointNumber(v, 2)}
-        // 00 is needed here see disadvantages comment at formatNumber
-        value={formatFixedPointNumber(`${fixedFloat}00`, 2)}
-        onChange={value => setFixedFloat(parseNumber(value))}
-      >
-        {renderInput}
-      </Rifm>
+      <div>
+        <div>Number with fractional part: {fixedFloat}</div>
+        <Rifm
+          accept={/[\d.]/g}
+          format={v => formatFixedPointNumber(v, 2)}
+          // 00 is needed here see disadvantages comment at formatNumber
+          value={formatFixedPointNumber(`${fixedFloat}00`, 2)}
+          onChange={value => setFixedFloat(parseNumber(value))}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
 
-      <div>Number with variable fractional part: {variableFloat}</div>
-      <Rifm
-        accept={/[\d.]/g}
-        format={v => formatFloatingPointNumber(v, 2)}
-        value={formatFloatingPointNumber(variableFloat, 2)}
-        onChange={value => setVariableFloat(parseNumber(value))}
-      >
-        {renderInput}
-      </Rifm>
+      <div>
+        <div>Number with variable fractional part: {variableFloat}</div>
+        <Rifm
+          accept={/[\d.]/g}
+          format={v => formatFloatingPointNumber(v, 2)}
+          value={formatFloatingPointNumber(variableFloat, 2)}
+          onChange={value => setVariableFloat(parseNumber(value))}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
 
-      <div>Square meters number: {variableFloat}</div>
-      <Rifm
-        accept={/[\d.]/g}
-        format={formatMeters}
-        value={formatMeters(variableFloat)}
-        onChange={value => setVariableFloat(parseNumber(value))}
-      >
-        {renderInput}
-      </Rifm>
+      <div>
+        <div>Square meters number: {variableFloat}</div>
+        <Rifm
+          accept={/[\d.]/g}
+          format={formatMeters}
+          value={formatMeters(variableFloat)}
+          onChange={value => setVariableFloat(parseNumber(value))}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
 
-      <div>Currency number: {variableFloat}</div>
-      <Rifm
-        // $ need to be in regexp to prevent cursor jumping on backspace
-        accept={/[\d.$]/g}
-        format={formatCurrency}
-        value={formatCurrency(variableFloat)}
-        onChange={value => setVariableFloat(parseNumber(value))}
-      >
-        {renderInput}
-      </Rifm>
-    </React.Fragment>
+      <div>
+        <div>Currency number: {variableFloat}</div>
+        <Rifm
+          // $ need to be in regexp to prevent cursor jumping on backspace
+          accept={/[\d.$]/g}
+          format={formatCurrency}
+          value={formatCurrency(variableFloat)}
+          onChange={value => setVariableFloat(parseNumber(value))}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
+    </Grid>
+  );
+};
+
+const renderInput = ({ value, onChange }) => (
+  // type=number is not allowed
+  <input
+    type="tel"
+    style={{
+      textAlign: 'right',
+      width: '100%',
+      height: 32,
+      fontSize: 'inherit',
+      boxSizing: 'border-box',
+    }}
+    value={value}
+    onChange={onChange}
+  />
+);
+
+const Grid = ({ children }) => {
+  return (
+    <div
+      style={{
+        display: 'grid',
+        padding: 16,
+        gap: 24,
+        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+        alignItems: 'end',
+      }}
+    >
+      {children}
+    </div>
   );
 };
 

@@ -4,15 +4,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Rifm } from 'rifm';
 
-const renderInput = ({ value, onChange }) => (
-  <input
-    type="tel"
-    placeholder="dd-mm-yyyy"
-    value={value}
-    onChange={onChange}
-  />
-);
-
 const parseDigits = string => (string.match(/\d+/g) || []).join('');
 
 const formatDate = string => {
@@ -34,33 +25,68 @@ const formatDateWithMask = string => {
   return `${days}-${months}-${years}`;
 };
 
-const Example = () => {
+const Example = () /*:React.Node*/ => {
   const [formatted, setFormatted] = React.useState('18-08-1978');
   const [masked, setMasked] = React.useState('');
 
   return (
-    <React.Fragment>
-      <div>Date format</div>
-      <Rifm
-        accept={/\d/g}
-        replace={v => 10 <= v.length}
-        format={formatDate}
-        value={formatDate(formatted)}
-        onChange={setFormatted}
-      >
-        {renderInput}
-      </Rifm>
+    <Grid>
+      <div>
+        <div>Date format</div>
+        <Rifm
+          accept={/\d/g}
+          replace={v => 10 <= v.length}
+          format={formatDate}
+          value={formatDate(formatted)}
+          onChange={setFormatted}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
 
-      <div>Date format with mask</div>
-      <Rifm
-        accept={/[\d]/g}
-        format={formatDateWithMask}
-        value={formatDateWithMask(masked)}
-        onChange={setMasked}
-      >
-        {renderInput}
-      </Rifm>
-    </React.Fragment>
+      <div>
+        <div>Date format with mask</div>
+        <Rifm
+          accept={/[\d]/g}
+          format={formatDateWithMask}
+          value={formatDateWithMask(masked)}
+          onChange={setMasked}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
+    </Grid>
+  );
+};
+
+const renderInput = ({ value, onChange }) => (
+  <input
+    type="tel"
+    placeholder="dd-mm-yyyy"
+    style={{
+      width: '100%',
+      height: 32,
+      fontSize: 'inherit',
+      boxSizing: 'border-box',
+    }}
+    value={value}
+    onChange={onChange}
+  />
+);
+
+const Grid = ({ children }) => {
+  return (
+    <div
+      style={{
+        display: 'grid',
+        padding: 16,
+        gap: 24,
+        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+        alignItems: 'end',
+      }}
+    >
+      {children}
+    </div>
   );
 };
 
