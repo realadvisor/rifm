@@ -7,11 +7,7 @@ const numberAccept = /[\d.]+/g;
 
 const parseNumber = string => (string.match(numberAccept) || []).join('');
 
-export const formatNumber = (
-  string: string,
-  scale: number,
-  fixed: boolean
-): string => {
+const formatNumber = (string, scale, fixed) => {
   const parsed = parseNumber(string);
   const [head, tail] = parsed.split('.');
   const scaledTail = tail != null ? tail.slice(0, scale) : '';
@@ -51,6 +47,20 @@ export const formatNumber = (
     }`;
   }
   return formatted;
+};
+
+export const formatFixedPointNumber = (
+  value: string,
+  scale: number
+): string => {
+  return formatNumber(value, scale, true);
+};
+
+export const formatFloatingPointNumber = (
+  value: string,
+  maxScale: number
+): string => {
+  return formatNumber(value, maxScale, false);
 };
 
 export const negNumberFormat = (str: string) => {

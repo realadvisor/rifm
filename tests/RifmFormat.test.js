@@ -1,10 +1,10 @@
 // @flow
 
-import { formatNumber } from './format';
+import { formatFixedPointNumber, formatFloatingPointNumber } from './format';
 import { createExec } from './utils/exec';
 
 test('format works', async () => {
-  const format = v => formatNumber(v, 0, true);
+  const format = v => formatFixedPointNumber(v, 0);
   const exec = createExec({ format });
 
   exec({ type: 'PUT_SYMBOL', payload: '1' }).toMatchInlineSnapshot(`"1|"`);
@@ -35,7 +35,7 @@ test('format works', async () => {
 });
 
 test('format with custom accept works', async () => {
-  const format = v => formatNumber(v, 2, false);
+  const format = v => formatFloatingPointNumber(v, 2);
   const exec = createExec({
     accept: /[\d.]/gi,
     format: format,
@@ -95,7 +95,7 @@ test('format with custom accept works', async () => {
 });
 
 test('format with fixed point delete backspace', async () => {
-  const format = v => formatNumber(v, 2, true);
+  const format = v => formatFixedPointNumber(v, 2);
 
   const exec = createExec({
     accept: /[\d.]/gi,
@@ -109,7 +109,7 @@ test('format with fixed point delete backspace', async () => {
 });
 
 test('format works even if state is not updated on equal vals', async () => {
-  const format = v => formatNumber(v, 0, true);
+  const format = v => formatFixedPointNumber(v, 0);
 
   const exec = createExec({
     format,
