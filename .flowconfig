@@ -15,5 +15,6 @@ unnecessary-invariant=error
 
 [options]
 include_warnings=true
+module.name_mapper='^rifm$' -> '<PROJECT_ROOT>/src'
 
 [strict]
