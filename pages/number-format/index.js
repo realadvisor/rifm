@@ -53,14 +53,19 @@ const parseNumber = string => (string.match(numberAccept) || []).join('');
 const formatNumber = (string, scale, fixed) => {
   const parsed = parseNumber(string);
   const [head, tail] = parsed.split('.');
-  const tl = tail != null ? tail.slice(0, scale) : '';
+  const scaledTail = tail != null ? tail.slice(0, scale) : '';
 
-  let number = Number.parseFloat(`${head}.${tl}`);
+  let number = Number.parseFloat(`${head}.${scaledTail}`);
 
+  // For fixed format numbers deleting "." must be no-op
+  // as imagine u have 123.45 then delete "." and get 12345.00 looks bad in UI
+  // so we transform here 12345 into 123.45 instead of 12345.00.
+  // The main disadvantage of this, that you need carefully check input value
+  // that it always has fractional part
   if (scale > 0 && fixed && tail == null) {
-    const headPad = head.padStart(scale + 1 - head.length, '0');
+    const paddedHead = head.padStart(scale + 1 - head.length, '0');
     number = Number.parseFloat(
-      `${headPad.slice(0, -scale)}.${headPad.slice(-scale)}`
+      `${paddedHead.slice(0, -scale)}.${paddedHead.slice(-scale)}`
     );
   }
 
@@ -73,14 +78,16 @@ const formatNumber = (string, scale, fixed) => {
     maximumFractionDigits: scale,
   });
 
-  // non fixed part can be removed for fixed floats
   if (!fixed && parsed.includes('.')) {
-    return (
-      formatted.split('.')[0] +
-      '.' +
+    const [formattedHead] = formatted.split('.');
+    return `${formattedHead}.${
       // skip zero at scale position for non fixed floats
-      (tl !== '' && tl[scale - 1] === '0' ? tl.slice(0, -1) : tl)
-    );
+      // as at scale 2 for non fixed floats numbers like 1.50 has no sense, just 1.5 allowed
+      // but 1.0 has sense as otherwise you will not be able to enter 1.05 for example
+      scaledTail !== '' && scaledTail[scale - 1] === '0'
+        ? scaledTail.slice(0, -1)
+        : scaledTail
+    }`;
   }
   return formatted;
 };
@@ -94,7 +101,7 @@ const Example = () => {
   const [integer, setInteger] = React.useState('12345');
   const [negative, setNegative] = React.useState('12345');
   const [variableFloat, setVariableFloat] = React.useState('12345');
-  const [fixedFloat, setFixedFloat] = React.useState('12345.00');
+  const [fixedFloat, setFixedFloat] = React.useState('12345');
 
   return (
     <React.Fragment>
@@ -122,7 +129,8 @@ const Example = () => {
       <Rifm
         accept={/[\d.]/g}
         format={v => formatNumber(v, 2, true)}
-        value={formatNumber(fixedFloat, 2, true)}
+        // 00 is needed here see disadvantages comment at formatNumber
+        value={formatNumber(`${fixedFloat}00`, 2, true)}
         onChange={value => setFixedFloat(parseNumber(value))}
       >
         {renderInput}
