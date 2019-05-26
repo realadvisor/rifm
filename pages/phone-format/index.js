@@ -1,4 +1,5 @@
 /* @flow */
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Rifm } from 'rifm';

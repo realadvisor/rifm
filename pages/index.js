@@ -1,3 +1,5 @@
+/* @flow */
+
 import * as React from 'react';
 import { Container, Typography, Link } from '@material-ui/core';
 
