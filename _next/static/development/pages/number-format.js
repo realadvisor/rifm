@@ -1549,10 +1549,10 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 /***/ }),
 
-/***/ "./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2Fnumber-format&absolutePagePath=%2FUsers%2Fice%2Fext%2Fnpm%2Frifm%2Fpages%2Fnumber-format%2Findex.js!./":
-/*!**********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2Fnumber-format&absolutePagePath=%2FUsers%2Fice%2Fext%2Fnpm%2Frifm%2Fpages%2Fnumber-format%2Findex.js ***!
-  \**********************************************************************************************************************************************************************************************/
+/***/ "./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2Fnumber-format&absolutePagePath=%2FUsers%2Fbogdancadkin%2Fhost%2Frifm%2Fpages%2Fnumber-format%2Findex.js!./":
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2Fnumber-format&absolutePagePath=%2FUsers%2Fbogdancadkin%2Fhost%2Frifm%2Fpages%2Fnumber-format%2Findex.js ***!
+  \**************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1603,9 +1603,9 @@ module.exports = (__webpack_require__(/*! dll-reference dll_9c75acfe53428ad7a9fa
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/slicedToArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js");
-/* harmony import */ var _babel_runtime_corejs2_core_js_number_parse_float__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/number/parse-float */ "./node_modules/@babel/runtime-corejs2/core-js/number/parse-float.js");
-/* harmony import */ var _babel_runtime_corejs2_core_js_number_parse_float__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_number_parse_float__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_corejs2_core_js_number_parse_float__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/number/parse-float */ "./node_modules/@babel/runtime-corejs2/core-js/number/parse-float.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_number_parse_float__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_number_parse_float__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/slicedToArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js");
 /* harmony import */ var _babel_runtime_corejs2_core_js_number_is_nan__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/number/is-nan */ "./node_modules/@babel/runtime-corejs2/core-js/number/is-nan.js");
 /* harmony import */ var _babel_runtime_corejs2_core_js_number_is_nan__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_number_is_nan__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _babel_runtime_corejs2_core_js_number_parse_int__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/number/parse-int */ "./node_modules/@babel/runtime-corejs2/core-js/number/parse-int.js");
@@ -1619,32 +1619,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _jsxFileName = "/Users/ice/ext/npm/rifm/pages/number-format/index.js";
+var _jsxFileName = "/Users/bogdancadkin/host/rifm/pages/number-format/index.js";
+
+/* @flow */
 
 
-
-
-var renderInput = function renderInput(_ref) {
-  var value = _ref.value,
-      onChange = _ref.onChange;
-  return (// type=number is not allowed
-    react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("input", {
-      type: "tel",
-      style: {
-        textAlign: 'right'
-      },
-      value: value,
-      onChange: onChange,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 7
-      },
-      __self: this
-    })
-  );
-}; // To prevent parseInt overflow you can use `maxLength` on input field
+ // To prevent parseInt overflow you can use `maxLength` on input field
 // or write your own numberFormat.
-
 
 var integerAccept = /\d+/g;
 
@@ -1692,32 +1673,74 @@ var parseNumber = function parseNumber(string) {
   return (string.match(numberAccept) || []).join('');
 };
 
-var floor = function floor(number, scale) {
-  var ratio = Math.pow(10, scale);
-  return Math.floor(number * ratio) / ratio;
-};
+var formatFixedPointNumber = function formatFixedPointNumber(value, digits) {
+  var parsed = parseNumber(value);
 
-var formatNumber = function formatNumber(string, scale, fixed) {
-  var parsed = parseNumber(string);
+  var _parsed$split = parsed.split('.'),
+      _parsed$split2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_parsed$split, 2),
+      head = _parsed$split2[0],
+      tail = _parsed$split2[1]; // Avoid rounding errors at toLocaleString as when user enters 1.239 and maxDigits=2 we
+  // must not to convert it to 1.24, it must stay 1.23
 
-  var number = _babel_runtime_corejs2_core_js_number_parse_float__WEBPACK_IMPORTED_MODULE_1___default()(parsed);
+
+  var scaledTail = tail != null ? tail.slice(0, digits) : '';
+
+  var number = _babel_runtime_corejs2_core_js_number_parse_float__WEBPACK_IMPORTED_MODULE_0___default()("".concat(head, ".").concat(scaledTail)); // For fixed format numbers deleting "." must be no-op
+  // as imagine u have 123.45 then delete "." and get 12345.00 looks bad in UI
+  // so we transform here 12345 into 123.45 instead of 12345.00.
+  // The main disadvantage of this, that you need carefully check input value
+  // that it always has fractional part
+
+
+  if (digits > 0 && tail == null) {
+    var paddedHead = head.padStart(digits + 1 - head.length, '0');
+    number = _babel_runtime_corejs2_core_js_number_parse_float__WEBPACK_IMPORTED_MODULE_0___default()("".concat(paddedHead.slice(0, -digits), ".").concat(paddedHead.slice(-digits)));
+  }
 
   if (_babel_runtime_corejs2_core_js_number_is_nan__WEBPACK_IMPORTED_MODULE_2___default()(number)) {
     return '';
-  } // floor to prevent incrementing rounded number
+  }
+
+  var formatted = number.toLocaleString('de-CH', {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits
+  });
+  return formatted;
+};
+
+var formatFloatingPointNumber = function formatFloatingPointNumber(value, maxDigits) {
+  var parsed = parseNumber(value);
+
+  var _parsed$split3 = parsed.split('.'),
+      _parsed$split4 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_parsed$split3, 2),
+      head = _parsed$split4[0],
+      tail = _parsed$split4[1]; // Avoid rounding errors at toLocaleString as when user enters 1.239 and maxDigits=2 we
+  // must not to convert it to 1.24, it must stay 1.23
 
 
-  var formatted = floor(number, scale).toLocaleString('de-CH', {
-    minimumFractionDigits: fixed ? scale : 0,
-    maximumFractionDigits: scale
+  var scaledTail = tail != null ? tail.slice(0, maxDigits) : '';
+
+  var number = _babel_runtime_corejs2_core_js_number_parse_float__WEBPACK_IMPORTED_MODULE_0___default()("".concat(head, ".").concat(scaledTail));
+
+  if (_babel_runtime_corejs2_core_js_number_is_nan__WEBPACK_IMPORTED_MODULE_2___default()(number)) {
+    return '';
+  }
+
+  var formatted = number.toLocaleString('de-CH', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: maxDigits
   });
 
-  if (!formatted.includes('.') && parsed.includes('.')) {
-    var _parsed$split = parsed.split('.'),
-        _parsed$split2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_parsed$split, 2),
-        tail = _parsed$split2[1];
+  if (parsed.includes('.')) {
+    var _formatted$split = formatted.split('.'),
+        _formatted$split2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_formatted$split, 1),
+        formattedHead = _formatted$split2[0]; // skip zero at digits position for non fixed floats
+    // as at digits 2 for non fixed floats numbers like 1.50 has no sense, just 1.5 allowed
+    // but 1.0 has sense as otherwise you will not be able to enter 1.05 for example
 
-    return formatted + '.' + tail.slice(0, scale);
+
+    var formattedTail = scaledTail !== '' && scaledTail[maxDigits - 1] === '0' ? scaledTail.slice(0, -1) : scaledTail;
+    return "".concat(formattedHead, ".").concat(formattedTail);
   }
 
   return formatted;
@@ -1725,48 +1748,56 @@ var formatNumber = function formatNumber(string, scale, fixed) {
 
 
 var formatMeters = function formatMeters(string) {
-  return formatNumber(string, 2, false) + " m\xB2";
+  return formatFloatingPointNumber(string, 2) + " m\xB2";
 };
 
 var formatCurrency = function formatCurrency(string) {
-  return '$' + formatNumber(string, 2, false);
+  return '$' + formatFloatingPointNumber(string, 2);
 };
 
-var Example = function Example() {
+var Example = function Example()
+/*:React.Node*/
+{
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_4__["useState"]('12345'),
-      _React$useState2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_React$useState, 2),
+      _React$useState2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_React$useState, 2),
       integer = _React$useState2[0],
       setInteger = _React$useState2[1];
 
   var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_4__["useState"]('12345'),
-      _React$useState4 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_React$useState3, 2),
+      _React$useState4 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_React$useState3, 2),
       negative = _React$useState4[0],
       setNegative = _React$useState4[1];
 
   var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_4__["useState"]('12345'),
-      _React$useState6 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_React$useState5, 2),
+      _React$useState6 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_React$useState5, 2),
       variableFloat = _React$useState6[0],
       setVariableFloat = _React$useState6[1];
 
   var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_4__["useState"]('12345'),
-      _React$useState8 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_React$useState7, 2),
+      _React$useState8 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_React$useState7, 2),
       fixedFloat = _React$useState8[0],
       setFixedFloat = _React$useState8[1];
 
-  return react__WEBPACK_IMPORTED_MODULE_4__["createElement"](react__WEBPACK_IMPORTED_MODULE_4__["Fragment"], {
+  return react__WEBPACK_IMPORTED_MODULE_4__["createElement"](Grid, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 86
+      lineNumber: 123
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 87
+      lineNumber: 124
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 125
     },
     __self: this
   }, "Integer number format: ", integer), react__WEBPACK_IMPORTED_MODULE_4__["createElement"](rifm__WEBPACK_IMPORTED_MODULE_6__["Rifm"], {
-    refuse: /[^\d]+/g,
+    accept: /\d/g,
     format: formatInteger,
     value: formatInteger(integer),
     onChange: function onChange(value) {
@@ -1774,17 +1805,23 @@ var Example = function Example() {
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 88
+      lineNumber: 126
     },
     __self: this
-  }, renderInput), react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+  }, renderInput)), react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 97
+      lineNumber: 136
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 137
     },
     __self: this
   }, "Negative number format: ", negative), react__WEBPACK_IMPORTED_MODULE_4__["createElement"](rifm__WEBPACK_IMPORTED_MODULE_6__["Rifm"], {
-    refuse: /[^\d-]+/g,
+    accept: /[\d-]/g,
     format: formatNegative,
     value: formatNegative(negative),
     onChange: function onChange(value) {
@@ -1792,57 +1829,76 @@ var Example = function Example() {
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 98
+      lineNumber: 138
     },
     __self: this
-  }, renderInput), react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+  }, renderInput)), react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 107
+      lineNumber: 148
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 149
     },
     __self: this
   }, "Number with fractional part: ", fixedFloat), react__WEBPACK_IMPORTED_MODULE_4__["createElement"](rifm__WEBPACK_IMPORTED_MODULE_6__["Rifm"], {
-    refuse: /[^\d.]+/g,
+    accept: /[\d.]/g,
     format: function format(v) {
-      return formatNumber(v, 2, true);
-    },
-    value: formatNumber(fixedFloat, 2, true),
+      return formatFixedPointNumber(v, 2);
+    } // 00 is needed here see disadvantages comment at formatNumber
+    ,
+    value: formatFixedPointNumber("".concat(fixedFloat, "00"), 2),
     onChange: function onChange(value) {
       return setFixedFloat(parseNumber(value));
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 108
+      lineNumber: 150
     },
     __self: this
-  }, renderInput), react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+  }, renderInput)), react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 117
+      lineNumber: 161
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 162
     },
     __self: this
   }, "Number with variable fractional part: ", variableFloat), react__WEBPACK_IMPORTED_MODULE_4__["createElement"](rifm__WEBPACK_IMPORTED_MODULE_6__["Rifm"], {
-    refuse: /[^\d.]+/g,
+    accept: /[\d.]/g,
     format: function format(v) {
-      return formatNumber(v, 2, false);
+      return formatFloatingPointNumber(v, 2);
     },
-    value: formatNumber(variableFloat, 2, false),
+    value: formatFloatingPointNumber(variableFloat, 2),
     onChange: function onChange(value) {
       return setVariableFloat(parseNumber(value));
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 118
+      lineNumber: 163
     },
     __self: this
-  }, renderInput), react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+  }, renderInput)), react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 127
+      lineNumber: 173
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 174
     },
     __self: this
   }, "Square meters number: ", variableFloat), react__WEBPACK_IMPORTED_MODULE_4__["createElement"](rifm__WEBPACK_IMPORTED_MODULE_6__["Rifm"], {
-    refuse: /[^\d.]+/g,
+    accept: /[\d.]/g,
     format: formatMeters,
     value: formatMeters(variableFloat),
     onChange: function onChange(value) {
@@ -1850,18 +1906,24 @@ var Example = function Example() {
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 128
+      lineNumber: 175
     },
     __self: this
-  }, renderInput), react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+  }, renderInput)), react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 137
+      lineNumber: 185
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 186
     },
     __self: this
   }, "Currency number: ", variableFloat), react__WEBPACK_IMPORTED_MODULE_4__["createElement"](rifm__WEBPACK_IMPORTED_MODULE_6__["Rifm"] // $ need to be in regexp to prevent cursor jumping on backspace
   , {
-    refuse: /[^\d.$]+/g,
+    accept: /[\d.$]/g,
     format: formatCurrency,
     value: formatCurrency(variableFloat),
     onChange: function onChange(value) {
@@ -1869,10 +1931,52 @@ var Example = function Example() {
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 138
+      lineNumber: 187
     },
     __self: this
-  }, renderInput));
+  }, renderInput)));
+};
+
+var renderInput = function renderInput(_ref) {
+  var value = _ref.value,
+      onChange = _ref.onChange;
+  return (// type=number is not allowed
+    react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("input", {
+      type: "tel",
+      style: {
+        textAlign: 'right',
+        width: '100%',
+        height: 32,
+        fontSize: 'inherit',
+        boxSizing: 'border-box'
+      },
+      value: value,
+      onChange: onChange,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 203
+      },
+      __self: this
+    })
+  );
+};
+
+var Grid = function Grid(_ref2) {
+  var children = _ref2.children;
+  return react__WEBPACK_IMPORTED_MODULE_4__["createElement"]("div", {
+    style: {
+      display: 'grid',
+      padding: 16,
+      gap: 24,
+      gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+      alignItems: 'end'
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 219
+    },
+    __self: this
+  }, children);
 };
 
 if (typeof document !== 'undefined') {
@@ -1882,7 +1986,7 @@ if (typeof document !== 'undefined') {
     react_dom__WEBPACK_IMPORTED_MODULE_5__["render"](react__WEBPACK_IMPORTED_MODULE_4__["createElement"](Example, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 154
+        lineNumber: 236
       },
       __self: undefined
     }), root);
@@ -2062,14 +2166,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 0:
-/*!**************************************************************************************************************************************************!*\
-  !*** multi next-client-pages-loader?page=%2Fnumber-format&absolutePagePath=%2FUsers%2Fice%2Fext%2Fnpm%2Frifm%2Fpages%2Fnumber-format%2Findex.js ***!
-  \**************************************************************************************************************************************************/
+/***/ 1:
+/*!******************************************************************************************************************************************************!*\
+  !*** multi next-client-pages-loader?page=%2Fnumber-format&absolutePagePath=%2FUsers%2Fbogdancadkin%2Fhost%2Frifm%2Fpages%2Fnumber-format%2Findex.js ***!
+  \******************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2Fnumber-format&absolutePagePath=%2FUsers%2Fice%2Fext%2Fnpm%2Frifm%2Fpages%2Fnumber-format%2Findex.js! */"./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2Fnumber-format&absolutePagePath=%2FUsers%2Fice%2Fext%2Fnpm%2Frifm%2Fpages%2Fnumber-format%2Findex.js!./");
+module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2Fnumber-format&absolutePagePath=%2FUsers%2Fbogdancadkin%2Fhost%2Frifm%2Fpages%2Fnumber-format%2Findex.js! */"./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2Fnumber-format&absolutePagePath=%2FUsers%2Fbogdancadkin%2Fhost%2Frifm%2Fpages%2Fnumber-format%2Findex.js!./");
 
 
 /***/ }),
@@ -2085,5 +2189,5 @@ module.exports = dll_9c75acfe53428ad7a9fa;
 
 /***/ })
 
-},[[0,"static/runtime/webpack.js"]]]);
+},[[1,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=number-format.js.map

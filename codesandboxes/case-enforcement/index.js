@@ -1,48 +1,94 @@
+/* @flow */
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Rifm } from 'rifm';
 
-const renderInput = ({ value, onChange }) => (
-  <input value={value} onChange={onChange} />
-);
-
-const Example = () => {
+const Example = () /*:React.Node*/ => {
   const [lowercase, setLowercase] = React.useState('');
   const [uppercase, setUppercase] = React.useState('');
   const [capitalized, setCapitalized] = React.useState('');
+  const [latinLetters, setLatinLetters] = React.useState('');
 
   return (
-    <React.Fragment>
-      <div>Lower case</div>
-      <Rifm
-        refuse={/$^/}
-        format={v => v.toLowerCase()}
-        value={lowercase}
-        onChange={setLowercase}
-      >
-        {renderInput}
-      </Rifm>
+    <Grid>
+      <div>
+        <div>Lower case</div>
+        <Rifm
+          accept={/./g}
+          format={v => v.toLowerCase()}
+          value={lowercase}
+          onChange={setLowercase}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
 
-      <div>Upper case</div>
-      <Rifm
-        refuse={/$^/}
-        format={v => v.toUpperCase()}
-        value={uppercase}
-        onChange={setUppercase}
-      >
-        {renderInput}
-      </Rifm>
+      <div>
+        <div>Upper case</div>
+        <Rifm
+          accept={/./g}
+          format={v => v.toUpperCase()}
+          value={uppercase}
+          onChange={setUppercase}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
 
-      <div>Capital first letter</div>
-      <Rifm
-        refuse={/$^/}
-        format={v => v.slice(0, 1).toUpperCase() + v.slice(1).toLowerCase()}
-        value={capitalized}
-        onChange={setCapitalized}
-      >
-        {renderInput}
-      </Rifm>
-    </React.Fragment>
+      <div>
+        <div>Capital first letter</div>
+        <Rifm
+          accept={/./g}
+          format={v => v.slice(0, 1).toUpperCase() + v.slice(1).toLowerCase()}
+          value={capitalized}
+          onChange={setCapitalized}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
+
+      <div>
+        <div>Allow latin letters only</div>
+        <Rifm
+          accept={/[a-zA-Z]/g}
+          format={v => (v.match(/[a-zA-Z]/g) || []).join('')}
+          value={latinLetters}
+          onChange={setLatinLetters}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
+    </Grid>
+  );
+};
+
+const renderInput = ({ value, onChange }) => (
+  <input
+    style={{
+      width: '100%',
+      height: 32,
+      fontSize: 'inherit',
+      boxSizing: 'border-box',
+    }}
+    value={value}
+    onChange={onChange}
+  />
+);
+
+const Grid = ({ children }) => {
+  return (
+    <div
+      style={{
+        display: 'grid',
+        padding: 16,
+        gap: 24,
+        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+        alignItems: 'end',
+      }}
+    >
+      {children}
+    </div>
   );
 };
 

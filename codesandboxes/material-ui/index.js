@@ -1,3 +1,5 @@
+/* @flow */
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Rifm } from 'rifm';
@@ -20,7 +22,7 @@ const Example = () => {
   const [number, setNumber] = React.useState('');
 
   return (
-    <React.Fragment>
+    <div style={{ padding: 16 }}>
       <div>Number format with material-ui text field</div>
       <Rifm format={formatInteger} value={number} onChange={setNumber}>
         {({ value, onChange }) => (
@@ -34,7 +36,7 @@ const Example = () => {
           />
         )}
       </Rifm>
-    </React.Fragment>
+    </div>
   );
 };
 
