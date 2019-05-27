@@ -8,6 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noEmit": true,
+    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": { "rifm": ["./src"] }
   },

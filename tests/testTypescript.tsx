@@ -30,4 +30,4 @@ const TestFlow = () => (
   </Value>
 );
 
-() => <TestFlow />;
+export const TestFlowComponent = () => <TestFlow />;
