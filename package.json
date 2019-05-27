@@ -89,7 +89,9 @@
     },
     "overrides": [
       {
-        "files": ["src/**/*.ts"],
+        "files": [
+          "src/**/*.ts"
+        ],
         "parser": "@typescript-eslint/parser",
         "parserOptions": {
           "ecmaVersion": 6,
@@ -111,7 +113,6 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^23.2.0",
-    "dtslint": "^0.4.2",
     "emotion": "^9.2.4",
     "eslint": "^5.0.1",
     "eslint-plugin-flowtype": "^2.49.3",
@@ -137,8 +138,7 @@
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-replace": "^2.1.0",
     "rollup-plugin-size-snapshot": "^0.8.0",
-    "rollup-plugin-terser": "^4.0.4",
-    "tslint": "^5.12.0"
+    "rollup-plugin-terser": "^4.0.4"
   },
   "peerDependencies": {
     "react": ">=16.8"
