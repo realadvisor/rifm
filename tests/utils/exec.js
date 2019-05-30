@@ -23,7 +23,7 @@ export const createExec = (props: Props) => {
   TestRenderer.create(
     <Value initial={''}>
       {input => {
-        stateValue_ = props.format(input.value);
+        stateValue_ = input.value;
 
         return (
           <Rifm value={input.value} onChange={input.set} {...props}>
@@ -51,11 +51,11 @@ export const createExec = (props: Props) => {
       execCommand(cmd);
     });
 
-    if (!getVal) {
+    if (getVal == null || stateValue_ == null) {
       throw Error('rifm is not initialized');
     }
 
-    expect(stateValue_).toEqual(getVal().value);
+    expect(props.format(stateValue_)).toEqual(getVal().value);
 
     return expect(renderInputState(getVal()));
   };
