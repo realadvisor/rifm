@@ -126,7 +126,7 @@ const Example = () /*:React.Node*/ => {
         <Rifm
           accept={/\d/g}
           format={formatInteger}
-          value={formatInteger(integer)}
+          value={integer}
           onChange={value => setInteger(parseInteger(value))}
         >
           {renderInput}
@@ -138,7 +138,7 @@ const Example = () /*:React.Node*/ => {
         <Rifm
           accept={/[\d-]/g}
           format={formatNegative}
-          value={formatNegative(negative)}
+          value={negative}
           onChange={value => setNegative(parseNegative(value))}
         >
           {renderInput}
@@ -151,7 +151,7 @@ const Example = () /*:React.Node*/ => {
           accept={/[\d.]/g}
           format={v => formatFixedPointNumber(v, 2)}
           // 00 is needed here see disadvantages comment at formatNumber
-          value={formatFixedPointNumber(`${fixedFloat}00`, 2)}
+          value={`${fixedFloat}00`}
           onChange={value => setFixedFloat(parseNumber(value))}
         >
           {renderInput}
@@ -163,7 +163,7 @@ const Example = () /*:React.Node*/ => {
         <Rifm
           accept={/[\d.]/g}
           format={v => formatFloatingPointNumber(v, 2)}
-          value={formatFloatingPointNumber(variableFloat, 2)}
+          value={variableFloat}
           onChange={value => setVariableFloat(parseNumber(value))}
         >
           {renderInput}
@@ -175,7 +175,7 @@ const Example = () /*:React.Node*/ => {
         <Rifm
           accept={/[\d.]/g}
           format={formatMeters}
-          value={formatMeters(variableFloat)}
+          value={variableFloat}
           onChange={value => setVariableFloat(parseNumber(value))}
         >
           {renderInput}
@@ -188,7 +188,7 @@ const Example = () /*:React.Node*/ => {
           // $ need to be in regexp to prevent cursor jumping on backspace
           accept={/[\d.$]/g}
           format={formatCurrency}
-          value={formatCurrency(variableFloat)}
+          value={variableFloat}
           onChange={value => setVariableFloat(parseNumber(value))}
         >
           {renderInput}

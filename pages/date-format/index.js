@@ -53,7 +53,7 @@ const Example = () /*:React.Node*/ => {
           accept={/\d/g}
           replace={v => 10 <= v.length}
           format={formatDate}
-          value={formatDate(formatted)}
+          value={formatted}
           onChange={setFormatted}
         >
           {renderInput}
@@ -66,7 +66,7 @@ const Example = () /*:React.Node*/ => {
           accept={/[\d-]+/g}
           replace={v => 10 <= v.length}
           format={formatDateOther}
-          value={formatDateOther(formattedA)}
+          value={formattedA}
           onChange={setFormattedA}
         >
           {renderInput}
@@ -78,7 +78,7 @@ const Example = () /*:React.Node*/ => {
         <Rifm
           accept={/[\d]/g}
           format={formatDateWithMask}
-          value={formatDateWithMask(masked)}
+          value={masked}
           onChange={setMasked}
         >
           {renderInput}

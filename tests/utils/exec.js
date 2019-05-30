@@ -23,7 +23,7 @@ export const createExec = (props: Props) => {
   TestRenderer.create(
     <Value initial={''}>
       {input => {
-        stateValue_ = input.value;
+        stateValue_ = props.format(input.value);
 
         return (
           <Rifm value={input.value} onChange={input.set} {...props}>

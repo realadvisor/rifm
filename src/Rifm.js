@@ -19,6 +19,7 @@ type Props = {|
 export const Rifm = (props: Props) => {
   const [, refresh] = React.useReducer(c => c + 1, 0);
   const valueRef = React.useRef(null);
+  const userValue = props.format(props.value);
 
   // state of delete button see comments below about inputType support
   const isDeleleteButtonDownRef = React.useRef(false);
@@ -35,15 +36,14 @@ export const Rifm = (props: Props) => {
       }
     }
 
-    const value = props.value;
     const eventValue = evt.target.value;
 
     valueRef.current = [
       eventValue, // eventValue
       evt.target, // input
-      eventValue.length > value.length, // isSizeIncreaseOperation
+      eventValue.length > userValue.length, // isSizeIncreaseOperation
       isDeleleteButtonDownRef.current, // isDeleleteButtonDown
-      value === props.format(eventValue), // isNoOperation
+      userValue === props.format(eventValue), // isNoOperation
     ];
 
     // The main trick is to update underlying input with non formatted value (= eventValue)
@@ -103,7 +103,7 @@ export const Rifm = (props: Props) => {
       // we need to replace symbols instead of do nothing as like in format
       if (
         props.replace &&
-        props.replace(props.value) &&
+        props.replace(userValue) &&
         isSizeIncreaseOperation &&
         !isNoOperation
       ) {
@@ -119,8 +119,8 @@ export const Rifm = (props: Props) => {
 
       const formattedValue = props.format(eventValue);
 
-      if (props.value === formattedValue) {
-        // if nothing changed for formatted value, just refresh so props.value will be used at render
+      if (userValue === formattedValue) {
+        // if nothing changed for formatted value, just refresh so userValue will be used at render
         refresh();
       } else {
         props.onChange(formattedValue);
@@ -176,7 +176,7 @@ export const Rifm = (props: Props) => {
   }, []);
 
   return props.children({
-    value: valueRef.current != null ? valueRef.current[0] : props.value,
+    value: valueRef.current != null ? valueRef.current[0] : userValue,
     onChange,
   });
 };
