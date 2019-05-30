@@ -13,7 +13,7 @@ const formatPhone = string => {
 };
 
 const Example = () /*:React.Node*/ => {
-  const [phone, setPhone] = React.useState('');
+  const [phone, setPhone] = React.useState('1234567');
 
   return (
     <Grid>
@@ -28,7 +28,7 @@ const Example = () /*:React.Node*/ => {
               : v => v.length >= 14
           }
           format={formatPhone}
-          value={formatPhone(phone)}
+          value={phone}
           onChange={setPhone}
         >
           {renderInput}
