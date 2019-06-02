@@ -11,7 +11,10 @@ into formatted or masked input.
 - Dependency free
 - Tiny (≈ 800b)
 - Supports any [input](https://istarkov.github.io/rifm#material-ui).
-- Can mask input and format
+- Can [mask](https://istarkov.github.io/rifm#date-format) input,
+  [format](https://istarkov.github.io/rifm#number-format) and [more](https://istarkov.github.io/rifm#case-enforcement)
+- Small readable source
+- flow + typescript definitions
 
 ## Example
 
