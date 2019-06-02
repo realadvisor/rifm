@@ -16,7 +16,8 @@ const Example = () /*:React.Node*/ => {
         <div>Lower case</div>
         <Rifm
           accept={/./g}
-          format={v => v.toLowerCase()}
+          format={v => v}
+          replace={v => v.toLowerCase()}
           value={lowercase}
           onChange={setLowercase}
         >
@@ -28,7 +29,8 @@ const Example = () /*:React.Node*/ => {
         <div>Upper case</div>
         <Rifm
           accept={/./g}
-          format={v => v.toUpperCase()}
+          format={v => v}
+          replace={v => v.toUpperCase()}
           value={uppercase}
           onChange={setUppercase}
         >
@@ -40,7 +42,8 @@ const Example = () /*:React.Node*/ => {
         <div>Capital first letter</div>
         <Rifm
           accept={/./g}
-          format={v => v.slice(0, 1).toUpperCase() + v.slice(1).toLowerCase()}
+          format={v => v}
+          replace={v => v.slice(0, 1).toUpperCase() + v.slice(1).toLowerCase()}
           value={capitalized}
           onChange={setCapitalized}
         >
@@ -55,6 +58,23 @@ const Example = () /*:React.Node*/ => {
           format={v => (v.match(/[a-zA-Z]/g) || []).join('')}
           value={latinLetters}
           onChange={setLatinLetters}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
+
+      <div>
+        <div>Leave a comment about Rifm</div>
+        <Rifm
+          accept={/./g}
+          format={v => v}
+          replace={v =>
+            'Rifm is the best mask and formatting library. I love it! '
+              .repeat(20)
+              .slice(0, v.length)
+          }
+          value={capitalized}
+          onChange={setCapitalized}
         >
           {renderInput}
         </Rifm>

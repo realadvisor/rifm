@@ -7,6 +7,7 @@ type Props = {|
   onChange: string => void,
   format: (str: string) => string,
   mask?: boolean,
+  replace?: string => string,
   accept?: RegExp,
   children: ({
     value: string,
@@ -46,6 +47,19 @@ export const Rifm = (props: Props) => {
       userValue === props.format(eventValue), // isNoOperation
     ];
 
+    if (process.env.NODE_ENV !== 'production') {
+      const formattedEventValue = props.format(eventValue);
+      if (
+        eventValue !== formattedEventValue &&
+        eventValue.toLowerCase() === formattedEventValue.toLowerCase()
+      ) {
+        console.warn(`
+          Case enforcement does not work with format.
+          Please use replace={value => value.toLowerCase()} instead
+        `);
+      }
+    }
+
     // The main trick is to update underlying input with non formatted value (= eventValue)
     // that allows us to calculate right cursor position after formatting (see getCursorPosition)
     // then we format new value and call props.onChange with masked/formatted value
@@ -78,7 +92,7 @@ export const Rifm = (props: Props) => {
 
       const valueBeforeSelectionStart = clean(
         eventValue.substr(0, input.selectionStart)
-      ).toLowerCase();
+      );
 
       // trying to find cursor position in formatted value having knowledge about valueBeforeSelectionStart
       // This works because we assume that format doesn't change the order of accepted symbols.
@@ -87,20 +101,16 @@ export const Rifm = (props: Props) => {
       // inputValue = 1'23'|4 so valueBeforeSelectionStart = 123 and formatted value = 1'2'3'4
       // calling getCursorPosition("1'2'3'4") will give us position after 3, 1'2'3|'4
       // so for formatting just this function to determine cursor position after formatting is enough
-      // with masking we need to do some additional checks see `replace` below
+      // with masking we need to do some additional checks see `mask` below
       const getCursorPosition = val => {
         let start = 0;
         let cleanPos = 0;
 
         for (let i = 0; i !== valueBeforeSelectionStart.length; ++i) {
-          let newPos =
-            val.toLowerCase().indexOf(valueBeforeSelectionStart[i], start) + 1;
+          let newPos = val.indexOf(valueBeforeSelectionStart[i], start) + 1;
 
           let newCleanPos =
-            clean(val.toLowerCase()).indexOf(
-              valueBeforeSelectionStart[i],
-              cleanPos
-            ) + 1;
+            clean(val).indexOf(valueBeforeSelectionStart[i], cleanPos) + 1;
 
           // this skips position change if accepted symbols order was broken
           // For example fixes edge case with fixed point numbers:
@@ -137,7 +147,24 @@ export const Rifm = (props: Props) => {
         // if nothing changed for formatted value, just refresh so userValue will be used at render
         refresh();
       } else {
-        props.onChange(formattedValue);
+        if (process.env.NODE_ENV !== 'production') {
+          const replaceValue =
+            props.replace != null
+              ? props.replace(formattedValue)
+              : formattedValue;
+
+          if (replaceValue.length !== formattedValue.length) {
+            console.warn('replace operation to work, must preserve length');
+          }
+
+          props.onChange(replaceValue);
+        } else {
+          props.onChange(
+            props.replace != null
+              ? props.replace(formattedValue)
+              : formattedValue
+          );
+        }
       }
 
       return () => {

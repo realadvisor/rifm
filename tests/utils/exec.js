@@ -14,6 +14,7 @@ type Props = {|
   // replace?: string => boolean,
   mask?: boolean,
   format: (str: string) => string,
+  replace?: (str: string) => string,
   maskFn?: string => boolean,
 |};
 
@@ -33,6 +34,7 @@ export const createExec = (props: Props) => {
             onChange={input.set}
             accept={props.accept}
             format={props.format}
+            replace={props.replace}
             mask={
               props.mask != null
                 ? props.mask
