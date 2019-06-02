@@ -38,17 +38,17 @@ const GithubIcon = ({ size }) => {
   );
 };
 
-const H1 = ({ children }) => {
+const H1 = ({ children, ...props }) => {
   return (
-    <Typography variant="h2" gutterBottom>
+    <Typography variant="h2" gutterBottom {...props}>
       {children}
     </Typography>
   );
 };
 
-const H2 = ({ children }) => {
+const H2 = ({ children, ...props }) => {
   return (
-    <Typography variant="h4" gutterBottom>
+    <Typography variant="h4" gutterBottom {...props}>
       {children}
     </Typography>
   );
