@@ -90,11 +90,30 @@ export const Rifm = (props: Props) => {
       // with masking we need to do some additional checks see `replace` below
       const getCursorPosition = val => {
         let start = 0;
+        let cleanPos = 0;
+
         for (let i = 0; i !== valueBeforeSelectionStart.length; ++i) {
-          start = Math.max(
-            start,
-            val.toLowerCase().indexOf(valueBeforeSelectionStart[i], start) + 1
-          );
+          let newPos =
+            val.toLowerCase().indexOf(valueBeforeSelectionStart[i], start) + 1;
+
+          let newCleanPos =
+            clean(val.toLowerCase()).indexOf(
+              valueBeforeSelectionStart[i],
+              cleanPos
+            ) + 1;
+
+          // this skips position change if accepted symbols order was broken
+          // For example fixes edge case with fixed point numbers:
+          // You have '0|.00', then press 1, it becomes 01|.00 and after format 1.00, this breaks our assumption
+          // that order of accepted symbols is not changed after format,
+          // so here we don't update start position if other accepted symbols was inbetween current and new position
+          if (newCleanPos - cleanPos > 1) {
+            newPos = start;
+            newCleanPos = cleanPos;
+          }
+
+          cleanPos = Math.max(newCleanPos, cleanPos);
+          start = Math.max(start, newPos);
         }
         return start;
       };
