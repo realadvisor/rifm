@@ -98,15 +98,15 @@ So mask is just symbol editing mode in this cases.
 
 ### Props
 
-| Prop         | type                         | default | Description                                                                    |
-| ------------ | :--------------------------- | :------ | :----------------------------------------------------------------------------- |
-| **accept**   | RegExp (optional)            | /\d/g   | Regular expression to detect **"accepted"** symbols                            |
-| **format**   | string => string             |         | format function                                                                |
-| **value**    | string                       |         | input value                                                                    |
-| **onChange** | string => void               |         | event fired on input change                                                    |
-| **children** | ({ value, onChange })=> Node |         | value and onChange handler you need to pass to underlying input element        |
-| **mask**     | boolean (optional)           |         | switch on replace input mode                                                   |
-| **replace**  | string => string (optional)  |         | postprocess format allowing you to fully replace all symbols preserving cursor |
+| Prop         | type                          | default | Description                                                                    |
+| ------------ | :---------------------------- | :------ | :----------------------------------------------------------------------------- |
+| **accept**   | RegExp (optional)             | /\d/g   | Regular expression to detect **"accepted"** symbols                            |
+| **format**   | string => string              |         | format function                                                                |
+| **value**    | string                        |         | input value                                                                    |
+| **onChange** | string => void                |         | event fired on input change                                                    |
+| **children** | ({ value, onChange }) => Node |         | value and onChange handler you need to pass to underlying input element        |
+| **mask**     | boolean (optional)            |         | switch on replace input mode                                                   |
+| **replace**  | string => string (optional)   |         | postprocess format allowing you to fully replace all symbols preserving cursor |
 
 ## Thanks
 
