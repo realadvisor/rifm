@@ -20,7 +20,10 @@ type Props = {|
 export const Rifm = (props: Props) => {
   const [, refresh] = React.useReducer(c => c + 1, 0);
   const valueRef = React.useRef(null);
-  const userValue = props.format(props.value);
+  const { replace } = props;
+  const userValue = replace
+    ? replace(props.format(props.value))
+    : props.format(props.value);
 
   // state of delete button see comments below about inputType support
   const isDeleleteButtonDownRef = React.useRef(false);
@@ -147,8 +150,8 @@ export const Rifm = (props: Props) => {
         refresh();
       } else {
         if (process.env.NODE_ENV !== 'production') {
-          const replaceValue = props.replace
-            ? props.replace(formattedValue)
+          const replaceValue = replace
+            ? replace(formattedValue)
             : formattedValue;
 
           if (replaceValue.length !== formattedValue.length) {
@@ -157,9 +160,7 @@ export const Rifm = (props: Props) => {
 
           props.onChange(replaceValue);
         } else {
-          props.onChange(
-            props.replace ? props.replace(formattedValue) : formattedValue
-          );
+          props.onChange(replace ? replace(formattedValue) : formattedValue);
         }
       }
 
