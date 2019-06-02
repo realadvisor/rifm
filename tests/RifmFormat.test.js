@@ -103,11 +103,12 @@ test('format with fixed point delete backspace', async () => {
   });
 
   exec({ type: 'MOVE_CARET', payload: 1 }).toMatchInlineSnapshot(`"0|.00"`);
-  exec({ type: 'PUT_SYMBOL', payload: '1' }).toMatchInlineSnapshot(`"1.|00"`);
-  exec({ type: 'PUT_SYMBOL', payload: '23' }).toMatchInlineSnapshot(`"1.23|"`);
-  exec({ type: 'MOVE_CARET', payload: -2 }).toMatchInlineSnapshot(`"1.|23"`);
-  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"1|.23"`);
-  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"1.|23"`);
+  exec({ type: 'PUT_SYMBOL', payload: '1' }).toMatchInlineSnapshot(`"1|.00"`);
+
+  exec({ type: 'PUT_SYMBOL', payload: '23' }).toMatchInlineSnapshot(`"123|.00"`);
+  exec({ type: 'MOVE_CARET', payload: -2 }).toMatchInlineSnapshot(`"1|23.00"`);
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"|23.00"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"|3.00"`);
 });
 
 test('format works even if state is not updated on equal vals', async () => {
