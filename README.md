@@ -58,7 +58,7 @@ yarn add rifm
 
 ### Terminology
 
-Rifm is based on a simple ideas (**\***):
+Rifm is based on few simple ideas (**\***):
 
 - format operation doesn't change the order of some symbols after edit
 - all that symbols are placed before input cursor position
