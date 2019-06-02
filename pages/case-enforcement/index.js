@@ -9,6 +9,7 @@ const Example = () /*:React.Node*/ => {
   const [uppercase, setUppercase] = React.useState('');
   const [capitalized, setCapitalized] = React.useState('');
   const [latinLetters, setLatinLetters] = React.useState('');
+  const [comment, setComment] = React.useState('');
 
   return (
     <Grid>
@@ -73,8 +74,8 @@ const Example = () /*:React.Node*/ => {
               .repeat(20)
               .slice(0, v.length)
           }
-          value={capitalized}
-          onChange={setCapitalized}
+          value={comment}
+          onChange={setComment}
         >
           {renderInput}
         </Rifm>
