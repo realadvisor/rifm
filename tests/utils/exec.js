@@ -44,17 +44,15 @@ export const createExec = (props: Props) => {
                 : undefined
             }
           >
-            {({ value, onChange }) =>
-              console.log('1', value) || (
-                <InputEmulator value={value} onChange={onChange}>
-                  {(exec, val) => {
-                    execCommand = exec;
-                    getVal = val;
-                    return null;
-                  }}
-                </InputEmulator>
-              )
-            }
+            {({ value, onChange }) => (
+              <InputEmulator value={value} onChange={onChange}>
+                {(exec, val) => {
+                  execCommand = exec;
+                  getVal = val;
+                  return null;
+                }}
+              </InputEmulator>
+            )}
           </Rifm>
         );
       }}
