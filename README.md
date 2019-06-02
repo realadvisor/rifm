@@ -71,7 +71,7 @@ _In all examples "|" shows current cursor position_
 - Imagine you have simple integer number formatter with **\`** as thousands separator
   and current input state is _123\`4_**|**_67_.
 
-  Then user press _5_ button and formatted input must be equal to _1\`234\`5_**|**_67_.
+  Then user press _5_ button and then formatted input must be equal to _1\`234\`5_**|**_67_.
 
   Even the overall order of elements has changed
   (was _1->2->3->\`->4->..._
