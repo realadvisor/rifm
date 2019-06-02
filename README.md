@@ -79,8 +79,8 @@ _In all examples "|" shows current cursor position_
   the order of digits before cursor hasn't changed
   (was _1->2->3->4_ and hasn't changed).
 
-Same will be for float numbers formatting, etc,
-just symbols with preserved order are different.
+Same are for float numbers formatting and many others,
+just symbols with preserved order are different and depends on format.
 We call this kind of symbols - **"accepted"** symbols.
 
 Rifm solves only one task -
