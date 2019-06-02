@@ -92,9 +92,7 @@ and cursor position in input after any user action
 is enough to find the final cursor position.
 
 Other simple idea that mask usually is nothing more
-than format with replace symbols instead of insert in some edit cases.
-
-So mask is just symbol editing mode in this cases.
+than editing mode. Instead of insert in some edit cases masks uses replace.
 
 ### Props
 
