@@ -16,6 +16,7 @@ type Props = {|
   format: (str: string) => string,
   replace?: (str: string) => string,
   maskFn?: string => boolean,
+  initialValue?: string,
 |};
 
 export const createExec = (props: Props) => {
@@ -24,7 +25,7 @@ export const createExec = (props: Props) => {
   let stateValue_ = null;
 
   TestRenderer.create(
-    <Value initial={''}>
+    <Value initial={props.initialValue != null ? props.initialValue : ''}>
       {input => {
         stateValue_ = input.value;
 
@@ -43,15 +44,17 @@ export const createExec = (props: Props) => {
                 : undefined
             }
           >
-            {({ value, onChange }) => (
-              <InputEmulator value={value} onChange={onChange}>
-                {(exec, val) => {
-                  execCommand = exec;
-                  getVal = val;
-                  return null;
-                }}
-              </InputEmulator>
-            )}
+            {({ value, onChange }) =>
+              console.log('1', value) || (
+                <InputEmulator value={value} onChange={onChange}>
+                  {(exec, val) => {
+                    execCommand = exec;
+                    getVal = val;
+                    return null;
+                  }}
+                </InputEmulator>
+              )
+            }
           </Rifm>
         );
       }}
@@ -70,8 +73,11 @@ export const createExec = (props: Props) => {
     if (getVal == null || stateValue_ == null) {
       throw Error('rifm is not initialized');
     }
+    const { replace } = props;
 
-    expect(props.format(stateValue_)).toEqual(getVal().value);
+    expect(
+      replace ? replace(props.format(stateValue_)) : props.format(stateValue_)
+    ).toEqual(getVal().value);
 
     return expect(renderInputState(getVal()));
   };

@@ -144,3 +144,14 @@ it('format can work with case changes', () => {
   exec({ type: 'MOVE_CARET', payload: -5 }).toMatchInlineSnapshot(`"hello |world"`);
   exec({ type: 'PUT_SYMBOL', payload: 'BeAuTiFuL ' }).toMatchInlineSnapshot(`"hello beautiful |world"`);
 });
+
+it('replace is applied to input value', () => {
+  const exec = createExec({
+    format: v => v,
+    replace: v => v.toLowerCase(),
+    accept: /.+/g,
+    initialValue: 'HeLLo',
+  });
+
+  exec({ type: 'MOVE_CARET', payload: -5 }).toMatchInlineSnapshot(`"|hello"`);
+});
