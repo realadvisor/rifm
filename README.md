@@ -58,10 +58,12 @@ yarn add rifm
 
 ### Terminology
 
-Rifm is based on a simple ideas (_\*_):
+Rifm is based on a simple ideas (**\***):
 
 - format operation doesn't change the order of some symbols after edit
 - all that symbols are placed before input cursor position
+
+**\*** _This ideas are not always true, but we solve some edge cases where it's not._
 
 Example:
 _In all examples "|" shows current cursor position_
@@ -103,10 +105,6 @@ So mask is just symbol editing mode in this cases.
 | **children** | ({value,onChange})=>Node  |         |    value and onChange handler you need to pass to underlying input element     |
 | **mask**     | boolean (optional)        |         |                          switch on replace input mode                          |
 | **replace**  | string=> string(optional) |         | postprocess format allowing you to fully replace all symbols preserving cursor |
-
-For
-
-_\*_ This ideas are not always true, but we solve some edge cases where it's not.
 
 ## Thanks
 
