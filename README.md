@@ -96,15 +96,15 @@ than editing mode. Instead of insert symbol mode, in some edit cases masks use r
 
 ### Props
 
-| Prop         | type                          | default | Description                                                                    |
-| ------------ | :---------------------------- | :------ | :----------------------------------------------------------------------------- |
-| **accept**   | RegExp (optional)             | /\d/g   | Regular expression to detect **"accepted"** symbols                            |
-| **format**   | string => string              |         | format function                                                                |
-| **value**    | string                        |         | input value                                                                    |
-| **onChange** | string => void                |         | event fired on input change                                                    |
-| **children** | ({ value, onChange }) => Node |         | value and onChange handler you need to pass to underlying input element        |
-| **mask**     | boolean (optional)            |         | switch on replace input mode                                                   |
-| **replace**  | string => string (optional)   |         | format postprocessor allows you to fully replace all symbols preserving cursor |
+| Prop         | type                          | default | Description                                                                         |
+| ------------ | :---------------------------- | :------ | :---------------------------------------------------------------------------------- |
+| **accept**   | RegExp (optional)             | /\d/g   | Regular expression to detect **"accepted"** symbols                                 |
+| **format**   | string => string              |         | format function                                                                     |
+| **value**    | string                        |         | input value                                                                         |
+| **onChange** | string => void                |         | event fired on input change                                                         |
+| **children** | ({ value, onChange }) => Node |         | value and onChange handler you need to pass to underlying input element             |
+| **mask**     | boolean (optional)            |         | switch on replace input mode                                                        |
+| **replace**  | string => string (optional)   |         | format postprocessor allows you to fully replace any/all symbol/s preserving cursor |
 
 ## Thanks
 
