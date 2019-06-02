@@ -74,7 +74,8 @@ _In all examples "|" shows current cursor position_
   Then user press _5_ button and formatted input must be equal to _1`234`5_**|**_67_.
 
   Even the overall order of elements has changed
-  (was _1->2->3->`->4->..._ became _1->`->2->3->4..._)
+  (was _1->2->3->`->4->..._
+  became _1->`->2->3->4..._)
   the order of digits before cursor hasn't changed
   (was _1->2->3->4_ and hasn't changed).
 
