@@ -7,7 +7,7 @@ into formatted or masked input.
 
 ## Highlights
 
-- Requires React 16.4+
+- Requires React 16.8+
 - Dependency free
 - Tiny (≈ 800b)
 - Supports any [input](https://istarkov.github.io/rifm#material-ui).
