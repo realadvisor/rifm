@@ -53,10 +53,9 @@ export const Rifm = (props: Props) => {
         eventValue !== formattedEventValue &&
         eventValue.toLowerCase() === formattedEventValue.toLowerCase()
       ) {
-        console.warn(`
-          Case enforcement does not work with format.
-          Please use replace={value => value.toLowerCase()} instead
-        `);
+        console.warn(
+          'Case enforcement does not work with format. Please use replace={value => value.toLowerCase()} instead'
+        );
       }
     }
 
@@ -154,7 +153,7 @@ export const Rifm = (props: Props) => {
               : formattedValue;
 
           if (replaceValue.length !== formattedValue.length) {
-            console.warn('replace operation to work, must preserve length');
+            console.warn('replace must preserve length');
           }
 
           props.onChange(replaceValue);
