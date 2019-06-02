@@ -63,7 +63,7 @@ Rifm is based on few simple ideas (**\***):
 - format operation doesn't change the order of some symbols after edit
 - all that symbols are placed before input cursor position
 
-**\*** _This ideas are not always true, but we solve some edge cases where it's not._
+**\*** _These ideas are not always true, but we solve some edge cases where it's not._
 
 Example:
 _In all examples "|" shows current cursor position_
