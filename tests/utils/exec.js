@@ -11,8 +11,10 @@ import {
 
 type Props = {|
   accept?: RegExp,
-  replace?: string => boolean,
+  // replace?: string => boolean,
+  mask?: boolean,
   format: (str: string) => string,
+  maskFn?: string => boolean,
 |};
 
 export const createExec = (props: Props) => {
@@ -26,7 +28,19 @@ export const createExec = (props: Props) => {
         stateValue_ = input.value;
 
         return (
-          <Rifm value={input.value} onChange={input.set} {...props}>
+          <Rifm
+            value={input.value}
+            onChange={input.set}
+            accept={props.accept}
+            format={props.format}
+            mask={
+              props.mask != null
+                ? props.mask
+                : props.maskFn != null
+                ? props.maskFn(input.value)
+                : undefined
+            }
+          >
             {({ value, onChange }) => (
               <InputEmulator value={value} onChange={onChange}>
                 {(exec, val) => {

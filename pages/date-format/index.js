@@ -51,7 +51,7 @@ const Example = () /*:React.Node*/ => {
         <div>Date format</div>
         <Rifm
           accept={/\d/g}
-          replace={v => 10 <= v.length}
+          mask={10 <= formatted.length}
           format={formatDate}
           value={formatted}
           onChange={setFormatted}
@@ -64,7 +64,7 @@ const Example = () /*:React.Node*/ => {
         <div>Date format another</div>
         <Rifm
           accept={/[\d-]+/g}
-          replace={v => 10 <= v.length}
+          mask={10 <= formatted.length}
           format={formatDateOther}
           value={formattedA}
           onChange={setFormattedA}
