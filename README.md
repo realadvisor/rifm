@@ -66,9 +66,9 @@ Rifm is based on few simple ideas (**\***):
 **\*** _These ideas are not always true, but we solve some edge cases where it's not._
 
 > Imagine you have simple integer number formatter with **\`** as thousands separator
-> and current input state is _123\`4_**|**_67_.
+> and current input state is _123\`4_**|**_67_ _("|" shows current cursor position)_.
 >
-> User press _5_ then formatted input must be equal to _1\`234\`5_**|**_67_ _("|" shows current cursor position)_.
+> User press _5_ then formatted input must be equal to _1\`234\`5_**|**_67_.
 >
 > Even the overall order of elements has changed (was _1->2->3->\`->4->..._ became _1->\`->2->3->4..._)
 > the order of digits before cursor hasn't changed (was _1->2->3->4_ and hasn't changed).
