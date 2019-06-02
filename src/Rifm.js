@@ -147,10 +147,9 @@ export const Rifm = (props: Props) => {
         refresh();
       } else {
         if (process.env.NODE_ENV !== 'production') {
-          const replaceValue =
-            props.replace != null
-              ? props.replace(formattedValue)
-              : formattedValue;
+          const replaceValue = props.replace
+            ? props.replace(formattedValue)
+            : formattedValue;
 
           if (replaceValue.length !== formattedValue.length) {
             console.warn('replace must preserve length');
@@ -159,9 +158,7 @@ export const Rifm = (props: Props) => {
           props.onChange(replaceValue);
         } else {
           props.onChange(
-            props.replace != null
-              ? props.replace(formattedValue)
-              : formattedValue
+            props.replace ? props.replace(formattedValue) : formattedValue
           );
         }
       }
