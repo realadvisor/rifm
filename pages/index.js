@@ -83,11 +83,11 @@ const Index = () => {
         </P>
       </section>
 
-      <H2 id="case-enforcement">Case enforcement</H2>
+      <H2 id="enforcement">Enforcement</H2>
 
       <EmbedCodesandbox
-        title="istarkob/rifm: case-enforcement"
-        href="github/istarkov/rifm/tree/gh-pages/codesandboxes/case-enforcement"
+        title="istarkob/rifm: enforcement"
+        href="github/istarkov/rifm/tree/gh-pages/codesandboxes/enforcement"
       />
 
       <H2 id="number-format">Number format</H2>
