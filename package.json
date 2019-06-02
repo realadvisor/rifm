@@ -16,7 +16,7 @@
     "build": "rimraf dist && npm run build:code && npm run build:flow",
     "dev": "NODE_ICU_DATA=`yarn -s run node-full-icu-path` next dev",
     "jest": "NODE_ICU_DATA=`yarn -s run node-full-icu-path` jest",
-    "test": "eslint ./ && flow check && yarn test:ts && yarn jest",
+    "test": "eslint --ignore-path .gitignore ./ && flow check && yarn test:ts && yarn jest",
     "test:ts": "tsc",
     "copy-sandbox-examples": "mkdir -p ./out/codesandboxes && find ./pages -type d -mindepth 1 -maxdepth 1 -exec cp -R \\{\\} ./out/codesandboxes \\;",
     "export": "rimraf ./out && next build && NODE_ICU_DATA=`yarn -s run node-full-icu-path` next export && yarn copy-sandbox-examples",
