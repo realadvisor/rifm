@@ -14,7 +14,7 @@ export const TestFlow = () => (
     {text => (
       <Rifm
         accept={/\d/g}
-        replace={undefined}
+        mask={undefined}
         value={text.value}
         onChange={text.set}
         format={numberFormat}

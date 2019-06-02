@@ -22,10 +22,10 @@ const Example = () /*:React.Node*/ => {
         <Rifm
           accept={/\d+/g}
           // do not jump after ) until see number before
-          replace={
+          mask={
             phone.length < 6 && /[^\d]+/.test(phone[3])
               ? undefined
-              : v => v.length >= 14
+              : phone.length >= 14
           }
           format={formatPhone}
           value={phone}
