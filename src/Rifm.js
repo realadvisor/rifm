@@ -157,11 +157,9 @@ export const Rifm = (props: Props) => {
           if (replaceValue.length !== formattedValue.length) {
             console.warn('replace must preserve length');
           }
-
-          props.onChange(replaceValue);
-        } else {
-          props.onChange(replace ? replace(formattedValue) : formattedValue);
         }
+
+        props.onChange(replace ? replace(formattedValue) : formattedValue);
       }
 
       return () => {
