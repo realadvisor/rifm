@@ -6,7 +6,7 @@ type Props = {|
   value: string,
   onChange: string => void,
   format: (str: string) => string,
-  replace?: string => boolean,
+  mask?: boolean,
   accept?: RegExp,
   children: ({
     value: string,
@@ -120,12 +120,7 @@ export const Rifm = (props: Props) => {
 
       // Masking part, for masks if size of mask is above some value (props.replace checks that)
       // we need to replace symbols instead of do nothing as like in format
-      if (
-        props.replace &&
-        props.replace(userValue) &&
-        isSizeIncreaseOperation &&
-        !isNoOperation
-      ) {
+      if (props.mask === true && isSizeIncreaseOperation && !isNoOperation) {
         let start = getCursorPosition(eventValue);
 
         const c = clean(eventValue.substr(start))[0];
@@ -153,7 +148,7 @@ export const Rifm = (props: Props) => {
         // as an example date mask: was "5|1-24-3" then user pressed "6"
         // it becomes "56-|12-43" with this code, and "56|-12-43" without
         if (
-          props.replace &&
+          props.mask != null &&
           (isSizeIncreaseOperation || (isDeleleteButtonDown && !deleteWasNoOp))
         ) {
           while (formattedValue[start] && clean(formattedValue[start]) === '') {

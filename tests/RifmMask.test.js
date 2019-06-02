@@ -5,7 +5,7 @@ import { createExec } from './utils/exec';
 
 test('mask behaviour', async () => {
   const exec = createExec({
-    replace: v => v.length >= 10,
+    maskFn: v => v.length >= 10,
     format: dateFormat,
   });
 
@@ -53,7 +53,7 @@ test('mask behaviour', async () => {
 
 test('mask behaviour with bad symbols', async () => {
   const exec = createExec({
-    replace: v => v.length >= 10,
+    mask: true,
     format: dateFormat,
   });
 
@@ -64,7 +64,7 @@ test('mask behaviour with bad symbols', async () => {
 
 test('mask behaviour with delete', async () => {
   const exec = createExec({
-    replace: v => v.length >= 10,
+    maskFn: v => v.length >= 10,
     format: dateFormat,
   });
 
@@ -95,7 +95,7 @@ test('mask behaviour with delete', async () => {
 
 test('mask works even if state is not updated on equal vals', async () => {
   const exec = createExec({
-    replace: v => v.length >= 10,
+    mask: true,
     format: dateFormat,
   });
 
