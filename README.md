@@ -70,8 +70,8 @@ Rifm is based on few simple ideas (**\***):
 >
 > User press _5_ then formatted input must be equal to _1\`234\`5_**|**_67_.
 >
-> Even the overall order of elements has changed (was _1->2->3->\`->4->..._ became _1->\`->2->3->4..._)
-> the order of digits before cursor hasn't changed (was _1->2->3->4_ and hasn't changed).
+> The overall order of elements has changed (was _1->2->3->\`->4->..._ became _1->\`->2->3->4..._)
+> but the order of digits before cursor hasn't changed (was _1->2->3->4_ and hasn't changed).
 
 The same is true for float numbers formatting, dates and more.
 Symbols with preserved order are different and depends on format.
