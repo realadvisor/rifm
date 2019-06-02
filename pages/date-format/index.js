@@ -32,7 +32,9 @@ const formatDateOther = string => {
   return res;
 };
 
-const formatDateWithMask = string => {
+// const addMaskedSymbols = string => string + '________';
+
+const addMask = string => {
   const digits = parseDigits(string);
   const days = digits.slice(0, 2).padEnd(2, '_');
   const months = digits.slice(2, 4).padEnd(2, '_');
@@ -77,7 +79,9 @@ const Example = () /*:React.Node*/ => {
         <div>Date format with mask</div>
         <Rifm
           accept={/[\d]/g}
-          format={formatDateWithMask}
+          mask={true}
+          format={formatDate}
+          replace={addMask}
           value={masked}
           onChange={setMasked}
         >
