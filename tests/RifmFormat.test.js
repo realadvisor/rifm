@@ -115,6 +115,7 @@ test('format with fixed point delete backspace', async () => {
   exec({ type: 'PUT_SYMBOL', payload: '0' }).toMatchInlineSnapshot(`"|1.23"`);
   exec({ type: 'PUT_SYMBOL', payload: '40' }).toMatchInlineSnapshot(`"40|1.23"`);
   exec({ type: 'MOVE_CARET', payload: -2 }).toMatchInlineSnapshot(`"|401.23"`);
+
   exec({ type: 'PUT_SYMBOL', payload: '00' }).toMatchInlineSnapshot(`"|401.23"`);
 });
 
