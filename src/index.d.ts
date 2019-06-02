@@ -9,7 +9,8 @@ interface RifmProps<E> {
   value: string;
   onChange: (str: string) => void;
   format: (str: string) => string;
-  replace?: (str: string) => boolean;
+  replace?: (str: string) => string;
+  mask?: boolean;
   accept?: RegExp;
   children: (args: RifmRenderArgs<E>) => React.ReactNode;
 }
