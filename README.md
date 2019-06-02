@@ -95,7 +95,7 @@ than format with replace editing mode + some small cursor visual hacks.
 | **value**    | string                        |         | input value                                                                         |
 | **onChange** | string => void                |         | event fired on input change                                                         |
 | **children** | ({ value, onChange }) => Node |         | value and onChange handler you need to pass to underlying input element             |
-| **mask**     | boolean (optional)            |         | switch on replace input mode                                                        |
+| **mask**     | boolean (optional)            |         | use replace input mode if true, use cursor visual hacks if prop provided            |
 | **replace**  | string => string (optional)   |         | format postprocessor allows you to fully replace any/all symbol/s preserving cursor |
 
 ## Thanks
