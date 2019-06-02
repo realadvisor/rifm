@@ -89,7 +89,7 @@ find the right place for cursor after formatting.
 Knowledge about what symbols are **"accepted"**
 _or in other words doesn't change order after formatting_
 and cursor position in input after any user action
-is enough to find final cursor position.
+is enough to find the final cursor position.
 
 Other simple idea that mask usually is nothing more
 than format with replace symbols instead of insert in some edit cases.
