@@ -132,3 +132,26 @@ test('format works even if state is not updated on equal vals', async () => {
   exec({ type: 'PUT_SYMBOL', payload: 'x' }).toMatchInlineSnapshot(`"123|’456"`);
   exec({ type: 'PUT_SYMBOL', payload: 'x' }).toMatchInlineSnapshot(`"123|’456"`);
 });
+
+it('format can work with case changes', () => {
+  const exec = createExec({
+    format: v => v,
+    replace: v => v.toLowerCase(),
+    accept: /.+/g,
+  });
+
+  exec({ type: 'PUT_SYMBOL', payload: 'HELLO WORLD' }).toMatchInlineSnapshot(`"hello world|"`);
+  exec({ type: 'MOVE_CARET', payload: -5 }).toMatchInlineSnapshot(`"hello |world"`);
+  exec({ type: 'PUT_SYMBOL', payload: 'BeAuTiFuL ' }).toMatchInlineSnapshot(`"hello beautiful |world"`);
+});
+
+it('replace is applied to input value', () => {
+  const exec = createExec({
+    format: v => v,
+    replace: v => v.toLowerCase(),
+    accept: /.+/g,
+    initialValue: 'HeLLo',
+  });
+
+  exec({ type: 'MOVE_CARET', payload: -5 }).toMatchInlineSnapshot(`"|hello"`);
+});
