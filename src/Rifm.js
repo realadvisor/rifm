@@ -149,16 +149,6 @@ export const Rifm = (props: Props) => {
         // if nothing changed for formatted value, just refresh so userValue will be used at render
         refresh();
       } else {
-        if (process.env.NODE_ENV !== 'production') {
-          const replaceValue = replace
-            ? replace(formattedValue)
-            : formattedValue;
-
-          if (replaceValue.length !== formattedValue.length) {
-            console.warn('replace must preserve length');
-          }
-        }
-
         props.onChange(replace ? replace(formattedValue) : formattedValue);
       }
 
