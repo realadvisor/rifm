@@ -87,7 +87,7 @@ Rifm solves only one task -
 find the right place for cursor after formatting.
 
 Knowledge about what symbols are **"accepted"**
-_or in other words doesn't change order after formatting_
+_(or in other words don't change the order after formatting)_
 and cursor position in input after any user action
 is enough to find the final cursor position.
 
