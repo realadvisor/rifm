@@ -5,6 +5,7 @@ import * as ReactDOM from 'react-dom';
 import { Rifm } from 'rifm';
 
 const Example = () /*:React.Node*/ => {
+  const [number, setNumber] = React.useState('');
   const [lowercase, setLowercase] = React.useState('');
   const [uppercase, setUppercase] = React.useState('');
   const [capitalized, setCapitalized] = React.useState('');
@@ -13,6 +14,20 @@ const Example = () /*:React.Node*/ => {
 
   return (
     <Grid>
+      <div>
+        <div>Mandatory dot (even if user enters comma) as floating point</div>
+        <Rifm
+          accept={/[\d.,]+/g}
+          // allow only one floating point
+          format={v => (v.match(/\d+[.,]?\d*/) || []).join('')}
+          replace={v => v.replace(',', '.')}
+          value={number}
+          onChange={setNumber}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
+
       <div>
         <div>Lower case</div>
         <Rifm

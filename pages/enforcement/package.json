@@ -1,5 +1,5 @@
 {
-  "description": "Rifm case enforcement example",
+  "description": "Rifm enforcement example",
   "dependencies": {
     "react": "16.8.6",
     "react-dom": "16.8.6",
