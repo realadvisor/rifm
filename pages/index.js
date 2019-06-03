@@ -38,17 +38,22 @@ const GithubIcon = ({ size }) => {
   );
 };
 
-const H1 = ({ children }) => {
+type HeadingProps = {|
+  children: React.Node,
+  id?: string,
+|};
+
+const H1 = ({ children, id }: HeadingProps) => {
   return (
-    <Typography variant="h2" gutterBottom>
+    <Typography variant="h2" gutterBottom id={id}>
       {children}
     </Typography>
   );
 };
 
-const H2 = ({ children }) => {
+const H2 = ({ children, id }: HeadingProps) => {
   return (
-    <Typography variant="h4" gutterBottom>
+    <Typography variant="h4" gutterBottom id={id}>
       {children}
     </Typography>
   );
