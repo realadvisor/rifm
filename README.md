@@ -86,7 +86,12 @@ find the right place for cursor after formatting.
 Knowledge about what symbols are **"accepted"** and cursor position after any user action
 is enough to find the final cursor position.
 
-The other simple idea that masks are usually is nothing more
+Most operations which are not covered with above ideas like
+case enforcements, masks guides, floating point _","=>"."_ replacement
+can be done using simple postprocessing step - replace.
+This operation works well if you need to change input value without loosing cursor position.
+
+And finaly masks - masks are usually is nothing more
 than format with replace editing mode + some small cursor visual hacks.
 
 ### Props
@@ -100,6 +105,8 @@ than format with replace editing mode + some small cursor visual hacks.
 | **children** | ({ value, onChange }) => Node |         | value and onChange handler you need to pass to underlying input element             |
 | **mask**     | boolean (optional)            |         | use replace input mode if true, use cursor visual hacks if prop provided            |
 | **replace**  | string => string (optional)   |         | format postprocessor allows you to fully replace any/all symbol/s preserving cursor |
+
+See the [Demo](https://istarkov.github.io/rifm) there are a lot of examples there.
 
 ## Thanks
 
