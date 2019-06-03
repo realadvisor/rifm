@@ -65,34 +65,27 @@ Rifm is based on few simple ideas (**\***):
 
 **\*** _These ideas are not always true, but we solve some edge cases where it's not._
 
-Example:
-_In all examples "|" shows current cursor position_
-
-- Imagine you have simple integer number formatter with **\`** as thousands separator
-  and current input state is _123\`4_**|**_67_.
-
-  Then user press _5_ button and then formatted input must be equal to _1\`234\`5_**|**_67_.
-
-  Even the overall order of elements has changed
-  (was _1->2->3->\`->4->..._
-  became _1->\`->2->3->4..._)
-  the order of digits before cursor hasn't changed
-  (was _1->2->3->4_ and hasn't changed).
+> Imagine you have simple integer number formatter with **\`** as thousands separator
+> and current input state is _123\`4_**|**_67_.
+>
+> User press _5_ then formatted input must be equal to _1\`234\`5_**|**_67_
+> where "|" shows current cursor position.
+>
+> Even the overall order of elements has changed (was _1->2->3->\`->4->..._ became _1->\`->2->3->4..._)
+> the order of digits before cursor hasn't changed (was _1->2->3->4_ and hasn't changed).
 
 The same is true for float numbers formatting, dates and more.
-Just symbols with preserved order are different and depends on format.
+Symbols with preserved order are different and depends on format.
 We call this kind of symbols - **"accepted"** symbols.
 
 Rifm solves only one task -
 find the right place for cursor after formatting.
 
-Knowledge about what symbols are **"accepted"**
-_(or in other words don't change the order after formatting)_
-and cursor position in input after any user action
+Knowledge about what symbols are **"accepted"** and cursor position after any user action
 is enough to find the final cursor position.
 
-Other simple idea that mask usually is nothing more
-than editing mode. Instead of insert symbol mode, in some edit cases masks use replace.
+The other simple idea that masks are usually is nothing more
+than format with replace editing mode + some small cursor visual hacks.
 
 ### Props
 
