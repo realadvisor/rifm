@@ -1,7 +1,6 @@
 /* @flow */
 import * as React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-// import { Value } from 'react-powerplug';
 import { Rifm } from '../../src';
 import {
   InputEmulator,

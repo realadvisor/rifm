@@ -1,8 +1,7 @@
 /* @flow */
 
 import * as React from 'react';
-import TestRenderer from 'react-test-renderer';
-import { Value } from 'react-powerplug';
+import TestRenderer, { act } from 'react-test-renderer';
 import { InputEmulator, renderInputState } from './InputEmulator';
 
 test('Input emulator commands test', () => {
@@ -17,34 +16,36 @@ test('Input emulator commands test', () => {
   document.addEventListener('keydown', keyDownHandler);
   document.addEventListener('keyup', keyUpHandler);
 
-  TestRenderer.create(
-    <Value
-      initial=""
-      onChange={v => {
-        reactVal = v;
-      }}
-    >
-      {input => (
-        <InputEmulator
-          value={input.value}
-          onChange={event => input.set(event.target.value)}
-        >
-          {(exec, val) => {
-            execCommand = exec;
-            getVal = val;
-            return null;
-          }}
-        </InputEmulator>
-      )}
-    </Value>
-  );
+  const Component = () => {
+    const [value, setValue] = React.useState('');
+    const onChange = v => {
+      reactVal = v;
+      setValue(v);
+    };
+
+    return (
+      <InputEmulator value={value} onChange={event => onChange(event.target.value)}>
+        {(exec, val) => {
+          execCommand = exec;
+          getVal = val;
+          return null;
+        }}
+      </InputEmulator>
+    );
+  };
+
+  TestRenderer.create(<Component />);
 
   const exec = cmd => {
-    if (!execCommand || !getVal) {
-      throw Error('rifm is not initialized');
+    act(() => {
+      if (!execCommand) {
+        throw Error('rifm is not initialized');
+      }
+      execCommand(cmd);
+    });
+    if (!getVal) {
+      throw Error('getVal is not initialized');
     }
-
-    execCommand(cmd);
     snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
 
@@ -89,29 +90,36 @@ test('Input emulator work as React if values dont match', () => {
   let snaphot = [];
   let badSymbol = '';
 
-  TestRenderer.create(
-    <Value initial="">
-      {input => (
-        <InputEmulator
-          value={badSymbol + input.value}
-          onChange={event => input.set(event.target.value)}
-        >
-          {(exec, val) => {
-            execCommand = exec;
-            getVal = val;
-            return null;
-          }}
-        </InputEmulator>
-      )}
-    </Value>
-  );
+  const Component = () => {
+    const [value, setValue] = React.useState('');
+    const onChange = v => {
+      // reactVal = v;
+      setValue(v);
+    };
+
+    return (
+      <InputEmulator value={badSymbol + value} onChange={event => onChange(event.target.value)}>
+        {(exec, val) => {
+          execCommand = exec;
+          getVal = val;
+          return null;
+        }}
+      </InputEmulator>
+    );
+  };
+
+  TestRenderer.create(<Component />);
 
   const exec = cmd => {
-    if (!execCommand || !getVal) {
-      throw Error('rifm is not initialized');
+    act(() => {
+      if (!execCommand) {
+        throw Error('rifm is not initialized');
+      }
+      execCommand(cmd);
+    });
+    if (!getVal) {
+      throw Error('getVal is not initialized');
     }
-
-    execCommand(cmd);
     snaphot.push({ ...getVal(), cmd, withCaret: renderInputState(getVal()) });
   };
 
