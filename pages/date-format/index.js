@@ -65,7 +65,7 @@ const Example = () /*:React.Node*/ => {
       <div>
         <div>Date format another</div>
         <Rifm
-          accept={/[\d-]+/g}
+          accept={/\d+/g}
           mask={10 <= formatted.length}
           format={formatDateOther}
           value={formattedA}
