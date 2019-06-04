@@ -144,12 +144,13 @@ export const Rifm = (props: Props) => {
       }
 
       const formattedValue = props.format(eventValue);
+      const replacedValue = replace ? replace(formattedValue) : formattedValue;
 
-      if (userValue === formattedValue) {
+      if (userValue === replacedValue) {
         // if nothing changed for formatted value, just refresh so userValue will be used at render
         refresh();
       } else {
-        props.onChange(replace ? replace(formattedValue) : formattedValue);
+        props.onChange(replacedValue);
       }
 
       return () => {

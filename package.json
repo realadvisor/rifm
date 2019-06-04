@@ -130,7 +130,6 @@
     "prettier": "^1.17.1",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
-    "react-powerplug": "^1.0.0-rc.1",
     "react-test-renderer": "^16.8.2",
     "rimraf": "^2.6.1",
     "rollup": "^1.2.0",

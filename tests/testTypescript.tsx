@@ -1,6 +1,6 @@
+/* @flow */
 import * as React from 'react';
-import { Value } from 'react-powerplug';
-import { Rifm } from 'rifm';
+import { Rifm } from '../src';
 import { css } from 'emotion';
 
 const numberFormat = (str: string) => {
@@ -8,26 +8,24 @@ const numberFormat = (str: string) => {
   return r ? r.toLocaleString('ch') : '';
 };
 
-const TestFlow = () => (
-  <Value initial={''}>
-    {text => (
-      <Rifm
-        accept={/a/gi}
-        replace={undefined}
-        value={text.value}
-        onChange={text.set}
-        format={numberFormat}
-      >
-        {({ value, onChange }) => (
-          <input
-            value={value}
-            onChange={onChange}
-            className={css({ textAlign: 'right' })}
-          />
-        )}
-      </Rifm>
-    )}
-  </Value>
-);
+export const TestFlow = () => {
+  const [value, setValue] = React.useState('');
 
-export const TestFlowComponent = () => <TestFlow />;
+  return (
+    <Rifm
+      accept={/\d/g}
+      mask={undefined}
+      value={value}
+      onChange={setValue}
+      format={numberFormat}
+    >
+      {({ value, onChange }) => (
+        <input
+          value={value}
+          onChange={onChange}
+          className={css({ textAlign: 'right' })}
+        />
+      )}
+    </Rifm>
+  );
+};

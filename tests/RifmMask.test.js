@@ -114,3 +114,34 @@ test('mask works even if state is not updated on equal vals', async () => {
   exec({ type: 'MOVE_CARET', payload: -1 }).toMatchInlineSnapshot(`"18-08|-1978"`);
   exec({ type: 'PUT_SYMBOL', payload: '1' }).toMatchInlineSnapshot(`"18-08-1|978"`);
 });
+
+test('xxx mask replace should update even format is not changed', async () => {
+  const parseDigits = string => (string.match(/\d+/g) || []).join('');
+
+  const addMask = string => {
+    const digits = parseDigits(string);
+    const days = digits.slice(0, 2).padEnd(2, '_');
+    const months = digits.slice(2, 4).padEnd(2, '_');
+    const years = digits.slice(4, 8).padEnd(4, '_');
+    return `${days}-${months}-${years}`;
+  };
+
+  const formatDate = string => {
+    const digits = parseDigits(string);
+    const chars = digits.split('');
+    return chars.reduce((r, v, index) => (index === 2 || index === 4 ? `${r}-${v}` : `${r}${v}`), '').substr(0, 10);
+  };
+
+  const exec = createExec({
+    mask: true,
+    format: formatDate,
+    replace: addMask,
+  });
+
+  exec({ type: 'MOVE_CARET', payload: 10 }).toMatchInlineSnapshot(`"__-__-____|"`);
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"|__-__-____"`);
+  exec({ type: 'MOVE_CARET', payload: 10 }).toMatchInlineSnapshot(`"__-__-____|"`);
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"|__-__-____"`);
+  // exec({ type: 'MOVE_CARET', payload: 100 }).toMatchInlineSnapshot(`"____|"`);
+  // exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"|____"`);
+});
