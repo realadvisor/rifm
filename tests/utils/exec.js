@@ -1,7 +1,7 @@
 /* @flow */
 import * as React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Value } from 'react-powerplug';
+// import { Value } from 'react-powerplug';
 import { Rifm } from '../../src';
 import {
   InputEmulator,
@@ -24,40 +24,41 @@ export const createExec = (props: Props) => {
   let execCommand = null;
   let stateValue_ = null;
 
-  TestRenderer.create(
-    <Value initial={props.initialValue != null ? props.initialValue : ''}>
-      {input => {
-        stateValue_ = input.value;
+  const Component = () => {
+    const [state, setState] = React.useState(
+      props.initialValue != null ? props.initialValue : ''
+    );
+    stateValue_ = state;
 
-        return (
-          <Rifm
-            value={input.value}
-            onChange={input.set}
-            accept={props.accept}
-            format={props.format}
-            replace={props.replace}
-            mask={
-              props.mask != null
-                ? props.mask
-                : props.maskFn != null
-                ? props.maskFn(input.value)
-                : undefined
-            }
-          >
-            {({ value, onChange }) => (
-              <InputEmulator value={value} onChange={onChange}>
-                {(exec, val) => {
-                  execCommand = exec;
-                  getVal = val;
-                  return null;
-                }}
-              </InputEmulator>
-            )}
-          </Rifm>
-        );
-      }}
-    </Value>
-  );
+    return (
+      <Rifm
+        value={state}
+        onChange={setState}
+        accept={props.accept}
+        format={props.format}
+        replace={props.replace}
+        mask={
+          props.mask != null
+            ? props.mask
+            : props.maskFn != null
+            ? props.maskFn(state)
+            : undefined
+        }
+      >
+        {({ value, onChange }) => (
+          <InputEmulator value={value} onChange={onChange}>
+            {(exec, val) => {
+              execCommand = exec;
+              getVal = val;
+              return null;
+            }}
+          </InputEmulator>
+        )}
+      </Rifm>
+    );
+  };
+
+  TestRenderer.create(<Component />);
 
   const exec = (cmd: InputCommand) => {
     act(() => {
@@ -73,6 +74,7 @@ export const createExec = (props: Props) => {
     }
     const { replace } = props;
 
+    // console.log({ stateValue_, v: renderInputState(getVal()) });
     expect(
       replace ? replace(props.format(stateValue_)) : props.format(stateValue_)
     ).toEqual(getVal().value);
