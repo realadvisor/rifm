@@ -1499,7 +1499,7 @@ var Example = function Example()
     },
     __self: this
   }, "Date format another"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](rifm__WEBPACK_IMPORTED_MODULE_3__["Rifm"], {
-    accept: /[\d-]+/g,
+    accept: /\d+/g,
     mask: 10 <= formatted.length,
     format: formatDateOther,
     value: formattedA,
@@ -1718,14 +1718,6 @@ var Rifm = function Rifm(props) {
         // if nothing changed for formatted value, just refresh so userValue will be used at render
         refresh();
       } else {
-        if (true) {
-          var replaceValue = replace ? replace(formattedValue) : formattedValue;
-
-          if (replaceValue.length !== formattedValue.length) {
-            console.warn('replace must preserve length');
-          }
-        }
-
         props.onChange(replace ? replace(formattedValue) : formattedValue);
       }
 
@@ -1795,7 +1787,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!**********************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2Fdate-format&absolutePagePath=%2FUsers%2Fice%2Fext%2Fnpm%2Frifm%2Fpages%2Fdate-format%2Findex.js ***!
   \**********************************************************************************************************************************************/
@@ -1818,5 +1810,5 @@ module.exports = dll_9c75acfe53428ad7a9fa;
 
 /***/ })
 
-},[[1,"static/runtime/webpack.js"]]]);
+},[[2,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=date-format.js.map
