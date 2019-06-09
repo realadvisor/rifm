@@ -36,6 +36,11 @@ const formatNegative = string => {
   return number.toLocaleString('en');
 };
 
+const truncScale = (number, scale) => {
+  const ratio = 10 ** scale;
+  return Math.trunc(number * ratio) / ratio;
+};
+
 const numberAccept = /[\d.]+/g;
 
 const parseNumber = string => (string.match(numberAccept) || []).join('');
@@ -43,11 +48,7 @@ const parseNumber = string => (string.match(numberAccept) || []).join('');
 const formatFixedPointNumber = (value, digits) => {
   const parsed = parseNumber(value);
   const [head, tail] = parsed.split('.');
-  // Avoid rounding errors at toLocaleString as when user enters 1.239 and maxDigits=2 we
-  // must not to convert it to 1.24, it must stay 1.23
-  const scaledTail = tail != null ? tail.slice(0, digits) : '';
-
-  let number = Number.parseFloat(`${head}.${scaledTail}`);
+  let number;
 
   // For fixed format numbers deleting "." must be no-op
   // as imagine u have 123.45 then delete "." and get 12345.00 looks bad in UI
@@ -59,11 +60,17 @@ const formatFixedPointNumber = (value, digits) => {
     number = Number.parseFloat(
       `${paddedHead.slice(0, -digits)}.${paddedHead.slice(-digits)}`
     );
+  } else {
+    number = Number.parseFloat(parsed);
   }
 
   if (Number.isNaN(number)) {
     return '';
   }
+
+  // Avoid rounding errors at toLocaleString as when user enters 1.239 and maxDigits=2 we
+  // must not to convert it to 1.24, it must stay 1.23
+  number = truncScale(number, digits);
 
   const formatted = number.toLocaleString('de-CH', {
     minimumFractionDigits: digits,
@@ -75,12 +82,7 @@ const formatFixedPointNumber = (value, digits) => {
 
 const formatFloatingPointNumber = (value, maxDigits) => {
   const parsed = parseNumber(value);
-  const [head, tail] = parsed.split('.');
-  // Avoid rounding errors at toLocaleString as when user enters 1.239 and maxDigits=2 we
-  // must not to convert it to 1.24, it must stay 1.23
-  const scaledTail = tail != null ? tail.slice(0, maxDigits) : '';
-
-  const number = Number.parseFloat(`${head}.${scaledTail}`);
+  const number = Number.parseFloat(parsed);
 
   if (Number.isNaN(number)) {
     return '';
@@ -93,6 +95,11 @@ const formatFloatingPointNumber = (value, maxDigits) => {
 
   if (parsed.includes('.')) {
     const [formattedHead] = formatted.split('.');
+    const [, tail] = parsed.split('.');
+
+    // Avoid rounding errors at toLocaleString as when user enters 1.239 and maxDigits=2 we
+    // must not to convert it to 1.24, it must stay 1.23
+    const scaledTail = tail != null ? tail.slice(0, maxDigits) : '';
 
     // skip zero at digits position for non fixed floats
     // as at digits 2 for non fixed floats numbers like 1.50 has no sense, just 1.5 allowed
@@ -104,6 +111,7 @@ const formatFloatingPointNumber = (value, maxDigits) => {
 
     return `${formattedHead}.${formattedTail}`;
   }
+
   return formatted;
 };
 
