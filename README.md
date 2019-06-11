@@ -61,12 +61,11 @@ yarn add rifm
 
 ### Terminology
 
-Rifm is based on few simple ideas (**\***):
+Rifm is based on simple idea (**\***):
 
-- format operation doesn't change the order of some symbols after edit
-- all that symbols are placed before input cursor position
+- format operation applied to input value after edit doesn't change the order of some symbols before cursor
 
-**\*** _These ideas are not always true, but we solve some edge cases where it's not._
+**\*** _This is not always true, but we solve some edge cases where it's not._
 
 > Imagine you have simple integer number formatter with **\`** as thousands separator
 > and current input state is _123\`4_**|**_67_ _("|" shows current cursor position)_.
@@ -86,13 +85,12 @@ find the right place for cursor after formatting.
 Knowledge about what symbols are **"accepted"** and cursor position after any user action
 is enough to find the final cursor position.
 
-Most operations which are not covered with above ideas like
+Most operations which are not covered with above idea like
 case enforcements, masks guides, floating point _","=>"."_ replacement
 can be done using simple postprocessing step - replace.
 This operation works well if you need to change input value without loosing cursor position.
 
-And finaly masks - masks are usually is nothing more
-than format with replace editing mode + some small cursor visual hacks.
+And finaly masks - masks are usually is format with replace editing mode + some small cursor visual hacks.
 
 ### Props
 
