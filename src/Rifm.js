@@ -130,7 +130,7 @@ export const Rifm = (props: Props) => {
         return start;
       };
 
-      // Masking part, for masks if size of mask is above some value (props.replace checks that)
+      // Masking part, for masks if size of mask is above some value
       // we need to replace symbols instead of do nothing as like in format
       if (props.mask === true && isSizeIncreaseOperation && !isNoOperation) {
         let start = getCursorPosition(eventValue);
