@@ -17,10 +17,10 @@ const formatDate = string => {
     .substr(0, 10);
 };
 
-const formatDateOther = string => {
+const formatDateOther = (string, isInc) => {
   const res = formatDate(string);
 
-  if (string.endsWith('-')) {
+  if (isInc !== false && (string.endsWith('-') || isInc === true)) {
     if (res.length === 2) {
       return `${res}-`;
     }
@@ -66,7 +66,7 @@ const Example = () /*:React.Node*/ => {
         <div>Date format another</div>
         <Rifm
           accept={/\d+/g}
-          mask={10 <= formatted.length}
+          mask={10 <= formattedA.length}
           format={formatDateOther}
           value={formattedA}
           onChange={setFormattedA}
