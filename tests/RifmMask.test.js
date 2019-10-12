@@ -115,7 +115,7 @@ test('mask works even if state is not updated on equal vals', async () => {
   exec({ type: 'PUT_SYMBOL', payload: '1' }).toMatchInlineSnapshot(`"18-08-1|978"`);
 });
 
-test('xxx mask replace should update even format is not changed', async () => {
+test('mask replace should update even format is not changed', async () => {
   const parseDigits = string => (string.match(/\d+/g) || []).join('');
 
   const addMask = string => {
@@ -144,4 +144,42 @@ test('xxx mask replace should update even format is not changed', async () => {
   exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"|__-__-____"`);
   // exec({ type: 'MOVE_CARET', payload: 100 }).toMatchInlineSnapshot(`"____|"`);
   // exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"|____"`);
+});
+
+test('xxx mask symbols can be added', async () => {
+  const parseDigits = string => (string.match(/\d+/g) || []).join('');
+
+  const formatDate = string => {
+    const digits = parseDigits(string);
+    const chars = digits.split('');
+    return chars.reduce((r, v, index) => (index === 2 || index === 4 ? `${r}-${v}` : `${r}${v}`), '').substr(0, 10);
+  };
+
+  const formatDateOther = (string, isInc) => {
+    const res = formatDate(string);
+
+    if (isInc !== false && (string.endsWith('-') || isInc === true)) {
+      if (res.length === 2) {
+        return `${res}-`;
+      }
+
+      if (res.length === 5) {
+        return `${res}-`;
+      }
+    }
+    return res;
+  };
+
+  const exec = createExec({
+    maskFn: v => v.length >= 10,
+    format: formatDateOther,
+  });
+
+  exec({ type: 'PUT_SYMBOL', payload: '12' }).toMatchInlineSnapshot(`"12-|"`);
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"12|"`);
+  exec({ type: 'PUT_SYMBOL', payload: '-' }).toMatchInlineSnapshot(`"12-|"`);
+  exec({ type: 'PUT_SYMBOL', payload: '34' }).toMatchInlineSnapshot(`"12-34-|"`);
+  exec({ type: 'MOVE_CARET', payload: -1 }).toMatchInlineSnapshot(`"12-34|-"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"12-34|"`);
+  exec({ type: 'PUT_SYMBOL', payload: 'a' }).toMatchInlineSnapshot(`"12-34|"`);
 });
