@@ -5,9 +5,10 @@ import * as React from 'react';
 type Props = {|
   value: string,
   onChange: string => void,
-  format: (str: string, isAppendOperation?: boolean) => string,
+  format: (str: string) => string,
   mask?: boolean,
   replace?: string => string,
+  append?: string => string,
   accept?: RegExp,
   children: ({
     value: string,
@@ -20,7 +21,7 @@ type Props = {|
 export const Rifm = (props: Props) => {
   const [, refresh] = React.useReducer(c => c + 1, 0);
   const valueRef = React.useRef(null);
-  const { replace } = props;
+  const { replace, append } = props;
   const userValue = replace
     ? replace(props.format(props.value))
     : props.format(props.value);
@@ -143,13 +144,17 @@ export const Rifm = (props: Props) => {
         )}`;
       }
 
-      const formattedValue = props.format(
-        eventValue,
+      let formattedValue = props.format(eventValue);
+
+      if (
+        append != null &&
         isSizeIncreaseOperation &&
-          !isNoOperation &&
-          // cursor at the end
-          input.selectionStart === eventValue.length
-      );
+        !isNoOperation &&
+        // cursor at the end
+        input.selectionStart === eventValue.length
+      ) {
+        formattedValue = append(formattedValue);
+      }
 
       const replacedValue = replace ? replace(formattedValue) : formattedValue;
 

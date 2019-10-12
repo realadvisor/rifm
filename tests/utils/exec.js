@@ -1,4 +1,5 @@
 /* @flow */
+
 import * as React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Rifm } from '../../src';
@@ -14,6 +15,7 @@ type Props = {|
   mask?: boolean,
   format: (str: string) => string,
   replace?: (str: string) => string,
+  append?: (str: string) => string,
   maskFn?: string => boolean,
   initialValue?: string,
 |};
@@ -36,6 +38,7 @@ export const createExec = (props: Props) => {
         accept={props.accept}
         format={props.format}
         replace={props.replace}
+        append={props.append}
         mask={
           props.mask != null
             ? props.mask

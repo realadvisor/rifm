@@ -17,10 +17,10 @@ const formatDate = string => {
     .substr(0, 10);
 };
 
-const formatDateOther = (string, isAppend) => {
+const formatDateWithAppend = string => {
   const res = formatDate(string);
 
-  if (isAppend !== false && (string.endsWith('-') || isAppend === true)) {
+  if (string.endsWith('-')) {
     if (res.length === 2) {
       return `${res}-`;
     }
@@ -31,6 +31,8 @@ const formatDateOther = (string, isAppend) => {
   }
   return res;
 };
+
+const appendHyphen = v => (v.length === 2 || v.length === 5 ? `${v}-` : v);
 
 const addMask = string => {
   const digits = parseDigits(string);
@@ -52,7 +54,8 @@ const Example = () /*:React.Node*/ => {
         <Rifm
           accept={/\d+/g}
           mask={10 <= formattedA.length}
-          format={formatDateOther}
+          format={formatDateWithAppend}
+          append={appendHyphen}
           value={formattedA}
           onChange={setFormattedA}
         >

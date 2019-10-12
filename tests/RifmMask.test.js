@@ -155,10 +155,10 @@ test('xxx mask symbols can be added', async () => {
     return chars.reduce((r, v, index) => (index === 2 || index === 4 ? `${r}-${v}` : `${r}${v}`), '').substr(0, 10);
   };
 
-  const formatDateOther = (string, isAppendOperation) => {
+  const formatDateOther = string => {
     const res = formatDate(string);
 
-    if (isAppendOperation !== false && (string.endsWith('-') || isAppendOperation === true)) {
+    if (string.endsWith('-')) {
       if (res.length === 2) {
         return `${res}-`;
       }
@@ -173,6 +173,7 @@ test('xxx mask symbols can be added', async () => {
   const exec = createExec({
     maskFn: v => v.length >= 10,
     format: formatDateOther,
+    append: v => (v.length === 2 || v.length === 5 ? `${v}-` : v),
   });
 
   exec({ type: 'PUT_SYMBOL', payload: '12' }).toMatchInlineSnapshot(`"12-|"`);
