@@ -17,10 +17,10 @@ const formatDate = string => {
     .substr(0, 10);
 };
 
-const formatDateOther = (string, isInc) => {
+const formatDateOther = (string, isAppend) => {
   const res = formatDate(string);
 
-  if (isInc !== false && (string.endsWith('-') || isInc === true)) {
+  if (isAppend !== false && (string.endsWith('-') || isAppend === true)) {
     if (res.length === 2) {
       return `${res}-`;
     }
@@ -31,8 +31,6 @@ const formatDateOther = (string, isInc) => {
   }
   return res;
 };
-
-// const addMaskedSymbols = string => string + '________';
 
 const addMask = string => {
   const digits = parseDigits(string);
@@ -50,6 +48,19 @@ const Example = () /*:React.Node*/ => {
   return (
     <Grid>
       <div>
+        <div>Date format with append</div>
+        <Rifm
+          accept={/\d+/g}
+          mask={10 <= formattedA.length}
+          format={formatDateOther}
+          value={formattedA}
+          onChange={setFormattedA}
+        >
+          {renderInput}
+        </Rifm>
+      </div>
+
+      <div>
         <div>Date format</div>
         <Rifm
           accept={/\d/g}
@@ -57,19 +68,6 @@ const Example = () /*:React.Node*/ => {
           format={formatDate}
           value={formatted}
           onChange={setFormatted}
-        >
-          {renderInput}
-        </Rifm>
-      </div>
-
-      <div>
-        <div>Date format another</div>
-        <Rifm
-          accept={/\d+/g}
-          mask={10 <= formattedA.length}
-          format={formatDateOther}
-          value={formattedA}
-          onChange={setFormattedA}
         >
           {renderInput}
         </Rifm>

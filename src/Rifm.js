@@ -5,7 +5,7 @@ import * as React from 'react';
 type Props = {|
   value: string,
   onChange: string => void,
-  format: (str: string, isInc?: boolean) => string,
+  format: (str: string, isAppendOperation?: boolean) => string,
   mask?: boolean,
   replace?: string => string,
   accept?: RegExp,
@@ -145,8 +145,12 @@ export const Rifm = (props: Props) => {
 
       const formattedValue = props.format(
         eventValue,
-        isSizeIncreaseOperation && !isNoOperation
+        isSizeIncreaseOperation &&
+          !isNoOperation &&
+          // cursor at the end
+          input.selectionStart === eventValue.length
       );
+
       const replacedValue = replace ? replace(formattedValue) : formattedValue;
 
       if (userValue === replacedValue) {

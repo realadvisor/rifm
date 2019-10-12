@@ -155,10 +155,10 @@ test('xxx mask symbols can be added', async () => {
     return chars.reduce((r, v, index) => (index === 2 || index === 4 ? `${r}-${v}` : `${r}${v}`), '').substr(0, 10);
   };
 
-  const formatDateOther = (string, isInc) => {
+  const formatDateOther = (string, isAppendOperation) => {
     const res = formatDate(string);
 
-    if (isInc !== false && (string.endsWith('-') || isInc === true)) {
+    if (isAppendOperation !== false && (string.endsWith('-') || isAppendOperation === true)) {
       if (res.length === 2) {
         return `${res}-`;
       }
