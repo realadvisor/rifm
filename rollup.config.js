@@ -16,6 +16,16 @@ const name = 'Rifm';
 const getBabelOptions = ({ useESModules }) => ({
   exclude: '**/node_modules/**',
   runtimeHelpers: true,
+  presets: [
+    [
+      '@babel/env',
+      {
+        loose: true,
+      },
+    ],
+    '@babel/flow',
+    '@babel/react',
+  ],
   plugins: [['@babel/plugin-transform-runtime', { useESModules }]],
 });
 
