@@ -148,12 +148,20 @@ export const Rifm = (props: Props) => {
 
       if (
         append != null &&
-        isSizeIncreaseOperation &&
-        !isNoOperation &&
         // cursor at the end
-        input.selectionStart === eventValue.length
+        input.selectionStart === eventValue.length &&
+        !isNoOperation
       ) {
-        formattedValue = append(formattedValue);
+        if (isSizeIncreaseOperation) {
+          formattedValue = append(formattedValue);
+        } else {
+          // If after delete last char is special character and we use append
+          // delete it too
+          // was: "12-3|" backspace pressed, then should be "12|"
+          if (clean(formattedValue.slice(-1)) === '') {
+            formattedValue = formattedValue.slice(0, -1);
+          }
+        }
       }
 
       const replacedValue = replace ? replace(formattedValue) : formattedValue;

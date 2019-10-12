@@ -183,4 +183,6 @@ test('xxx mask symbols can be added', async () => {
   exec({ type: 'MOVE_CARET', payload: -1 }).toMatchInlineSnapshot(`"12-34|-"`);
   exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"12-34|"`);
   exec({ type: 'PUT_SYMBOL', payload: 'a' }).toMatchInlineSnapshot(`"12-34|"`);
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"12-3|"`);
+  exec({ type: 'BACKSPACE' }).toMatchInlineSnapshot(`"12|"`);
 });
