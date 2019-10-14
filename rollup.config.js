@@ -15,6 +15,7 @@ const name = 'Rifm';
 
 const getBabelOptions = ({ useESModules }) => ({
   exclude: '**/node_modules/**',
+  babelrc: false,
   runtimeHelpers: true,
   presets: [
     [
