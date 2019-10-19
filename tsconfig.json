@@ -1,16 +1,33 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom"],
-    "jsx": "react",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "jsx": "preserve",
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
     "baseUrl": ".",
-    "paths": { "rifm": ["./src"] }
+    "paths": {
+      "rifm": [
+        "./src"
+      ]
+    },
+    "allowJs": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
-  "include": ["./src/**/*.ts*", "./tests/**/*.tsx"]
+  "include": [
+    "./src/**/*.ts*",
+    "./tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
