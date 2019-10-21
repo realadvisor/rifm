@@ -13,13 +13,11 @@ const globals = { react: 'React' };
 
 const name = 'Rifm';
 
-const getBabelOptions = ({ useESModules }) => ({
+const babelOptions = {
   exclude: '**/node_modules/**',
   babelrc: false,
-  runtimeHelpers: true,
   presets: [['@babel/env', { loose: true }], '@babel/flow', '@babel/react'],
-  plugins: [['@babel/plugin-transform-runtime', { useESModules }]],
-});
+};
 
 export default [
   {
@@ -28,7 +26,7 @@ export default [
     external: Object.keys(globals),
     plugins: [
       nodeResolve(),
-      babel(getBabelOptions({ useESModules: true })),
+      babel(babelOptions),
       replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
       sizeSnapshot(),
     ],
@@ -40,7 +38,7 @@ export default [
     external: Object.keys(globals),
     plugins: [
       nodeResolve(),
-      babel(getBabelOptions({ useESModules: true })),
+      babel(babelOptions),
       replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
       sizeSnapshot(),
       terser(),
@@ -51,14 +49,14 @@ export default [
     input,
     output: { file: pkg.main, format: 'cjs' },
     external,
-    plugins: [babel(getBabelOptions({ useESModules: false })), sizeSnapshot()],
+    plugins: [babel(babelOptions), sizeSnapshot()],
   },
 
   {
     input,
     output: { file: pkg.module, format: 'esm' },
     external,
-    plugins: [babel(getBabelOptions({ useESModules: true })), sizeSnapshot()],
+    plugins: [babel(babelOptions), sizeSnapshot()],
   },
 
   // to check esm production size
@@ -67,7 +65,7 @@ export default [
     output: { file: 'dist/rifm.esm.production.js', format: 'esm' },
     external,
     plugins: [
-      babel(getBabelOptions({ useESModules: true })),
+      babel(babelOptions),
       replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
       sizeSnapshot(),
     ],
