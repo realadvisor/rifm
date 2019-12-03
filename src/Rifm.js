@@ -39,6 +39,12 @@ export const Rifm = (props: Props) => {
         );
         return;
       }
+      if (evt.target.type === 'date') [
+        console.error(
+          'Rifm does not support input type=date.'
+        );
+        return;
+      }
     }
 
     const eventValue = evt.target.value;
