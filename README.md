@@ -3,16 +3,16 @@
 Is a tiny (≈ 800b) component to transform any input component
 into formatted or masked input.
 
-[Demo](https://istarkov.github.io/rifm)
+[Demo](https://realadvisor.github.io/rifm)
 
 ## Highlights
 
 - Requires React 16.8+
 - Dependency free
 - Tiny (≈ 800b)
-- Supports any [input](https://istarkov.github.io/rifm#material-ui).
-- Can [mask](https://istarkov.github.io/rifm#date-format) input,
-  [format](https://istarkov.github.io/rifm#number-format) and [more](https://istarkov.github.io/rifm#case-enforcement)
+- Supports any [input](https://realadvisor.github.io/rifm#material-ui).
+- Can [mask](https://realadvisor.github.io/rifm#date-format) input,
+  [format](https://realadvisor.github.io/rifm#number-format) and [more](https://realadvisor.github.io/rifm#case-enforcement)
 - Small readable source
 - flow + typescript definitions
 
@@ -105,7 +105,7 @@ And finaly masks - masks are usually is format with replace editing mode + some 
 | **replace**  | string => string (optional)   |         | format postprocessor allows you to fully replace any/all symbol/s preserving cursor                                                                           |
 | **append**   | string => string (optional)   |         | format postprocessor called only if cursor is in the last position and new symbols added, used for specific use-case to add non accepted symbol when you type |
 
-See the [Demo](https://istarkov.github.io/rifm) there are a lot of examples there.
+See the [Demo](https://realadvisor.github.io/rifm) there are a lot of examples there.
 
 ## Thanks
 
