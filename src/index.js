@@ -1,3 +1,3 @@
 /* @flow */
 
-export { Rifm } from './Rifm';
+export { useRifm, Rifm } from './Rifm';

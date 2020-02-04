@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-type Props = {|
+type Args = {|
   value: string,
   onChange: string => void,
   format: (str: string) => string,
@@ -10,15 +10,21 @@ type Props = {|
   replace?: string => string,
   append?: string => string,
   accept?: RegExp,
-  children: ({
-    value: string,
-    onChange: (
-      evt: SyntheticInputEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => void,
-  }) => React.Node,
 |};
 
-export const Rifm = (props: Props) => {
+type RenderProps = {|
+  value: string,
+  onChange: (
+    evt: SyntheticInputEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void,
+|};
+
+type Props = {|
+  ...Args,
+  children: RenderProps => React.Node,
+|};
+
+export const useRifm = (props: Args): RenderProps => {
   const [, refresh] = React.useReducer(c => c + 1, 0);
   const valueRef = React.useRef(null);
   const { replace, append } = props;
@@ -40,9 +46,7 @@ export const Rifm = (props: Props) => {
         return;
       }
       if (evt.target.type === 'date') {
-        console.error(
-          'Rifm does not support input type=date.'
-        );
+        console.error('Rifm does not support input type=date.');
         return;
       }
     }
@@ -228,8 +232,14 @@ export const Rifm = (props: Props) => {
     };
   }, []);
 
-  return props.children({
+  return {
     value: valueRef.current != null ? valueRef.current[0] : userValue,
     onChange,
-  });
+  };
+};
+
+export const Rifm = ({ children, ...args }: Props) => {
+  const renderProps = useRifm(args);
+
+  return children(renderProps);
 };
