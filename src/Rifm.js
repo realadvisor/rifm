@@ -238,8 +238,8 @@ export const useRifm = (props: Args): RenderProps => {
   };
 };
 
-export const Rifm = ({ children, ...args }: Props) => {
-  const renderProps = useRifm(args);
+export const Rifm = (props: Props) => {
+  const renderProps = useRifm((props: any));
 
-  return children(renderProps);
+  return props.children(renderProps);
 };
