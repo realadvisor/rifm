@@ -1,6 +1,6 @@
 # RIFM - React Input Format & Mask
 
-Is a tiny (≈ 800b) component to transform any input component
+Is a tiny (≈ 800b) component (and hook) to transform any input component
 into formatted or masked input.
 
 [Demo](https://realadvisor.github.io/rifm)
@@ -17,6 +17,10 @@ into formatted or masked input.
 - flow + typescript definitions
 
 ## Example
+
+Rifm offers both a Render Prop and a Hook API:
+
+### Render Prop
 
 ```js
 import { Rifm } from 'rifm';
@@ -47,6 +51,42 @@ const numberFormat = (str: string) => {
       />
     )}
   </Rifm>
+
+...
+```
+
+### Hook
+
+```js
+import { useRifm } from 'rifm';
+import TextField from '@material-ui/core/TextField';
+import { css } from 'emotion';
+
+const numberFormat = (str: string) => {
+  const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
+  return r ? r.toLocaleString('en') : '';
+}
+
+...
+
+  const [value, setValue] = React.useState('')
+
+  const {
+    value,
+    onChange,
+  } = useRifm({
+    value,
+    onChange: setValue,
+    format: numberFormat
+  })
+
+  <TextField
+    value={value}
+    label={'Float'}
+    onChange={onChange}
+    className={css({input: {textAlign:"right"}})}
+    type="tel"
+  />
 
 ...
 ```
@@ -92,7 +132,9 @@ This operation works well if you need to change input value without loosing curs
 
 And finaly masks - masks are usually is format with replace editing mode + some small cursor visual hacks.
 
-### Props
+### Input Props
+
+These are accepted by the Rifm component as props and the useRifm hook as named arguments.
 
 | Prop         | type                          | default | Description                                                                                                                                                   |
 | ------------ | :---------------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -104,6 +146,15 @@ And finaly masks - masks are usually is format with replace editing mode + some 
 | **mask**     | boolean (optional)            |         | use replace input mode if true, use cursor visual hacks if prop provided                                                                                      |
 | **replace**  | string => string (optional)   |         | format postprocessor allows you to fully replace any/all symbol/s preserving cursor                                                                           |
 | **append**   | string => string (optional)   |         | format postprocessor called only if cursor is in the last position and new symbols added, used for specific use-case to add non accepted symbol when you type |
+
+### Output Props
+
+These will be passed into the `children` render prop for the Rifm component as named arguments, and returned from the useRifm hook as an object.
+
+| Prop         | type                   | default | Description                                                      |
+| ------------ | :--------------------- | :------ | :--------------------------------------------------------------- |
+| **value**    | string                 |         | A formatted string value to pass as a prop to your input element |
+| **onChange** | SyntheticEvent => void |         | The change handler to pass as a prop to your input element       |
 
 See the [Demo](https://realadvisor.github.io/rifm) there are a lot of examples there.
 
