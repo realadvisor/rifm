@@ -24,8 +24,7 @@ Rifm offers both a Render Prop and a Hook API:
 
 ```js
 import { Rifm } from 'rifm';
-import TextField from '@material-ui/core/TextField';
-import { css } from 'emotion';
+import { TextField } from '@material-ui/core';
 
 const numberFormat = (str: string) => {
   const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
@@ -43,11 +42,9 @@ const numberFormat = (str: string) => {
   >
     {({ value, onChange }) => (
       <TextField
-        value={value}
-        label={'Float'}
-        onChange={onChange}
-        className={css({input: {textAlign:"right"}})}
         type="tel"
+        value={value}
+        onChange={onChange}
       />
     )}
   </Rifm>
@@ -59,8 +56,7 @@ const numberFormat = (str: string) => {
 
 ```js
 import { useRifm } from 'rifm';
-import TextField from '@material-ui/core/TextField';
-import { css } from 'emotion';
+import { TextField } from '@material-ui/core';
 
 const numberFormat = (str: string) => {
   const r = parseInt(str.replace(/[^\d]+/gi, ''), 10);
@@ -71,21 +67,16 @@ const numberFormat = (str: string) => {
 
   const [value, setValue] = React.useState('')
 
-  const {
-    value,
-    onChange,
-  } = useRifm({
+  const rifm = useRifm({
     value,
     onChange: setValue,
     format: numberFormat
   })
 
   <TextField
-    value={value}
-    label={'Float'}
-    onChange={onChange}
-    className={css({input: {textAlign:"right"}})}
     type="tel"
+    value={rifm.value}
+    onChange={rifm.onChange}
   />
 
 ...
