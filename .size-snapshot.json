@@ -1,23 +1,23 @@
 {
   "dist/rifm.umd.js": {
-    "bundled": 8499,
-    "minified": 2012,
-    "gzipped": 994
+    "bundled": 8775,
+    "minified": 2150,
+    "gzipped": 1030
   },
   "dist/rifm.min.js": {
-    "bundled": 7864,
-    "minified": 1693,
-    "gzipped": 843
+    "bundled": 8002,
+    "minified": 1744,
+    "gzipped": 861
   },
   "dist/rifm.cjs.js": {
-    "bundled": 8026,
-    "minified": 1978,
-    "gzipped": 974
+    "bundled": 8284,
+    "minified": 2152,
+    "gzipped": 1007
   },
   "dist/rifm.esm.js": {
-    "bundled": 7955,
-    "minified": 1915,
-    "gzipped": 933,
+    "bundled": 8195,
+    "minified": 2073,
+    "gzipped": 961,
     "treeshaked": {
       "rollup": {
         "code": 14,
@@ -29,9 +29,9 @@
     }
   },
   "dist/rifm.esm.production.js": {
-    "bundled": 7217,
-    "minified": 1482,
-    "gzipped": 723,
+    "bundled": 7327,
+    "minified": 1537,
+    "gzipped": 736,
     "treeshaked": {
       "rollup": {
         "code": 14,

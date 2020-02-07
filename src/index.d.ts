@@ -1,11 +1,6 @@
 import * as React from 'react';
 
-interface RifmRenderArgs<E> {
-  value: string;
-  onChange: React.ChangeEventHandler<E>;
-}
-
-interface RifmProps<E> {
+interface RifmArgs {
   value: string;
   onChange: (str: string) => void;
   format: (str: string) => string;
@@ -13,11 +8,23 @@ interface RifmProps<E> {
   append?: (str: string) => string;
   mask?: boolean;
   accept?: RegExp;
+}
+
+interface RifmRenderArgs<E> {
+  value: string;
+  onChange: React.ChangeEventHandler<E>;
+}
+
+interface RifmProps<E> extends RifmArgs {
   children: (args: RifmRenderArgs<E>) => React.ReactNode;
 }
+
+declare function useRifm<E = HTMLInputElement>(
+  args: RifmArgs
+): RifmRenderArgs<E>;
 
 declare class Rifm<E = HTMLInputElement> extends React.Component<
   RifmProps<E>
 > {}
 
-export { Rifm };
+export { useRifm, Rifm };
