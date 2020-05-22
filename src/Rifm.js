@@ -100,6 +100,15 @@ export const useRifm = (props: Args): RenderProps => {
       // in case of isDeleleteButtonDown cursor should move differently vs backspace
       const deleteWasNoOp = isDeleleteButtonDown && isNoOperation;
 
+      const valueAfterSelectionStart = eventValue.slice(input.selectionStart);
+
+      const acceptedCharIndexAfterDelete = valueAfterSelectionStart.search(
+        props.accept || /\d/g
+      );
+
+      const charsToSkipAfterDelete =
+        acceptedCharIndexAfterDelete !== -1 ? acceptedCharIndexAfterDelete : 0;
+
       // Create string from only accepted symbols
       const clean = str => (str.match(props.accept || /\d/g) || []).join('');
 
@@ -200,7 +209,7 @@ export const useRifm = (props: Args): RenderProps => {
         }
 
         input.selectionStart = input.selectionEnd =
-          start + (deleteWasNoOp ? 1 : 0);
+          start + (deleteWasNoOp ? 1 + charsToSkipAfterDelete : 0);
       };
     });
   }

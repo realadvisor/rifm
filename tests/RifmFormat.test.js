@@ -1,6 +1,6 @@
 // @flow
 
-import { formatFixedPointNumber, formatFloatingPointNumber } from './format';
+import { formatFixedPointNumber, formatFloatingPointNumber, formatPhone } from './format';
 import { createExec } from './utils/exec';
 
 test('format works', async () => {
@@ -154,4 +154,15 @@ it('replace is applied to input value', () => {
   });
 
   exec({ type: 'MOVE_CARET', payload: -5 }).toMatchInlineSnapshot(`"|hello"`);
+});
+
+it('moves cursor to expected position when deleting with more than 1 non-accepted chars after cursor', () => {
+  const exec = createExec({
+    format: formatPhone,
+    accept: /\d+/g,
+    initialValue: '1 (234) 567',
+  });
+
+  exec({ type: 'MOVE_CARET', payload: 6 }).toMatchInlineSnapshot(`"1 (234|) 567"`);
+  exec({ type: 'DELETE' }).toMatchInlineSnapshot(`"1 (234) |567"`);
 });
