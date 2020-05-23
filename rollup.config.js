@@ -1,41 +1,28 @@
+import fs from 'fs';
+import path from 'path';
 import replace from '@rollup/plugin-replace';
-import babel from 'rollup-plugin-babel';
+import { babel } from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
-import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
+import gzipSize from 'gzip-size';
+import * as brotliSize from 'brotli-size';
 import pkg from './package.json';
 
 const input = './src/index.js';
-const name = 'Rifm';
-const globals = { react: 'React' };
-const external = Object.keys(globals);
+const external = id =>
+  id.startsWith('.') === false && path.isAbsolute(id) === false;
 
 const babelOptions = {
   babelrc: false,
-  presets: [['@babel/env', { loose: true }], '@babel/flow', '@babel/react'],
+  configFile: false,
+  babelHelpers: 'bundled',
+  presets: [
+    ['@babel/preset-env', { bugfixes: true, loose: true }],
+    '@babel/flow',
+    '@babel/react',
+  ],
 };
 
 export default [
-  {
-    input,
-    output: { file: 'dist/rifm.umd.js', format: 'umd', name, globals },
-    external,
-    plugins: [
-      babel(babelOptions),
-      replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),
-    ],
-  },
-
-  {
-    input,
-    output: { file: 'dist/rifm.min.js', format: 'umd', name, globals },
-    external,
-    plugins: [
-      babel(babelOptions),
-      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-      terser(),
-    ],
-  },
-
   {
     input,
     output: { file: pkg.main, format: 'cjs' },
@@ -47,7 +34,7 @@ export default [
     input,
     output: { file: pkg.module, format: 'esm' },
     external,
-    plugins: [babel(babelOptions), sizeSnapshot()],
+    plugins: [babel(babelOptions)],
   },
 
   // to check esm production size
@@ -58,7 +45,24 @@ export default [
     plugins: [
       babel(babelOptions),
       replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-      sizeSnapshot(),
+      terser(),
+      {
+        generateBundle(outputOptions, bundle) {
+          let sizeInfo = '';
+          for (const [name, chunk] of Object.entries(bundle)) {
+            const parsedSize = chunk.code.length;
+            const gzippedSize = gzipSize.sync(chunk.code);
+            const brotliedSize = brotliSize.sync(chunk.code);
+            sizeInfo += `Size of ${name}
+            =============================
+            min: ${parsedSize} b
+            gzip: ${gzippedSize} b
+            brotli: ${brotliedSize} b\n`.replace(/^\s+/gm, '');
+          }
+          console.info(sizeInfo);
+          fs.writeFileSync('size-snapshot.txt', sizeInfo, 'utf-8');
+        },
+      },
     ],
   },
 ];
