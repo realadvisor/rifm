@@ -1,0 +1,5 @@
+Size of rifm.esm.production.js
+=============================
+min: 1480 b
+gzip: 753 b
+brotli: 684 b
