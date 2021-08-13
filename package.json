@@ -127,7 +127,7 @@
     "jest": "^26.0.1",
     "libphonenumber-js": "^1.2.15",
     "lint-staged": "^10.0.7",
-    "next": "^9.4.2",
+    "next": "^11.1.0",
     "prettier": "^1.19.1",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
