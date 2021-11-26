@@ -1,6 +1,6 @@
 {
   "name": "rifm",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "Tiny react input formatter and mask",
   "author": "istarkov",
   "license": "MIT",
