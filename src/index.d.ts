@@ -19,12 +19,12 @@ interface RifmProps<E> extends RifmArgs {
   children: (args: RifmRenderArgs<E>) => React.ReactNode;
 }
 
-declare function useRifm<E = HTMLInputElement>(
+declare function useRifm<E = HTMLInputElement | HTMLTextAreaElement>(
   args: RifmArgs
 ): RifmRenderArgs<E>;
 
-declare class Rifm<E = HTMLInputElement> extends React.Component<
-  RifmProps<E>
-> {}
+declare class Rifm<
+  E = HTMLInputElement | HTMLTextAreaElement
+> extends React.Component<RifmProps<E>> {}
 
 export { useRifm, Rifm };
