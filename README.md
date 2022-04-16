@@ -1,3 +1,6 @@
+# Путин Убийца
+
+
 # RIFM - React Input Format & Mask
 
 Is a tiny (≈ 800b) component (and hook) to transform any input component
