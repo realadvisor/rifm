@@ -33,7 +33,7 @@ export const useRifm = (props: Args): RenderProps => {
     : props.format(props.value);
 
   // state of delete button see comments below about inputType support
-  const isDeleleteButtonDownRef = React.useRef(false);
+  const isDeleteButtonDownRef = React.useRef(false);
 
   const onChange = (
     evt: SyntheticInputEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -57,7 +57,7 @@ export const useRifm = (props: Args): RenderProps => {
       eventValue, // eventValue
       evt.target, // input
       eventValue.length > userValue.length, // isSizeIncreaseOperation
-      isDeleleteButtonDownRef.current, // isDeleleteButtonDown
+      isDeleteButtonDownRef.current, // isDeleteButtonDown
       userValue === props.format(eventValue), // isNoOperation
     ];
 
@@ -90,15 +90,15 @@ export const useRifm = (props: Args): RenderProps => {
         eventValue,
         input,
         isSizeIncreaseOperation,
-        isDeleleteButtonDown,
+        isDeleteButtonDown,
         // No operation means that value itself hasn't been changed, BTW cursor, selection etc can be changed
         isNoOperation,
       ] = valueRef.current;
       valueRef.current = null;
 
       // this usually occurs on deleting special symbols like ' here 123'123.00
-      // in case of isDeleleteButtonDown cursor should move differently vs backspace
-      const deleteWasNoOp = isDeleleteButtonDown && isNoOperation;
+      // in case of isDeleteButtonDown cursor should move differently vs backspace
+      const deleteWasNoOp = isDeleteButtonDown && isNoOperation;
 
       const valueAfterSelectionStart = eventValue.slice(input.selectionStart);
 
@@ -201,7 +201,7 @@ export const useRifm = (props: Args): RenderProps => {
         // it becomes "56-|12-43" with this code, and "56|-12-43" without
         if (
           props.mask != null &&
-          (isSizeIncreaseOperation || (isDeleleteButtonDown && !deleteWasNoOp))
+          (isSizeIncreaseOperation || (isDeleteButtonDown && !deleteWasNoOp))
         ) {
           while (formattedValue[start] && clean(formattedValue[start]) === '') {
             start += 1;
@@ -222,13 +222,13 @@ export const useRifm = (props: Args): RenderProps => {
     // firefox track https://bugzilla.mozilla.org/show_bug.cgi?id=1447239
     const handleKeyDown = (evt: KeyboardEvent) => {
       if (evt.code === 'Delete') {
-        isDeleleteButtonDownRef.current = true;
+        isDeleteButtonDownRef.current = true;
       }
     };
 
     const handleKeyUp = (evt: KeyboardEvent) => {
       if (evt.code === 'Delete') {
-        isDeleleteButtonDownRef.current = false;
+        isDeleteButtonDownRef.current = false;
       }
     };
 
